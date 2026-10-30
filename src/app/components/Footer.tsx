@@ -1,11 +1,15 @@
 "use client";
 
-import { useMemo } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
 function CopyrightYear() {
-  const year = useMemo(() => new Date().getFullYear(), []);
+  const [year, setYear] = useState("2026"); // 放一个静态年份占位，避免服务端渲染报错
+
+  useEffect(() => {
+    setYear(String(new Date().getFullYear())); // 仅在客户端挂载后动态更新
+  }, []);
 
   return <span>© {year} WUNAI. All rights reserved.</span>;
 }
