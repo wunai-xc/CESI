@@ -1,0 +1,26 @@
+---
+title: Hello World
+date: "2025-10-20"
+summary: 第一篇文章，用来验证 MDX 渲染、代码块和公式是否正常。
+tags: [Next.js, MDX]
+---
+
+## 你好
+
+这是一个用来测试渲染的示例文章，正文写在 `src/app/content/posts/<slug>.mdx`。
+
+行内代码 `npm run dev`，代码块：
+
+```ts
+export const posts = loadPosts();
+```
+
+公式：
+
+$$
+a^2 + b^2 = c^2
+$$
+
+<Callout type="info" title="提示">
+  这是 Callout 组件在 MDX 里的用法。
+</Callout>
