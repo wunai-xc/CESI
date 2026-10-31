@@ -62,10 +62,30 @@ const components: MDXComponents = {
     );
   },
 
-  // 表格外面套一层横向滚动容器，窄屏不会撑破布局
+  // 表格：外层横向滚动容器（窄屏不撑破布局）+ not-prose 接管样式，避免和 typography 的极简表格样式打架。
+  // 单元格留白、表头底色、斑马纹、行分隔线都用 arbitrary variant 写在 table 上，一处维护。
   table: (props) => (
-    <div className="my-6 w-full overflow-x-auto border border-zinc-200 dark:border-zinc-800">
-      <table {...props} />
+    <div className="not-prose my-6 w-full overflow-x-auto border border-zinc-200 dark:border-zinc-800">
+      <table
+        {...props}
+        className={[
+          "w-full border-collapse text-left text-sm leading-6",
+          // 单元格：内收缩进 16px，上下 10px
+          "[&_th]:px-4 [&_th]:py-2.5 [&_td]:px-4 [&_td]:py-2.5",
+          // 表头：浅底、加粗、行首不换行
+          "[&_th]:bg-zinc-100 [&_th]:font-semibold [&_th]:whitespace-nowrap",
+          "[&_th]:text-zinc-900 [&_td]:align-top [&_td]:text-zinc-700",
+          // 行分隔线：只画在单元格底部，最后一行去掉避免和容器边框重叠
+          "[&_th]:border-b [&_th]:border-zinc-200 [&_td]:border-b [&_td]:border-zinc-200",
+          "[&_tbody_tr:last-child>*]:border-b-0",
+          // 斑马纹，长表格更好读
+          "[&_tbody_tr:nth-child(even)]:bg-zinc-50",
+          // 暗色
+          "dark:[&_th]:bg-zinc-900 dark:[&_th]:text-zinc-100 dark:[&_td]:text-zinc-300",
+          "dark:[&_th]:border-zinc-800 dark:[&_td]:border-zinc-800",
+          "dark:[&_tbody_tr:nth-child(even)]:bg-zinc-900/40",
+        ].join(" ")}
+      />
     </div>
   ),
 
