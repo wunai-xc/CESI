@@ -29,9 +29,22 @@ tags: [Next.js, MDX]
 - 列表页：`/components/posts`
 - 详情页：`/components/posts/<slug>`
 
-## 构建
+## 构建与部署
+
+站点是**静态导出**（`next.config.ts` 里 `output: "export"`），构建产物在 `out/`：
 
 ```bash
 npm run build
-npm start
 ```
+
+### Cloudflare Pages
+
+- Build command：`npm run build`
+- Build output directory：`out`
+- 环境变量：不需要（构建期会把文章编译进 HTML）
+- 自定义域名：`newbl.wunai.top`（在 Pages 项目 → Custom domains 里绑定）
+
+因为不受任何适配器约束，纯静态产物也可以直接丢到任何静态托管。
+
+注意静态导出下**不能**使用请求期动态能力（PPR / ISR / `cookies()` / `headers()` / `connection()`），
+文章新增后需要重新构建才会出现在线上。

@@ -11,6 +11,7 @@ import PostSearch from "@/app/components/PostSearch";
 export const metadata: Metadata = {
   title: "全部文章",
   description: "WUNAI 的全部文章列表",
+  alternates: { canonical: "/components/posts" },
 };
 
 export default function PostsPage() {

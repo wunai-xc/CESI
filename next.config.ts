@@ -1,6 +1,7 @@
 // next.config.ts
 // Next.js 配置：MDX 管线（frontmatter / 数学公式 / 代码高亮 / 代码块元数据）、
-// Tailwind 的 Turbopack 加载器、PPR（cacheComponents）以及只在生产启用的 React Compiler。
+// Tailwind 的 Turbopack 加载器、静态导出（部署到 Cloudflare Pages）
+// 以及只在生产启用的 React Compiler。
 
 import type { NextConfig } from 'next'
 import path from 'node:path'
@@ -19,12 +20,16 @@ const defListPlugin = libPlugin('remark-def-list.mjs')
 const headingIdPlugin = libPlugin('remark-heading-id.mjs')
 
 const nextConfig: NextConfig = {
+  // 静态导出：构建产物是纯 HTML/CSS/JS，直接扔 Cloudflare Pages，不需要任何适配器。
+  // 代价是不能用 PPR / ISR / 请求期动态数据，所以下面关掉了 cacheComponents 与 partialPrefetching。
+  output: 'export',
+  // 静态托管没有图片优化服务，next/image 退化成普通 <img>
+  images: {
+    unoptimized: true,
+  },
   experimental: {
     agentFeedback: true,
   },
-  // 启用 Cache Components（PPR）：页面里读 params/cookies 等必须在 Suspense 内
-  cacheComponents: true,
-  partialPrefetching: true,
   reactCompiler: isProduction,
   turbopack: {
     rules: {

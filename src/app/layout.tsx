@@ -7,13 +7,23 @@ import "./styles/globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import SweepLoader from "./components/SweepLoader";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "./lib/site";
 
 export const metadata: Metadata = {
+  // metadataBase：把站内相对地址补成绝对地址（OG 图、canonical 等都需要）
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "cesi",
-    template: "%s | cesi",
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
   },
-  description: "WUNAI 的个人站点",
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+  },
 };
 
 // 内联到 <head> 的极小脚本：在首帧前根据 localStorage / 系统偏好给 <html> 加 .dark，

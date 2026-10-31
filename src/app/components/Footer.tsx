@@ -1,12 +1,10 @@
 // src/app/components/Footer.tsx
 // 页脚：最上一行是站点 logo + 主题三切按钮（无分隔线），
 // 下面三栏用竖线分隔：常用网站 / 关于我（联系方式）/ 条款与隐私，
-// 最下一行是版权年份（Suspense 里动态取）和占位的设置按钮。
+// 最下一行是版权年份（构建期算好）和占位的设置按钮。
 
-import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { connection } from "next/server";
 import BrandIcon from "./BrandIcon";
 import ThemeToggle from "./ThemeToggle";
 import type { BrandName } from "./brand-icons";
@@ -77,14 +75,12 @@ function profileHref(href: string) {
   return href.includes("@") ? `mailto:${href}` : href;
 }
 
-// 版权年份：先 await connection() 表示"这里依赖请求时信息"，
-// 否则 cacheComponents 会因为在预渲染阶段读 new Date() 而报错
-async function CopyrightYear() {
-  await connection();
+// 版权年份：静态导出后页面在构建时生成，这里就是构建那一刻的年份，
+// 每年重新构建一次即可（客户端要动态化可以改成 ThemeToggle 那种 useEffect 写法）
+const BUILD_YEAR = new Date().getFullYear();
 
-  return (
-    <span>© {new Date().getFullYear()} WUNAI. All rights reserved.</span>
-  );
+function CopyrightYear() {
+  return <span>© {BUILD_YEAR} WUNAI. All rights reserved.</span>;
 }
 
 function SettingsIcon() {
@@ -208,9 +204,7 @@ export default function Footer() {
         {/* 底行：版权 + 设置按钮（占位，暂无功能） */}
         <div className="flex items-center justify-between gap-4 border-t border-zinc-200 py-4 dark:border-zinc-800">
           <p className="text-xs text-zinc-500 dark:text-zinc-400">
-            <Suspense fallback={<span>© WUNAI. All rights reserved.</span>}>
-              <CopyrightYear />
-            </Suspense>
+            <CopyrightYear />
           </p>
           <button
             type="button"

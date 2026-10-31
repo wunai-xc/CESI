@@ -1,9 +1,7 @@
 // src/app/components/posts/tag/[tag]/page.tsx
 // 标签页，路由 /components/posts/tag/<tag>：列出该标签下的所有文章。
-// 结构和文章详情页一致：页面外壳同步渲染，读 URL 参数的部分放进 Suspense，
-// 这样 cacheComponents 预渲染时不会因为提前读 params 而报错。
+// 静态导出，所有标签都在 generateStaticParams 里列全，所以可以直接 await params。
 
-import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -26,10 +24,17 @@ export async function generateMetadata({
   return {
     title: `#${tag}`,
     description: `标签 #${tag} 下的所有文章`,
+    alternates: { canonical: `/components/posts/tag/${encodeURIComponent(tag)}` },
   };
 }
 
-export default function TagPage({ params }: TagPageProps) {
+export default async function TagPage({ params }: TagPageProps) {
+  const { tag } = await params;
+  const tagged = getPostsByTag(tag);
+  if (tagged.length === 0) notFound();
+
+  const totalWords = tagged.reduce((sum, post) => sum + post.wordCount, 0);
+
   return (
     <div className="mx-auto w-full max-w-3xl flex-1 px-6 py-12">
       <Link
@@ -39,25 +44,6 @@ export default function TagPage({ params }: TagPageProps) {
         ← Back All Posts
       </Link>
 
-      <Suspense
-        fallback={<p className="mt-8 text-sm text-zinc-500">Loading 加载中…</p>}
-      >
-        <TagBody params={params} />
-      </Suspense>
-    </div>
-  );
-}
-
-async function TagBody({ params }: TagPageProps) {
-  const { tag } = await params;
-  const tagged = getPostsByTag(tag);
-  if (tagged.length === 0) notFound();
-
-  // 未编码的 tag 可能带空格等字符，这里统一用 URL 编码后的形式再匹配一次兜底
-  const totalWords = tagged.reduce((sum, post) => sum + post.wordCount, 0);
-
-  return (
-    <>
       <header className="mt-6 border-b border-zinc-200 pb-6 dark:border-zinc-800">
         <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
           #{tag}
@@ -68,6 +54,6 @@ async function TagBody({ params }: TagPageProps) {
       </header>
 
       <PostList posts={tagged} />
-    </>
+    </div>
   );
 }
