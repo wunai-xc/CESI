@@ -17,6 +17,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="zh-cn" suppressHydrationWarning className="h-full antialiased">
       <head>
+        <link
+          rel="preload"
+          href="/fonts/wsstubeddemo-m2ox5.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="flex min-h-full flex-col">
