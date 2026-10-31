@@ -97,6 +97,23 @@ export function getPost(slug: string): Post | undefined {
   return posts.find((post) => post.slug === slug);
 }
 
+// 相邻文章（用于底部「上篇 / 下篇」）：
+// posts 已按日期倒序，所以 index + 1 是更早发布的一篇（上一篇），index - 1 是更晚的一篇（下一篇）
+export type AdjacentPosts = {
+  previous?: Post;
+  next?: Post;
+};
+
+export function getAdjacentPosts(slug: string): AdjacentPosts {
+  const index = posts.findIndex((post) => post.slug === slug);
+  if (index === -1) return {};
+
+  return {
+    previous: posts[index + 1],
+    next: posts[index - 1],
+  };
+}
+
 // 动态 import 对应 slug 的 MDX；文件不存在或编译失败时返回 null（由页面转 404）
 export async function loadPostContent(
   slug: string,

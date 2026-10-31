@@ -10,9 +10,16 @@ import "katex/dist/contrib/mhchem.min.js";
 import "katex/dist/katex.min.css";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPost, getPostHeadings, loadPostContent, posts } from "@/app/content/posts";
+import {
+  getAdjacentPosts,
+  getPost,
+  getPostHeadings,
+  loadPostContent,
+  posts,
+} from "@/app/content/posts";
 import { formatDate } from "@/app/lib/formatDate";
 import PostToc from "@/app/components/PostToc";
+import PostPager from "@/app/components/PostPager";
 
 type PostPageProps = {
   params: Promise<{ slug: string }>;
@@ -64,6 +71,9 @@ async function PostBody({ params }: PostPageProps) {
   // 目录条目在服务端从同一份 .mdx 源文件里扫出来，锚点 id 与 rehype-slug 生成的一致
   const headings = getPostHeadings(slug);
 
+  // 相邻文章用于底部翻页，缺哪一侧就在那一侧显示「全部文章」
+  const { previous, next } = getAdjacentPosts(slug);
+
   return (
     <>
       <PostToc headings={headings} />
@@ -89,6 +99,8 @@ async function PostBody({ params }: PostPageProps) {
       <div className="prose prose-zinc mt-8 max-w-none dark:prose-invert prose-a:text-blue-600 dark:prose-a:text-blue-400">
         <Content />
       </div>
+
+      <PostPager previous={previous} next={next} />
       </article>
     </>
   );
