@@ -19,9 +19,29 @@
   animation: rise-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* 切页时页面内容的入场：由 TransitionOverlay 给 <main> 挂 .page-enter。
+   延迟 0.55s 起步，正好接在扫描色块扫过、幕布淡出那一段，
+   视觉上内容像是被扫描线"刷"出来的。没有 JS 时不会加这个类，内容始终可见。 */
+@keyframes page-enter {
+  from {
+    opacity: 0.3;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.page-enter {
+  animation: page-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both;
+}
+
 /* 尊重系统"减少动态效果"：直接不播动画，元素保持可见 */
 @media (prefers-reduced-motion: reduce) {
-  .animate-rise {
+  .animate-rise,
+  .page-enter {
     animation: none;
   }
 }
