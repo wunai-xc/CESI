@@ -52,3 +52,9 @@ export const posts = loadPosts();
 - 语言名由围栏的 `ts` / `bash` / `json` 等自动映射为 TypeScript / Bash / JSON
 
 元数据由 `src/app/lib/remark-code-meta.mjs` 写进 `data-*` 属性，`src/mdx-components.tsx` 的 `pre` 读出来传给 `src/app/components/CodeBlock.tsx`；高亮由 `rehype-highlight` 在编译期完成，不跑客户端 JS。
+
+## 表格
+
+- 表格是 GFM 语法，必须有表头 + 分隔行：`| a | b |` / `| --- | --- |` / 数据行。
+- 想在「效果」列展示真实渲染结果（标题、粗体、链接等）时，**单元格里直接写 JSX**：`<h1>H1</h1>`、`<strong>粗体</strong>`、`<em>斜体</em>`、`<a href="…">链接</a>`。
+  Markdown 的块级语法（`#`、列表、代码块）在表格单元格里不生效，因为 GFM 单元格只解析行内内容。

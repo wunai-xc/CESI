@@ -80,6 +80,17 @@ const components: MDXComponents = {
           "[&_tbody_tr:last-child>*]:border-b-0",
           // 斑马纹，长表格更好读
           "[&_tbody_tr:nth-child(even)]:bg-zinc-50",
+          // 单元格里常用来演示渲染效果（<h1>~<h4>、链接），把标题外边距清掉并压一点字号，
+          // 否则 h1 在 14px 的表格里会显得过大
+          "[&_h1]:m-0 [&_h2]:m-0 [&_h3]:m-0 [&_h4]:m-0 [&_p]:m-0",
+          "[&_h1]:text-2xl [&_h2]:text-xl [&_h3]:text-lg [&_h4]:text-base",
+          "[&_a]:text-blue-600 [&_a]:underline dark:[&_a]:text-blue-400",
+          // 单元格里演示列表 / 图片时，把默认外边距和列表符号归一化，否则缩进会很难看
+          "[&_ol]:m-0 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:m-0 [&_ul]:list-disc [&_ul]:pl-5",
+          "[&_li]:my-0.5 [&_img]:my-0 [&_img]:inline [&_img]:h-auto [&_img]:max-w-full [&_hr]:my-2",
+          // 单元格里嵌套的 table / blockquote 是原样 HTML，不走组件映射，这里统一补上基本版式
+          "[&_table]:w-full [&_table]:border-collapse [&_table]:text-sm",
+          "[&_blockquote]:m-0 [&_blockquote]:border-l-2 [&_blockquote]:border-zinc-300 [&_blockquote]:pl-3 dark:[&_blockquote]:border-zinc-700",
           // 暗色
           "dark:[&_th]:bg-zinc-900 dark:[&_th]:text-zinc-100 dark:[&_td]:text-zinc-300",
           "dark:[&_th]:border-zinc-800 dark:[&_td]:border-zinc-800",

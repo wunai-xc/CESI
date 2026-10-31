@@ -5,7 +5,25 @@ summary: Markdown基础语法以及MDX
 tags: [MDX]
 ---
 
-## 1.1 Markdown基础语法速查表
+## 1.1 Markdown + HTML 基础语法速查表
 
-| 元素 | MD语法 |
-| --- | --- |
+| 元素 | MD语法 | HTML语法 | 效果 |
+| --- | --- | --- | --- |
+| 标题 | `#` <br /> `##` <br /> `###` <br /> `####` | `<h1>H1</h1>` <br /> `<h2>H2</h2>` <br /> `<h3>H3</h3>` <br /> `<h4>H4</h4>` | <h1>H1</h1> <br /> <h2>H2</h2> <br /> <h3>H3</h3> <br /> <h4>H4</h4> |
+| 粗体 | `**粗体**` <br /> `__粗体__` | `<strong>粗体</strong>` | **粗体** <br /> __粗体__ |
+| 斜体 | `*斜体*` <br /> `_斜体_` | `<em>斜体</em>` | *斜体* <br /> _斜体_ |
+| 粗斜体 | `***粗斜体***` <br /> `___粗斜体___` | `<strong><em>粗斜体</em></strong>` | ***粗斜体*** <br /> ___粗斜体___ |
+| 删除线 | `~~删除线~~` | `<del>删除线</del>` | ~~删除线~~ |
+| 行内代码 | `` `code` `` | `<code>code</code>` | `code` |
+| 链接 | `[Next.js](https://nextjs.org)` | `<a href="https://nextjs.org">Next.js</a>` | [Next.js](https://nextjs.org) |
+| 引用块 | `> 引用` | `<blockquote><p>这是一段引用内容。</p></blockquote>` | <blockquote><p>这是一段引用内容。</p></blockquote> |
+| 水平线 | `***` <br /> `---` | `<hr />` | <hr /> |
+| 换行 | 行尾两个空格 + 回车 | `<br />` | 第一行 <br /> 第二行 |
+| 图片 | `![alt text](/icon/WUNAI-LOGO-light.png)` | `<img src="/icon/WUNAI-LOGO-light.png" alt="logo" width="120" />` | <img src="/icon/WUNAI-LOGO-light.png" alt="logo" width="120" /> |
+| 有序列表 | `1.` 每行一项 | `<ol><li>第一项</li><li>第二项</li></ol>` | <ol><li>第一项</li><li>第二项</li></ol> |
+| 无序列表 | `- ` 每行一项 | `<ul><li>第一项</li><li>第二项</li></ul>` | <ul><li>第一项</li><li>第二项</li></ul> |
+| 表格 | `\| 日期 \| 顺序 \|` <br /> `\| --- \| --- \|` <br /> `\| 31 \| 1 \|` | `<table><tbody><tr><th>日期</th><th>顺序</th></tr><tr><td>31</td><td>1</td></tr></tbody></table>` | <table><tbody><tr><th>日期</th><th>顺序</th></tr><tr><td>31</td><td>1</td></tr></tbody></table> |
+
+> 表格单元格只解析**行内内容**：块级 markdown（`#`、列表、代码块）在里面不生效，
+> 想展示真实效果就写 HTML/JSX 标签，并且整段必须和这一行在同一行、不能换行。
+> 单元格里出现的 `|` 必须转义成 `\|`，否则会被当成列分隔符。
