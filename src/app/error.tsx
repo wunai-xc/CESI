@@ -1,5 +1,7 @@
 // src/app/error.tsx
-// 错误兜底页面。必须是客户端组件（React 的 error boundary 只能在客户端工作）。
+// 错误兜底页面（路由段出错时由 React error boundary 渲染）。
+// 必须是客户端组件：error boundary 只在客户端工作。
+
 "use client";
 
 export default function Error({
@@ -14,6 +16,7 @@ export default function Error({
       <h2 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">
         出错了
       </h2>
+      {/* 生产环境里 error.message 可能被脱敏，兜底给一句通用提示 */}
       <p className="max-w-md text-sm leading-6 text-zinc-600 dark:text-zinc-400">
         {error.message || "页面渲染时发生了意外错误。"}
       </p>

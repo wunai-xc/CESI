@@ -1,3 +1,5 @@
+<!-- cesi/README.md -->
+
 # cesi
 
 WUNAI 的个人站点，使用 Next.js 16 + MDX + Tailwind CSS v4 搭建。

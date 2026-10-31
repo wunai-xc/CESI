@@ -1,3 +1,6 @@
+// src/app/page.tsx
+// 首页（路由 /）：一句欢迎语 + 去文章列表的入口。
+
 import Link from "next/link";
 
 export default function Home() {

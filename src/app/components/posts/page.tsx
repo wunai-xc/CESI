@@ -1,3 +1,7 @@
+// src/app/components/posts/page.tsx
+// 全部文章列表页，路由 /components/posts。
+// 数据来自 src/app/content/posts.ts（读取 content/posts/*.mdx 的 frontmatter）。
+
 import type { Metadata } from "next";
 import Link from "next/link";
 import { posts } from "@/app/content/posts";
@@ -18,6 +22,7 @@ export default function PostsPage() {
         <p className="mt-2 text-sm text-zinc-500">共 {posts.length} 篇</p>
       </header>
 
+      {/* 没有文章时的空状态 */}
       {posts.length === 0 ? (
         <p className="mt-10 text-sm text-zinc-500">还没有文章。</p>
       ) : (
@@ -34,6 +39,7 @@ export default function PostsPage() {
                   </p>
                 ) : null}
                 <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-zinc-400">
+                  {/* dateTime 给搜索引擎和读屏用，显示用本地化格式 */}
                   <time dateTime={post.date}>{formatDate(post.date)}</time>
                   {post.tags.map((tag) => (
                     <span

@@ -1,3 +1,4 @@
+<!-- cesi/AGENTS.md -->
 <!-- BEGIN:nextjs-agent-rules -->
 
 ## This is NOT the Next.js you know
@@ -15,7 +16,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - **不要 kill 任何不是自己启动的进程**，尤其是用户的 `next dev`。需要重启时先告诉用户，由用户操作。
 - 需要验证改动时，只用静态检查：`./node_modules/.bin/tsc --noEmit`、`npm run lint`，以及读文件、读 `node_modules/next/dist/docs/` 里的文档。
 - 如果某项改动非跑起来才能确认，就在回复里写清楚"请自行运行 `npm run dev` 并看 XXX"，然后停下，不要自己跑。
-- 写代码不要加注释（用户明确要求源码里不出现注释）。
+- **每个文件第一行都要有文件路径注释**（例：`// src/app/page.tsx`、`/* src/app/styles/tokens.css */`；MDX 因为 frontmatter 必须在首行，路径注释紧跟在 `---` 块之后；JSON 文件不能写注释，跳过）。
+- **代码要有注释说明**：文件头写清这个文件干什么，关键逻辑、不直观的取值（魔法数字、兼容写法、workaround）都要解释清楚，注释用中文。
 - **全站不使用圆角**：不要用 `rounded-*`（`rounded`、`rounded-md`、`rounded-full` 等）工具类，按钮、卡片、图片、标签一律方角。
 - 不要用 `cp -al` / 硬链接方式复制项目：这个 Android proot 环境用 link2symlink 模拟硬链接，会把项目文件改成 `.l2s.*` 链接对，误删就会丢文件。
 - 删除文件前先确认路径，不要对项目目录做模糊匹配的批量删除。

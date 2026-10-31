@@ -1,3 +1,6 @@
+/* src/app/styles/syntax.css */
+/* 代码高亮配色：rehype-highlight 输出的 .hljs-* 类在这里上色，亮/暗各一套变量。 */
+
 :root {
   --hl-comment: #8a8f98;
   --hl-keyword: #a626a4;

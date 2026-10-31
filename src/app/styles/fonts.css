@@ -1,3 +1,6 @@
+/* src/app/styles/fonts.css */
+/* 站点字体：文件放在 public/fonts/ 下，@font-face 直接引用，不请求任何外部字体服务。 */
+
 @font-face {
   font-family: "cesi-sans";
   src: url("/fonts/vendettaregular-xgrga.ttf") format("truetype");

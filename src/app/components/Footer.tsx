@@ -1,3 +1,8 @@
+// src/app/components/Footer.tsx
+// 页脚：最上一行是站点 logo + 主题三切按钮（无分隔线），
+// 下面三栏用竖线分隔：常用网站 / 关于我（联系方式）/ 条款与隐私，
+// 最下一行是版权年份（Suspense 里动态取）和占位的设置按钮。
+
 import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -59,11 +64,14 @@ const legalLinks: LegalLink[] = [
   { label: "隐私政策 privacy", href: "/privacy" },
 ];
 
+// 邮箱这类没写协议的地址自动补 mailto:，其余原样返回
 function profileHref(href: string) {
   if (href.startsWith("http") || href.startsWith("mailto:")) return href;
   return href.includes("@") ? `mailto:${href}` : href;
 }
 
+// 版权年份：先 await connection() 表示"这里依赖请求时信息"，
+// 否则 cacheComponents 会因为在预渲染阶段读 new Date() 而报错
 async function CopyrightYear() {
   await connection();
 
@@ -94,6 +102,7 @@ export default function Footer() {
   return (
     <footer className="w-full border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
       <div className="mx-auto w-full max-w-6xl px-4">
+        {/* 顶行：logo + 主题切换，这一行没有分隔线 */}
         <div className="flex items-center justify-between gap-4 py-4">
           <Link href="/" className="flex items-center">
             <Image
@@ -115,6 +124,7 @@ export default function Footer() {
           <ThemeToggle />
         </div>
 
+        {/* 三栏：窄屏上下堆叠（横线分隔），sm 起并排（竖线分隔） */}
         <div className="grid grid-cols-1 divide-y divide-zinc-200 dark:divide-zinc-800 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           <div className="py-6 sm:pr-6">
             <p className="text-xs font-semibold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">
@@ -188,6 +198,7 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* 底行：版权 + 设置按钮（占位，暂无功能） */}
         <div className="flex items-center justify-between gap-4 border-t border-zinc-200 py-4 dark:border-zinc-800">
           <p className="text-xs text-zinc-500 dark:text-zinc-400">
             <Suspense fallback={<span>© WUNAI. All rights reserved.</span>}>

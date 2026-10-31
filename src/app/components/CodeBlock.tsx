@@ -1,3 +1,7 @@
+// src/app/components/CodeBlock.tsx
+// MDX 代码块外壳：顶部信息栏（文件名 / 运行环境与版本 / 语言与版本）+ 复制按钮，下面是高亮后的代码。
+// 高亮本身由 rehype-highlight 在编译期完成，这里只负责外壳与复制交互，不引入客户端高亮库。
+
 "use client";
 
 import { isValidElement, useRef, useState, type ReactNode } from "react";
@@ -11,12 +15,14 @@ type CodeBlockProps = {
   runtimeVersion?: string;
 };
 
+// 取子元素（<code>）的 className，用来从 language-xxx 里读语言
 function classNameOf(children: ReactNode) {
   const child = Array.isArray(children) ? children[0] : children;
   if (!isValidElement<{ className?: string }>(child)) return "";
   return child.props.className ?? "";
 }
 
+// 语言标识（ts / bash / json ...）转成显示名；显式传入 language 时优先用它
 function languageOf(children: ReactNode, language?: string) {
   const raw =
     language ?? /language-([\w+#.-]+)/.exec(classNameOf(children))?.[1] ?? "";
@@ -57,12 +63,14 @@ export default function CodeBlock({
   const bodyRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
 
+  // 信息栏要显示的三段文字，缺哪段就不渲染哪段
   const languageLabel = languageOf(children, language);
   const runtimeLabel = [runtime, runtimeVersion].filter(Boolean).join(" ");
   const languageLabelWithVersion = [languageLabel, languageVersion]
     .filter(Boolean)
     .join(" ");
 
+  // 复制：直接从 DOM 里取 <code> 的纯文本，避免和 React 子节点结构耦合
   async function copyCode() {
     const text = bodyRef.current?.querySelector("code")?.textContent ?? "";
     if (!text) return;
@@ -77,6 +85,7 @@ export default function CodeBlock({
 
   return (
     <div className="not-prose my-6 border border-zinc-200 dark:border-zinc-800">
+      {/* 信息栏 */}
       <div className="flex items-center justify-between gap-3 border-b border-zinc-200 bg-zinc-100 px-3 py-1.5 text-xs text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
         <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1">
           {filename ? (
@@ -98,6 +107,7 @@ export default function CodeBlock({
           {copied ? "已复制" : "复制"}
         </button>
       </div>
+      {/* 代码正文：children 是 rehype-highlight 处理过的 <code> */}
       <div
         ref={bodyRef}
         className="overflow-x-auto bg-zinc-50 px-4 py-3 text-[13px] leading-6 dark:bg-zinc-950"

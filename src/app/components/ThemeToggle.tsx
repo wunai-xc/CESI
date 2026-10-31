@@ -1,3 +1,8 @@
+// src/app/components/ThemeToggle.tsx
+// 亮色 / 暗色 / 跟随系统 三切按钮。
+// 主题存在 localStorage 的 "theme"，实际效果是在 <html> 上加/去 .dark 类；
+// 首屏防闪白的脚本在 src/app/layout.tsx 的 <head> 里。
+
 "use client";
 
 import { useSyncExternalStore } from "react";
@@ -5,12 +10,15 @@ import { useSyncExternalStore } from "react";
 type Theme = "light" | "dark" | "system";
 
 const STORAGE_KEY = "theme";
+
+// 极简外部 store：所有按钮 + 系统主题变化都通过它通知 React 重渲染
 const listeners = new Set<() => void>();
 
 function systemPrefersDark() {
   return window.matchMedia("(prefers-color-scheme: dark)").matches;
 }
 
+// 把主题落到 DOM 上：class 决定 Tailwind 的 dark: 变体，colorScheme 决定浏览器原生控件配色
 function applyTheme(theme: Theme) {
   const isDark =
     theme === "dark" || (theme === "system" && systemPrefersDark());
@@ -18,11 +26,13 @@ function applyTheme(theme: Theme) {
   document.documentElement.style.colorScheme = isDark ? "dark" : "light";
 }
 
+// 读取已保存的主题，没存过就是"跟随系统"
 function readTheme(): Theme {
   const stored = window.localStorage.getItem(STORAGE_KEY);
   return stored === "light" || stored === "dark" ? stored : "system";
 }
 
+// useSyncExternalStore 的订阅：系统主题变化、别的标签页改主题时同步过来
 function subscribe(listener: () => void) {
   listeners.add(listener);
 
@@ -42,6 +52,7 @@ function subscribe(listener: () => void) {
   };
 }
 
+// 用户点击后：写 localStorage、立即应用到 DOM、通知所有订阅者
 function setTheme(theme: Theme) {
   window.localStorage.setItem(STORAGE_KEY, theme);
   applyTheme(theme);
@@ -100,6 +111,7 @@ function SystemIcon() {
   );
 }
 
+// 三个选项：值、可访问标签、图标
 const options: { value: Theme; label: string; icon: () => React.JSX.Element }[] =
   [
     { value: "light", label: "亮色", icon: SunIcon },
@@ -108,6 +120,7 @@ const options: { value: Theme; label: string; icon: () => React.JSX.Element }[] 
   ];
 
 export default function ThemeToggle() {
+  // 服务端渲染时固定给 "system"，水合后立刻换成真实值，避免 SSR/客户端不一致
   const theme = useSyncExternalStore(
     subscribe,
     readTheme,

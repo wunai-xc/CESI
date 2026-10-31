@@ -1,4 +1,6 @@
-// src/app/not-found.tsx(404页面)
+// src/app/not-found.tsx
+// 404 页面：notFound() 被调用或访问不存在的路由时显示。
+
 import Link from "next/link";
 
 export default function NotFound() {

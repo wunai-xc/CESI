@@ -1,3 +1,7 @@
+// src/mdx-components.tsx
+// @next/mdx 要求的组件映射文件（必须放在 src 根目录）。
+// 这里把 MDX 里的原生标签换成带样式的版本，并注册可在正文里直接用的组件（Callout / CodeBlock）。
+
 import { isValidElement } from "react";
 import type { MDXComponents } from "mdx/types";
 import Callout from "@/app/components/Callout";
@@ -8,6 +12,7 @@ const components: MDXComponents = {
 
   CodeBlock,
 
+  // 代码块外壳：从 <code> 的 data-* 里取出 remark-code-meta 写入的文件名/版本信息
   pre: ({ children }) => {
     const child = Array.isArray(children) ? children[0] : children;
     const data = isValidElement<Record<string, string>>(child)
@@ -27,6 +32,7 @@ const components: MDXComponents = {
     );
   },
 
+  // 代码：行内代码加底色和边框；块级代码（有 language- 或 hljs 类）交给高亮结果，不再套样式
   code: ({ className, ...props }) => {
     const isBlockCode =
       typeof className === "string" &&
@@ -56,12 +62,14 @@ const components: MDXComponents = {
     );
   },
 
+  // 表格外面套一层横向滚动容器，窄屏不会撑破布局
   table: (props) => (
     <div className="my-6 w-full overflow-x-auto border border-zinc-200 dark:border-zinc-800">
       <table {...props} />
     </div>
   ),
 
+  // 外链自动加 target/rel，站内链接保持默认行为
   a: ({ href, ...props }) => {
     const isExternal = typeof href === "string" && href.startsWith("http");
     return (
