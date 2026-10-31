@@ -99,8 +99,12 @@ async function PostBody({ params }: PostPageProps) {
       </header>
 
       {/* prose 来自 @tailwindcss/typography，一行类名把 markdown 排版好；
-          prose-reading 让正文改用阅读字体，不用站点字体 */}
-      <div className="prose prose-zinc prose-reading mt-8 max-w-none dark:prose-invert prose-a:text-blue-600 dark:prose-a:text-blue-400">
+          正文字体用内联样式指向 --font-reading（阅读字体，不含站点字体 cesi-sans），
+          这样不依赖额外 CSS 类，也不会被工具类或插件样式覆盖 */}
+      <div
+        className="prose prose-zinc mt-8 max-w-none dark:prose-invert prose-a:text-blue-600 dark:prose-a:text-blue-400"
+        style={{ fontFamily: "var(--font-reading)" }}
+      >
         <Content />
       </div>
 

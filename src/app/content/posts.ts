@@ -73,8 +73,9 @@ function countWords(content: string): number {
   return cjk + latin;
 }
 
-// 读单个文件：解析 frontmatter，缺关键字段直接抛错，方便写作时立刻发现
-function readPost(fileName: string): Post {
+// 读单个文件：解析 frontmatter。缺关键字段时打印警告并跳过这篇，
+// 不抛异常——一篇文章写坏不该把整站（首页、列表页、其它文章）一起搞崩。
+function readPost(fileName: string): Post | null {
   const slug = fileName.replace(/\.mdx$/, "");
   const filePath = path.join(POSTS_DIR, fileName);
   const { data, content } = matter(fs.readFileSync(filePath, "utf8"));
@@ -87,9 +88,10 @@ function readPost(fileName: string): Post {
   if (!title) missing.push("title");
   if (!date) missing.push('date（写成 "2025-10-20" 这种格式）');
   if (missing.length > 0) {
-    throw new Error(
-      `文章 ${fileName} 的 frontmatter 有问题：缺少或格式不对 → ${missing.join("、")}`,
+    console.warn(
+      `[posts] 跳过 ${fileName}：frontmatter 缺少或格式不对 → ${missing.join("、")}`,
     );
+    return null;
   }
 
   return {
@@ -111,6 +113,7 @@ function loadPosts(): Post[] {
     .filter((fileName) => fileName.endsWith(".mdx"))
     .filter((fileName) => !fileName.startsWith("_"))
     .map(readPost)
+    .filter((post): post is Post => post !== null)
     .sort((a, b) => b.date.localeCompare(a.date));
 }
 
