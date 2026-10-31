@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./styles/globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import SweepLoader from "./components/SweepLoader";
 
 export const metadata: Metadata = {
   title: {
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="flex min-h-full flex-col">
+        <SweepLoader />
         <Navbar />
         <main className="flex min-h-svh flex-col">{children}</main>
         <Footer />
