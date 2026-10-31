@@ -1,13 +1,15 @@
 import type { NextConfig } from 'next'
 import createMDX from '@next/mdx'
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 const nextConfig: NextConfig = {
   experimental: {
     agentFeedback: true,
   },
   cacheComponents: true,
   partialPrefetching: true,
-  reactCompiler: true,
+  reactCompiler: isProduction,
   turbopack: {
     rules: {
       "*.css": {

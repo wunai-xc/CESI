@@ -1,5 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
+import "katex/dist/contrib/mhchem.min.js";
+import "katex/dist/katex.min.css";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPost, loadPostContent, posts } from "@/app/content/posts";
