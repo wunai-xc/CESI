@@ -119,3 +119,39 @@ body {
 .hljs-strong {
   font-weight: 600;
 }
+
+@keyframes sweep-x {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes sweep-y {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-100svh);
+  }
+}
+
+.sweep-line-x {
+  animation: sweep-x 1s ease-in-out infinite alternate;
+}
+
+.sweep-line-y {
+  animation: sweep-y 1s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sweep-line-x,
+  .sweep-line-y {
+    animation-duration: 2s;
+    animation-timing-function: linear;
+  }
+}
