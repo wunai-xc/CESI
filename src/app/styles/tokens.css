@@ -1,19 +1,16 @@
 /* src/app/styles/tokens.css */
-/* 全局设计变量：工程机械风格配色（骨白 / 石墨 / 安全黄），暗色为终端炭黑。
-   暗色切换靠 <html> 上的 .dark 类，accent 在两套主题里各自取对比度合适的值。 */
+/* 全局设计变量：单纯的黑白灰（白底黑字 / 炭黑底浅字），没有任何彩色强调。
+   accent 在这里就等于前景色，只用来表达"悬停/激活时加深"，不做彩色点缀。 */
 
 :root {
-  /* 浅色：骨白底、石墨字 */
-  --background: #f1efea;
-  --foreground: #16181a;
-  /* 强调色：安全黄。浅底上要压深一档才够对比 */
-  --accent: #a8760f;
+  --background: #ffffff;
+  --foreground: #171717;
+  /* 强调 = 前景色（灰阶），hover 时用它加深 */
+  --accent: #171717;
   --accent-contrast: #ffffff;
-  /* 分隔线 / 面板，跟底色同一族的暖灰 */
-  --line: #d7d2c7;
-  --panel: #e8e5dd;
-  /* 斜纹（危险条纹）颜色，颜色浓淡由主题决定 */
-  --hazard: rgba(22, 24, 26, 0.16);
+  /* 分隔线 / 面板，跟 zinc 灰阶同一族 */
+  --line: #e4e4e7;
+  --panel: #fafafa;
 
   /* 站点字体优先，中文逐字回退到系统黑体 */
   --font-sans-local: "cesi-sans", "PingFang SC", "Hiragino Sans GB",
@@ -29,11 +26,10 @@
 }
 
 .dark {
-  --background: #0c0d0f;
-  --foreground: #e6e4de;
-  --accent: #f2c14a;
-  --accent-contrast: #16170f;
-  --line: #272a2d;
-  --panel: #141619;
-  --hazard: rgba(242, 193, 74, 0.3);
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --accent: #f4f4f5;
+  --accent-contrast: #0a0a0a;
+  --line: #27272a;
+  --panel: #18181b;
 }

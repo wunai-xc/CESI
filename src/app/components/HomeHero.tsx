@@ -1,7 +1,6 @@
 // src/app/components/HomeHero.tsx
-// 首页第一屏：工程机械风格（骨白 / 石墨 / 安全黄）。
-// 背景是纯色（bg-background），不加网格/光晕；装饰只靠危险条纹与细边框。
-// 眉标 + 硬投影标题 + 打字机标语 + 数据条 + 按钮 + 下滑提示。
+// 首页第一屏：黑白灰配色（白底黑字 / 暗色炭黑），纯色背景，不加网格或光晕。
+// 眉标 + 标题 + 打字机标语 + 数据条 + 按钮 + 下滑提示。
 // 效果全部是 CSS 动画（见 src/app/styles/animations.css），不依赖 JS，
 // 静态导出后即使脚本没加载完文字也可见。
 
@@ -47,19 +46,19 @@ export default function HomeHero({
           />
         </div>
 
-        {/* 眉标：等宽小字 + 危险条纹 */}
+        {/* 眉标：等宽小字 + 两侧细线 */}
         <div
           className="animate-rise flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.32em] text-zinc-500 dark:text-zinc-400"
           style={{ animationDelay: "0.06s" }}
         >
-          <span className="hazard-stripes h-3 w-10 border border-line" />
+          <span className="h-px w-8 bg-zinc-300 dark:bg-zinc-700" />
           Personal blog
-          <span className="hazard-stripes h-3 w-10 border border-line" />
+          <span className="h-px w-8 bg-zinc-300 dark:bg-zinc-700" />
         </div>
 
-        {/* 标题：石墨实色 + 强调色 + 硬投影（无模糊，像丝印/铭牌） */}
+        {/* 标题：纯灰阶，最后一个词用前景色加深 */}
         <h1
-          className="animate-rise text-balance text-5xl font-bold leading-[1.15] tracking-tight text-zinc-900 [text-shadow:3px_3px_0_var(--line)] sm:text-6xl dark:text-zinc-50 dark:[text-shadow:3px_3px_0_var(--line)]"
+          className="animate-rise text-balance text-5xl font-bold leading-[1.15] tracking-tight text-zinc-900 sm:text-6xl dark:text-zinc-50"
           style={{ animationDelay: "0.12s" }}
         >
           Hello, I&apos;m <span className="text-accent">WUNAI.</span>

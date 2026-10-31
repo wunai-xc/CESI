@@ -37,44 +37,6 @@
   animation: page-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both;
 }
 
-/* 转场用的网格底纹：1px 细线 + 20px 格距，亮暗各一套颜色 */
-.scan-grid {
-  background-image:
-    repeating-linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.09) 0 1px,
-      transparent 1px 16px
-    ),
-    repeating-linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.09) 0 1px,
-      transparent 1px 16px
-    );
-}
-
-.dark .scan-grid {
-  background-image:
-    repeating-linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.12) 0 1px,
-      transparent 1px 16px
-    ),
-    repeating-linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.12) 0 1px,
-      transparent 1px 16px
-    );
-}
-
-/* 把扫描色块裁成 10px 的棋盘格小块，扫过去就像扫描仪一行行点亮网格。
-   mask 只在负责渲染的浏览器上生效，不支持时退化成整块实心色块，不影响功能。 */
-.scan-cells {
-  -webkit-mask-image: repeating-conic-gradient(#000 0 25%, transparent 0 50%);
-  mask-image: repeating-conic-gradient(#000 0 25%, transparent 0 50%);
-  -webkit-mask-size: 10px 10px;
-  mask-size: 10px 10px;
-}
-
 /* 尊重系统"减少动态效果"：直接不播动画，元素保持可见 */
 @media (prefers-reduced-motion: reduce) {
   .animate-rise,
@@ -105,12 +67,7 @@
   animation: caret-blink 1.05s step-end infinite;
 }
 
-/* 描边字：用来压一档视觉重量（填充透明 + 只留描边） */
-.text-outline {
-  -webkit-text-stroke-width: 1.5px;
-  -webkit-text-stroke-color: currentColor;
-  -webkit-text-fill-color: transparent;
-}
+
 
 /* ---------- 打字机 ---------- */
 
@@ -147,11 +104,4 @@
   }
 }
 
-/* 危险条纹：工程/机械风格的斜纹装饰，颜色由主题的 --hazard 决定 */
-.hazard-stripes {
-  background-image: repeating-linear-gradient(
-    45deg,
-    var(--hazard) 0 6px,
-    transparent 6px 12px
-  );
-}
+

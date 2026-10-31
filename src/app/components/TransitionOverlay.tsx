@@ -107,25 +107,17 @@ export default function TransitionOverlay() {
           transition={{ duration: 0.45, delay: 0.25, ease: "easeInOut" }}
         />
 
-        {/* 2) 网格底纹：扫描期间铺在幕布之上，被扫过的区域看起来是一格格点亮的 */}
-        <motion.div
-          className="scan-grid absolute inset-0"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 1, 1, 0] }}
-          transition={{ duration: DURATION, times: [0, 0.12, 0.8, 1], ease: "easeInOut" }}
-        />
-
-        {/* 3) 扫描色块：.scan-cells 把色块裁成棋盘小格，扫过去就是一行行点亮网格。
+        {/* 2) 扫描色块：纯实心色带，不加网格裁切。
             竖块短边（宽度）3 → 16 → 3px，细线条更像扫描线；整块从左外侧扫到右外侧 */}
         <motion.span
-          className="scan-cells absolute left-0 top-0 h-full bg-yellow-500"
+          className="absolute left-0 top-0 h-full bg-yellow-500"
           initial={{ width: 3, x: "-100%" }}
           animate={{ width: [3, 16, 3], x: ["-100%", 0, "100vw"] }}
           transition={{ duration: 0.85, delay: 0.12, ease: "easeInOut" }}
         />
         {/* 横块短边（高度）同理，从下外侧扫到上外侧 */}
         <motion.span
-          className="scan-cells absolute bottom-0 left-0 w-full bg-yellow-500"
+          className="absolute bottom-0 left-0 w-full bg-yellow-500"
           initial={{ height: 3, y: "100%" }}
           animate={{ height: [3, 16, 3], y: ["100%", 0, "-100vh"] }}
           transition={{ duration: 0.85, delay: 0.12, ease: "easeInOut" }}
