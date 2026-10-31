@@ -6,6 +6,7 @@
 
 import type { CSSProperties } from "react";
 import Image from "next/image";
+import HomeBackdrop from "@/app/components/home/HomeBackdrop";
 
 // 打字机内容：中文字宽约 1em，正好可以用「字数 × 1em」当结束宽度
 const TYPED_LINE = "用代码写点东西，也写点没想清楚的想法。";
@@ -21,6 +22,9 @@ export default function HomeHero({
 }) {
   return (
     <section className="relative flex min-h-[calc(100svh-4rem)] flex-col items-center justify-center overflow-hidden bg-background px-6 py-20">
+      {/* 背景：两层星空视差 + 中央遮罩 */}
+      <HomeBackdrop />
+
       <div className="relative flex w-full max-w-3xl flex-col items-center gap-6 text-center">
         {/* logo */}
         <div
