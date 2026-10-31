@@ -31,7 +31,7 @@ export default function PostPage({ params }: PostPageProps) {
         href="/posts"
         className="text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:hover:text-zinc-100"
       >
-        ← 返回文章列表
+        ← Back All Posts
       </Link>
 
       <Suspense fallback={<PostSkeleton />}>
@@ -60,7 +60,7 @@ async function PostBody({ params }: PostPageProps) {
           {post.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"
+              className="bg-zinc-100 px-2.5 py-0.5 text-xs text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"
             >
               #{tag}
             </span>
@@ -78,12 +78,12 @@ async function PostBody({ params }: PostPageProps) {
 function PostSkeleton() {
   return (
     <div className="mt-6 animate-pulse">
-      <div className="h-8 w-3/4 rounded bg-zinc-200 dark:bg-zinc-800" />
-      <div className="mt-3 h-4 w-40 rounded bg-zinc-100 dark:bg-zinc-800/60" />
+      <div className="h-8 w-3/4 bg-zinc-200 dark:bg-zinc-800" />
+      <div className="mt-3 h-4 w-40 bg-zinc-100 dark:bg-zinc-800/60" />
       <div className="mt-8 space-y-3">
-        <div className="h-4 w-full rounded bg-zinc-100 dark:bg-zinc-800/60" />
-        <div className="h-4 w-11/12 rounded bg-zinc-100 dark:bg-zinc-800/60" />
-        <div className="h-4 w-4/5 rounded bg-zinc-100 dark:bg-zinc-800/60" />
+        <div className="h-4 w-full bg-zinc-100 dark:bg-zinc-800/60" />
+        <div className="h-4 w-11/12 bg-zinc-100 dark:bg-zinc-800/60" />
+        <div className="h-4 w-4/5 bg-zinc-100 dark:bg-zinc-800/60" />
       </div>
     </div>
   );

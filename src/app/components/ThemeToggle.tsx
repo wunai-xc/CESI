@@ -118,7 +118,7 @@ export default function ThemeToggle() {
     <div
       role="group"
       aria-label="主题切换"
-      className="inline-flex items-center gap-0.5 rounded-full border border-zinc-200 bg-zinc-50 p-0.5 dark:border-zinc-800 dark:bg-zinc-900"
+      className="inline-flex items-center gap-0.5 border border-zinc-200 bg-zinc-50 p-0.5 dark:border-zinc-800 dark:bg-zinc-900"
     >
       {options.map(({ value, label, icon: Icon }) => {
         const active = theme === value;
@@ -131,7 +131,7 @@ export default function ThemeToggle() {
             aria-pressed={active}
             onClick={() => setTheme(value)}
             className={[
-              "rounded-full p-1.5 transition-colors",
+              "p-1.5 transition-colors",
               active
                 ? "bg-white text-zinc-900 shadow-sm dark:bg-zinc-700 dark:text-zinc-50"
                 : "text-zinc-400 hover:text-zinc-700 dark:text-zinc-500 dark:hover:text-zinc-200",

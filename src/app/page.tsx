@@ -6,7 +6,7 @@ export default function Home() {
       <h1 className="text-center text-5xl">Hello! This is my App.</h1>
       <Link
         href="/posts"
-        className="rounded-full px-5 py-2 text-sm transition-colors hover:border-blue-500 hover:text-blue-600 dark:hover:border-blue-400 dark:hover:text-blue-400"
+        className="px-5 py-2 text-sm transition-colors hover:border-blue-500 hover:text-blue-600 dark:hover:border-blue-400 dark:hover:text-blue-400"
       >
         All Posts →
       </Link>

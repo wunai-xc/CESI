@@ -21,7 +21,7 @@ export default function Callout({
   children,
 }: CalloutProps) {
   return (
-    <aside className={`not-prose my-6 rounded-xl border px-4 py-3 text-sm leading-6 ${styles[type]}`}>
+    <aside className={`not-prose my-6 border px-4 py-3 text-sm leading-6 ${styles[type]}`}>
       {title ? <p className="mb-1 font-semibold">{title}</p> : null}
       <div className="[&>*+*]:mt-2 [&_p]:m-0">{children}</div>
     </aside>

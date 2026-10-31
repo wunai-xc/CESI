@@ -8,30 +8,31 @@ import type { BrandName } from "./brand-icons";
 
 type SiteLink = { name: string; icon: BrandName; href: string };
 type SiteGroup = { title: string; items: SiteLink[] };
-type ProfileLink = { label: string; icon: BrandName; value: string };
+type ProfileLink = { label: string; icon: BrandName; href: string };
 type LegalLink = { label: string; href: string };
 
+// 第一栏常用网站
 const siteGroups: SiteGroup[] = [
   {
-    title: "代码 / 社交",
+    title: "code / social contact",
     items: [
       { name: "GitHub", icon: "github", href: "https://github.com" },
       { name: "X", icon: "x", href: "https://x.com" },
     ],
   },
   {
-    title: "视频",
+    title: "video",
     items: [
-      { name: "哔哩哔哩", icon: "bilibili", href: "https://www.bilibili.com" },
+      { name: "BiliBili", icon: "bilibili", href: "https://www.bilibili.com" },
       { name: "YouTube", icon: "youtube", href: "https://www.youtube.com" },
     ],
   },
   {
-    title: "联系",
+    title: "contact",
     items: [
       { name: "Discord", icon: "discord", href: "https://discord.com" },
       { name: "QQ", icon: "qq", href: "https://im.qq.com" },
-      { name: "微信", icon: "wechat", href: "https://weixin.qq.com" },
+      { name: "WeChat", icon: "wechat", href: "https://weixin.qq.com" },
     ],
   },
   {
@@ -43,18 +44,25 @@ const siteGroups: SiteGroup[] = [
   },
 ];
 
+// 第二栏关于我以及联系
 const profileLinks: ProfileLink[] = [
-  { label: "GitHub", icon: "github", value: "" },
-  { label: "哔哩哔哩", icon: "bilibili", value: "" },
-  { label: "Discord", icon: "discord", value: "" },
-  { label: "QQ", icon: "qq", value: "" },
-  { label: "Email", icon: "gmail", value: "" },
+  { label: "GitHub", icon: "github", href: "https://github.com/wunai-xc" },
+  { label: "BiliBili", icon: "bilibili", href: "https://b23.tv/GX3txwm" },
+  { label: "Discord", icon: "discord", href: "https://discord.gg/NDyVRZzH" },
+  { label: "QQ", icon: "qq", href: "https://qm.qq.com/q/lbaW6DOHdK" },
+  { label: "Email", icon: "gmail", href: "3234319738@qq.com" },
 ];
 
+// 第三栏条款与隐私
 const legalLinks: LegalLink[] = [
-  { label: "服务条款", href: "/terms" },
-  { label: "隐私政策", href: "/privacy" },
+  { label: "服务条款 terms", href: "/terms" },
+  { label: "隐私政策 privacy", href: "/privacy" },
 ];
+
+function profileHref(href: string) {
+  if (href.startsWith("http") || href.startsWith("mailto:")) return href;
+  return href.includes("@") ? `mailto:${href}` : href;
+}
 
 async function CopyrightYear() {
   await connection();
@@ -110,7 +118,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 divide-y divide-zinc-200 dark:divide-zinc-800 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           <div className="py-6 sm:pr-6">
             <p className="text-xs font-semibold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">
-              常用网站
+              Commonly used websites
             </p>
             <div className="mt-3 flex flex-col gap-3">
               {siteGroups.map((group) => (
@@ -126,7 +134,7 @@ export default function Footer() {
                           target="_blank"
                           rel="noopener noreferrer"
                           title={item.name}
-                          className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 px-2.5 py-1 text-xs text-zinc-600 transition-colors hover:border-blue-400 hover:text-blue-600 dark:border-zinc-800 dark:text-zinc-300 dark:hover:border-blue-500 dark:hover:text-blue-400"
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs text-zinc-600 transition-colors hover:border-blue-400 hover:text-blue-600 dark:text-zinc-300 dark:hover:text-blue-400"
                         >
                           <BrandIcon name={item.icon} className="h-3.5 w-3.5" />
                           <span>{item.name}</span>
@@ -141,23 +149,21 @@ export default function Footer() {
 
           <div className="py-6 sm:px-6">
             <p className="text-xs font-semibold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">
-              关于我
+              About me.
             </p>
             <ul className="mt-3 flex flex-col gap-2 text-sm">
               {profileLinks.map((item) => (
-                <li key={item.label} className="flex items-center gap-2">
-                  <BrandIcon
-                    name={item.icon}
-                    className="h-4 w-4 shrink-0 text-zinc-400 dark:text-zinc-500"
-                  />
-                  <span className="text-zinc-500 dark:text-zinc-400">
-                    {item.label}
-                  </span>
-                  {item.value ? (
-                    <span className="truncate text-zinc-700 dark:text-zinc-200">
-                      {item.value}
-                    </span>
-                  ) : null}
+                <li key={item.label}>
+                  <a
+                    href={profileHref(item.href)}
+                    {...(item.href.startsWith("http")
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                    className="inline-flex items-center gap-2 px-3 py-1.5 text-zinc-600 transition-colors hover:text-blue-600 dark:text-zinc-300 dark:hover:text-blue-400"
+                  >
+                    <BrandIcon name={item.icon} className="h-4 w-4 shrink-0" />
+                    <span>{item.label}</span>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -165,7 +171,7 @@ export default function Footer() {
 
           <div className="py-6 sm:pl-6">
             <p className="text-xs font-semibold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">
-              条款 / 协议
+              terms / privacy
             </p>
             <ul className="mt-3 flex flex-col gap-2 text-sm">
               {legalLinks.map((item) => (
@@ -192,7 +198,7 @@ export default function Footer() {
             type="button"
             title="设置"
             aria-label="设置"
-            className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 px-3 py-1.5 text-xs text-zinc-500 transition-colors hover:border-zinc-300 hover:text-zinc-800 dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-zinc-700 dark:hover:text-zinc-100"
+            className="inline-flex items-center gap-1.5 border border-zinc-200 px-3 py-1.5 text-xs text-zinc-500 transition-colors hover:border-zinc-300 hover:text-zinc-800 dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-zinc-700 dark:hover:text-zinc-100"
           >
             <SettingsIcon />
             <span>设置</span>

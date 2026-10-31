@@ -7,11 +7,11 @@ tags: [Next.js, MDX]
 
 ## 你好
 
-这是一个用来测试渲染的示例文章，正文写在 `src/app/content/posts/<slug>.mdx`。
+这是一个用来测试渲染的示例文章
 
-行内代码 `npm run dev`，代码块：
+行内代码 `npm run dev`，代码块（带文件名与版本信息）：
 
-```ts
+```ts filename="src/app/content/posts.ts" runtime=Node runtimeVersion=22.23.4 languageVersion=5.9
 export const posts = loadPosts();
 ```
 
@@ -24,3 +24,28 @@ $$
 <Callout type="info" title="提示">
   这是 Callout 组件在 MDX 里的用法。
 </Callout>
+
+# 1
+## 2
+### 3
+#### 4
+
+---
+
+- 1
+- 2
+
+1. 1
+2. 2
+
+**加粗**
+
+*斜体*
+
+***加粗斜体***
+
+`行内`
+
+```markdown
+# 1
+```

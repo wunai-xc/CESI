@@ -29,12 +29,6 @@ export default function Navbar() {
           <Link href="/about" className="transition-colors hover:text-blue-400">
             About
           </Link>
-          <Link href="/contact" className="transition-colors hover:text-blue-400">
-            Contact
-          </Link>
-          <Link href="/links" className="transition-colors hover:text-blue-400">
-            Links
-          </Link>
         </div>
       </nav>
     </header>

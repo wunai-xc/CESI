@@ -1,36 +1,55 @@
+import { isValidElement } from "react";
 import type { MDXComponents } from "mdx/types";
 import Callout from "@/app/components/Callout";
+import CodeBlock from "@/app/components/CodeBlock";
 
 const components: MDXComponents = {
   Callout,
 
-  pre: ({ className, ...props }) => (
-    <pre
-      {...props}
-      className={[
-        "not-prose my-6 overflow-x-auto rounded-xl border p-4 text-[13px] leading-6",
-        "border-zinc-200 bg-zinc-50 text-zinc-800",
-        "dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100",
-        "[&_code]:bg-transparent [&_code]:p-0 [&_code]:font-mono [&_code]:text-inherit",
-        className ?? "",
-      ].join(" ")}
-    />
-  ),
+  CodeBlock,
+
+  pre: ({ children }) => {
+    const child = Array.isArray(children) ? children[0] : children;
+    const data = isValidElement<Record<string, string>>(child)
+      ? child.props
+      : {};
+
+    return (
+      <CodeBlock
+        filename={data["data-filename"]}
+        language={data["data-language"]}
+        languageVersion={data["data-language-version"]}
+        runtime={data["data-runtime"]}
+        runtimeVersion={data["data-runtime-version"]}
+      >
+        {children}
+      </CodeBlock>
+    );
+  },
 
   code: ({ className, ...props }) => {
     const isBlockCode =
-      typeof className === "string" && className.includes("language-");
+      typeof className === "string" &&
+      (className.includes("language-") || className.includes("hljs"));
 
     if (isBlockCode) {
-      return <code className={className} {...props} />;
+      const cleaned = Object.fromEntries(
+        Object.entries(props).filter(([key]) => !key.startsWith("data-")),
+      );
+      return (
+        <code
+          className={className}
+          {...(cleaned as React.HTMLAttributes<HTMLElement>)}
+        />
+      );
     }
 
     return (
       <code
         {...props}
         className={[
-          "not-prose rounded px-1.5 py-0.5 font-mono text-[0.9em]",
-          "bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-100",
+          "not-prose border border-zinc-200 px-1.5 py-0.5 font-mono text-[0.9em]",
+          "bg-zinc-100 text-zinc-800 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100",
           className ?? "",
         ].join(" ")}
       />
@@ -38,7 +57,7 @@ const components: MDXComponents = {
   },
 
   table: (props) => (
-    <div className="my-6 w-full overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
+    <div className="my-6 w-full overflow-x-auto border border-zinc-200 dark:border-zinc-800">
       <table {...props} />
     </div>
   ),
