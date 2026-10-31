@@ -1,15 +1,25 @@
 // src/app/components/PostList.tsx
 // 文章列表：列表页、搜索结果、标签页共用的同一份渲染逻辑。
 // 只依赖 type-only 的 Post 类型，因此服务端组件与客户端组件都能用。
+// 传入 terms 时会把标题、摘要里的命中词高亮。
 
 import Link from "next/link";
 import { formatDate } from "@/app/lib/formatDate";
+import Highlight from "@/app/components/Highlight";
 import TagLink from "@/app/components/TagLink";
 import type { Post } from "@/app/content/posts";
 
-export default function PostList({ posts }: { posts: Post[] }) {
+export default function PostList({
+  posts,
+  terms = [],
+  emptyText = "没有匹配的文章。",
+}: {
+  posts: Post[];
+  terms?: string[];
+  emptyText?: string;
+}) {
   if (posts.length === 0) {
-    return <p className="mt-10 text-sm text-zinc-500">没有匹配的文章。</p>;
+    return <p className="mt-10 text-sm text-zinc-500">{emptyText}</p>;
   }
 
   return (
@@ -18,11 +28,11 @@ export default function PostList({ posts }: { posts: Post[] }) {
         <li key={post.slug} className="py-6">
           <Link href={`/components/posts/${post.slug}`} className="group block">
             <h2 className="text-xl font-semibold text-zinc-900 transition-colors group-hover:text-blue-600 dark:text-zinc-100 dark:group-hover:text-blue-400">
-              {post.title}
+              <Highlight text={post.title} terms={terms} />
             </h2>
             {post.summary ? (
               <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-                {post.summary}
+                <Highlight text={post.summary} terms={terms} />
               </p>
             ) : null}
             <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-zinc-400">
