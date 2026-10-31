@@ -116,18 +116,18 @@ export default function TransitionOverlay() {
         />
 
         {/* 3) 扫描色块：.scan-cells 把色块裁成棋盘小格，扫过去就是一行行点亮网格。
-            竖块短边（宽度）10 → 50 → 10px，整块从左外侧扫到右外侧 */}
+            竖块短边（宽度）3 → 16 → 3px，细线条更像扫描线；整块从左外侧扫到右外侧 */}
         <motion.span
           className="scan-cells absolute left-0 top-0 h-full bg-yellow-500"
-          initial={{ width: 10, x: "-100%" }}
-          animate={{ width: [10, 50, 10], x: ["-100%", 0, "100vw"] }}
+          initial={{ width: 3, x: "-100%" }}
+          animate={{ width: [3, 16, 3], x: ["-100%", 0, "100vw"] }}
           transition={{ duration: 0.85, delay: 0.12, ease: "easeInOut" }}
         />
         {/* 横块短边（高度）同理，从下外侧扫到上外侧 */}
         <motion.span
           className="scan-cells absolute bottom-0 left-0 w-full bg-yellow-500"
-          initial={{ height: 10, y: "100%" }}
-          animate={{ height: [10, 50, 10], y: ["100%", 0, "-100vh"] }}
+          initial={{ height: 3, y: "100%" }}
+          animate={{ height: [3, 16, 3], y: ["100%", 0, "-100vh"] }}
           transition={{ duration: 0.85, delay: 0.12, ease: "easeInOut" }}
         />
 

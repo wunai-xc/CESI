@@ -43,12 +43,12 @@
     repeating-linear-gradient(
       to right,
       rgba(0, 0, 0, 0.09) 0 1px,
-      transparent 1px 20px
+      transparent 1px 16px
     ),
     repeating-linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0.09) 0 1px,
-      transparent 1px 20px
+      transparent 1px 16px
     );
 }
 
@@ -57,12 +57,12 @@
     repeating-linear-gradient(
       to right,
       rgba(255, 255, 255, 0.12) 0 1px,
-      transparent 1px 20px
+      transparent 1px 16px
     ),
     repeating-linear-gradient(
       to bottom,
       rgba(255, 255, 255, 0.12) 0 1px,
-      transparent 1px 20px
+      transparent 1px 16px
     );
 }
 
@@ -71,8 +71,8 @@
 .scan-cells {
   -webkit-mask-image: repeating-conic-gradient(#000 0 25%, transparent 0 50%);
   mask-image: repeating-conic-gradient(#000 0 25%, transparent 0 50%);
-  -webkit-mask-size: 20px 20px;
-  mask-size: 20px 20px;
+  -webkit-mask-size: 10px 10px;
+  mask-size: 10px 10px;
 }
 
 /* 尊重系统"减少动态效果"：直接不播动画，元素保持可见 */
