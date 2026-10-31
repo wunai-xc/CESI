@@ -3,29 +3,43 @@
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
-const DURATION = 1000;
+const BASE_DURATION = 1000;
 
 export default function SweepLoader() {
   const pathname = usePathname();
+  const overlayRef = useRef<HTMLDivElement>(null);
   const verticalRef = useRef<HTMLSpanElement>(null);
   const horizontalRef = useRef<HTMLSpanElement>(null);
   const lastRunRef = useRef(0);
 
   useEffect(() => {
+    const overlay = overlayRef.current;
     const vertical = verticalRef.current;
     const horizontal = horizontalRef.current;
-    if (!vertical || !horizontal) return;
+    if (!overlay || !vertical || !horizontal) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const duration = reduced ? BASE_DURATION * 2 : BASE_DURATION;
+    const easing = reduced ? "linear" : "ease-in-out";
 
     const now = Date.now();
-    if (now - lastRunRef.current < DURATION) return;
+    if (now - lastRunRef.current < duration) return;
     lastRunRef.current = now;
 
-    const options: KeyframeAnimationOptions = {
-      duration: DURATION,
-      easing: "ease-in-out",
+    const sweep = {
+      duration,
+      easing,
       iterations: 1,
       fill: "forwards",
-    };
+    } satisfies KeyframeAnimationOptions;
+
+    const blur = overlay.animate(
+      [
+        { backdropFilter: "blur(16px)" },
+        { backdropFilter: "blur(0px)" },
+      ],
+      { duration, easing: "ease-out", iterations: 1 },
+    );
 
     const verticalAnimation = vertical.animate(
       [
@@ -33,7 +47,7 @@ export default function SweepLoader() {
         { opacity: 1, width: "50px", offset: 0.5 },
         { opacity: 1, width: "10px", transform: "translateX(100vw)" },
       ],
-      options,
+      sweep,
     );
 
     const horizontalAnimation = horizontal.animate(
@@ -42,10 +56,11 @@ export default function SweepLoader() {
         { opacity: 1, height: "50px", offset: 0.5 },
         { opacity: 1, height: "10px", transform: "translateY(-100svh)" },
       ],
-      options,
+      sweep,
     );
 
     return () => {
+      blur.cancel();
       verticalAnimation.cancel();
       horizontalAnimation.cancel();
     };
@@ -53,6 +68,7 @@ export default function SweepLoader() {
 
   return (
     <div
+      ref={overlayRef}
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 z-50 overflow-hidden"
     >
