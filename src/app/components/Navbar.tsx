@@ -31,7 +31,7 @@ export default function Navbar() {
           <Link href="/components/posts" className="transition-colors hover:text-blue-400">
             All posts
           </Link>
-          <Link href="/about" className="transition-colors hover:text-blue-400">
+          <Link href="/content/about" className="transition-colors hover:text-blue-400">
             About
           </Link>
         </div>

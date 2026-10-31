@@ -114,9 +114,9 @@ function SystemIcon() {
 // 三个选项：值、可访问标签、图标
 const options: { value: Theme; label: string; icon: () => React.JSX.Element }[] =
   [
-    { value: "light", label: "亮色", icon: SunIcon },
-    { value: "dark", label: "暗色", icon: MoonIcon },
-    { value: "system", label: "跟随系统", icon: SystemIcon },
+    { value: "light", label: "Light 亮色", icon: SunIcon },
+    { value: "dark", label: "Dark 暗色", icon: MoonIcon },
+    { value: "system", label: "System 跟随系统", icon: SystemIcon },
   ];
 
 export default function ThemeToggle() {
@@ -130,7 +130,7 @@ export default function ThemeToggle() {
   return (
     <div
       role="group"
-      aria-label="主题切换"
+      aria-label="Theme"
       className="inline-flex items-center gap-0.5 border border-zinc-200 bg-zinc-50 p-0.5 dark:border-zinc-800 dark:bg-zinc-900"
     >
       {options.map(({ value, label, icon: Icon }) => {

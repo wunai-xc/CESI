@@ -60,8 +60,8 @@ const profileLinks: ProfileLink[] = [
 
 // 第三栏条款与隐私
 const legalLinks: LegalLink[] = [
-  { label: "服务条款 terms", href: "/terms" },
-  { label: "隐私政策 privacy", href: "/privacy" },
+  { label: "服务条款 terms", href: "/content/terms" },
+  { label: "隐私政策 privacy", href: "/content/privacy" },
 ];
 
 // 邮箱这类没写协议的地址自动补 mailto:，其余原样返回
@@ -207,12 +207,13 @@ export default function Footer() {
           </p>
           <button
             type="button"
-            title="设置"
-            aria-label="设置"
+            title="Settings 设置"
+            aria-label="Settings"
             className="inline-flex items-center gap-1.5 border border-zinc-200 px-3 py-1.5 text-xs text-zinc-500 transition-colors hover:border-zinc-300 hover:text-zinc-800 dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-zinc-700 dark:hover:text-zinc-100"
           >
             <SettingsIcon />
-            <span>设置</span>
+            <span>Settings</span>
+            <span className="text-zinc-400 dark:text-zinc-500">设置</span>
           </button>
         </div>
       </div>

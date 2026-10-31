@@ -18,6 +18,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - 如果某项改动非跑起来才能确认，就在回复里写清楚"请自行运行 `npm run dev` 并看 XXX"，然后停下，不要自己跑。
 - **每个文件第一行都要有文件路径注释**（例：`// src/app/page.tsx`、`/* src/app/styles/tokens.css */`；MDX 因为 frontmatter 必须在首行，路径注释紧跟在 `---` 块之后；JSON 文件不能写注释，跳过）。
 - **代码要有注释说明**：文件头写清这个文件干什么，关键逻辑、不直观的取值（魔法数字、兼容写法、workaround）都要解释清楚，注释用中文。
+- **按钮文案以英文为主体**：站内所有按钮 / 可点击控件一律用英文（`Copy`、`Settings`、`Retry`…），**不要单独使用中文按钮**；空间宽裕时用「英文 + 中文」并列（例：`Settings 设置`、`Retry 重试`），空间紧张时只留英文。导航链接同理（`All posts`、`About`）。
 - **全站不使用圆角**：不要用 `rounded-*`（`rounded`、`rounded-md`、`rounded-full` 等）工具类，按钮、卡片、图片、标签一律方角。
 - 不要用 `cp -al` / 硬链接方式复制项目：这个 Android proot 环境用 link2symlink 模拟硬链接，会把项目文件改成 `.l2s.*` 链接对，误删就会丢文件。
 - 删除文件前先确认路径，不要对项目目录做模糊匹配的批量删除。

@@ -20,7 +20,7 @@ export default function NotFound() {
         href="/"
         className="bg-zinc-900 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
       >
-        Back（返回首页）
+        Back 返回首页
       </Link>
     </div>
   );

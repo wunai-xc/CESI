@@ -9,7 +9,7 @@ import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 // 一遍动画的时长（毫秒）
-const BASE_DURATION = 1000;
+const BASE_DURATION = 300;
 
 export default function SweepLoader() {
   const pathname = usePathname();

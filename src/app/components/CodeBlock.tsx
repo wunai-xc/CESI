@@ -101,10 +101,10 @@ export default function CodeBlock({
         <button
           type="button"
           onClick={copyCode}
-          aria-label="复制代码"
+          aria-label="Copy code"
           className="shrink-0 border border-zinc-300 px-2 py-0.5 text-xs transition-colors hover:border-zinc-400 hover:text-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-500 dark:hover:text-zinc-100"
         >
-          {copied ? "已复制" : "复制"}
+          {copied ? "Copied" : "Copy"}
         </button>
       </div>
       {/* 代码正文：children 是 rehype-highlight 处理过的 <code> */}
