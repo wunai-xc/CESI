@@ -24,8 +24,8 @@ tags: [Next.js, MDX]
 ---
 ```
 
-- 列表页：`/posts`
-- 详情页：`/posts/<slug>`
+- 列表页：`/components/posts`
+- 详情页：`/components/posts/<slug>`
 
 ## 构建
 

@@ -28,7 +28,7 @@ export default function PostPage({ params }: PostPageProps) {
   return (
     <div className="mx-auto w-full max-w-3xl flex-1 px-6 py-12">
       <Link
-        href="/posts"
+        href="/components/posts"
         className="text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:hover:text-zinc-100"
       >
         ← Back All Posts

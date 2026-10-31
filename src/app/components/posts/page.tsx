@@ -24,7 +24,7 @@ export default function PostsPage() {
         <ul className="divide-y divide-zinc-200 dark:divide-zinc-800">
           {posts.map((post) => (
             <li key={post.slug} className="py-6">
-              <Link href={`/posts/${post.slug}`} className="group block">
+              <Link href={`/components/posts/${post.slug}`} className="group block">
                 <h2 className="text-xl font-semibold text-zinc-900 transition-colors group-hover:text-blue-600 dark:text-zinc-100 dark:group-hover:text-blue-400">
                   {post.title}
                 </h2>

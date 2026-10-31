@@ -23,7 +23,7 @@ export default function Navbar() {
         </Link>
 
         <div className="flex items-center space-x-6">
-          <Link href="/posts" className="transition-colors hover:text-blue-400">
+          <Link href="/components/posts" className="transition-colors hover:text-blue-400">
             All posts
           </Link>
           <Link href="/about" className="transition-colors hover:text-blue-400">
