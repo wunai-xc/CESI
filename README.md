@@ -37,12 +37,25 @@ tags: [Next.js, MDX]
 npm run build
 ```
 
-### Cloudflare Pages
+### 方案一：Cloudflare Pages（推荐）
 
+新建一个 **Pages** 项目（不是 Workers），连这个仓库：
+
+- Framework preset：**None**
 - Build command：`npm run build`
 - Build output directory：`out`
 - 环境变量：不需要（构建期会把文章编译进 HTML）
-- 自定义域名：`newbl.wunai.top`（在 Pages 项目 → Custom domains 里绑定）
+- 自定义域名：Pages 项目 → Custom domains → `newbl.wunai.top`
+
+### 方案二：Cloudflare Workers（静态资源）
+
+仓库里的 `wrangler.jsonc` 已经把 `out/` 当作静态资源发布，不跑任何 Worker 脚本。
+Workers 项目里要把 **Framework preset 改成 None**，否则 Cloudflare 会按 Next.js 处理、
+自动塞 OpenNext 并改写 package.json 脚本（那条路对静态导出没用）：
+
+- Build command：`npm run build`
+- Deploy command：`npx wrangler deploy`
+- 自定义域名：Worker → Settings → Domains & Routes → `newbl.wunai.top`
 
 因为不受任何适配器约束，纯静态产物也可以直接丢到任何静态托管。
 
