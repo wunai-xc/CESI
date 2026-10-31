@@ -1,4 +1,4 @@
-// src/app/components/Reveal.tsx
+// src/app/components/ui/Reveal.tsx
 // 通用入场动画容器：给子内容套一层 CSS 动画（淡入 + 上移）。
 // 故意不用客户端动画库：静态导出时如果靠 JS 才能把 opacity 从 0 改回来，
 // 那么 JS 没加载完（或失败）内容就是不可见的；这里交给 CSS keyframes，天然渐进增强。

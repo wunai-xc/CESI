@@ -1,4 +1,4 @@
-// src/app/components/Navbar.tsx
+// src/app/components/layout/Navbar.tsx
 // 顶部导航条：左侧站点 logo（亮色/暗色两张图切换），右侧是页面入口。
 
 import Link from "next/link";

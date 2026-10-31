@@ -1,4 +1,4 @@
-// src/app/components/brand-icons.ts
+// src/app/components/mdx/brand-icons.ts
 // 品牌图标数据：多数取自 simple-icons（24×24 单色单路径），
 // ChatGPT / Grok 在 simple-icons 里没有收录，改用 iconify 的 logos 图标集（viewBox 各不相同，随条目记录）。
 // 这里只存 path 与 viewBox，由 BrandIcon 渲染成内联 SVG，不请求任何图标 CDN。

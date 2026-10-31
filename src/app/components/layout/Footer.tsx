@@ -1,13 +1,13 @@
-// src/app/components/Footer.tsx
+// src/app/components/layout/Footer.tsx
 // 页脚：最上一行是站点 logo + 主题三切按钮（无分隔线），
 // 下面三栏用竖线分隔：常用网站 / 关于我（联系方式）/ 条款与隐私，
 // 最下一行是版权年份（构建期算好）和占位的设置按钮。
 
 import Image from "next/image";
 import Link from "next/link";
-import BrandIcon from "./BrandIcon";
-import ThemeToggle from "./ThemeToggle";
-import type { BrandName } from "./brand-icons";
+import BrandIcon from "@/app/components/mdx/BrandIcon";
+import ThemeToggle from "@/app/components/layout/ThemeToggle";
+import type { BrandName } from "@/app/components/mdx/brand-icons";
 
 type SiteLink = { name: string; icon: BrandName; href: string };
 type SiteGroup = { title: string; items: SiteLink[] };

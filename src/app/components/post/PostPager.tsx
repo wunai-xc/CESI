@@ -1,4 +1,4 @@
-// src/app/components/PostPager.tsx
+// src/app/components/post/PostPager.tsx
 // 文章底部的「上一篇 / 下一篇」翻页按钮。
 // 哪一侧没有相邻文章，就用「All posts 全部文章」按钮占位；两边都没有（只有一篇文章）时只显示一个。
 

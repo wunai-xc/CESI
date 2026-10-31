@@ -1,4 +1,4 @@
-// src/app/components/HomeHero.tsx
+// src/app/components/home/HomeHero.tsx
 // 首页第一屏：黑白灰配色（白底黑字 / 暗色炭黑），纯色背景，不加网格或光晕。
 // 眉标 + 标题 + 打字机标语 + 数据条 + 按钮 + 下滑提示。
 // 效果全部是 CSS 动画（见 src/app/styles/animations.css），不依赖 JS，
@@ -6,7 +6,6 @@
 
 import type { CSSProperties } from "react";
 import Image from "next/image";
-import Link from "next/link";
 
 // 打字机内容：中文字宽约 1em，正好可以用「字数 × 1em」当结束宽度
 const TYPED_LINE = "用代码写点东西，也写点没想清楚的想法。";
@@ -83,7 +82,7 @@ export default function HomeHero({
 
         {/* 数据条：等宽小字 + 竖线分隔，像设备铭牌 */}
         <dl
-          className="animate-rise flex divide-x divide-line border border-line bg-panel/60 font-mono text-[10px] uppercase tracking-[0.18em]"
+          className="animate-rise flex divide-x divide-line bg-panel/60 font-mono text-[10px] uppercase tracking-[0.18em]"
           style={{ animationDelay: "0.5s" }}
         >
           <div className="px-4 py-2">
@@ -105,31 +104,6 @@ export default function HomeHero({
             </dd>
           </div>
         </dl>
-
-        {/* 按钮：主按钮用强调色（深色文字保证对比），次按钮描边 */}
-        <div
-          className="animate-rise flex flex-wrap items-center justify-center gap-3"
-          style={{ animationDelay: "0.58s" }}
-        >
-          <Link
-            href="/components/posts"
-            className="group inline-flex items-center gap-2 border border-accent bg-accent px-5 py-2.5 text-sm font-semibold text-accent-contrast transition-colors hover:bg-transparent hover:text-accent"
-          >
-            All Posts
-            <span
-              className="transition-transform duration-200 group-hover:translate-x-1"
-              aria-hidden="true"
-            >
-              →
-            </span>
-          </Link>
-          <Link
-            href="/content/about"
-            className="inline-flex items-center gap-2 border border-line px-5 py-2.5 text-sm text-zinc-700 transition-colors hover:border-accent hover:text-accent dark:text-zinc-300"
-          >
-            About 关于
-          </Link>
-        </div>
       </div>
 
       {/* 下滑提示 */}

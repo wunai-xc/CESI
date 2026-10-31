@@ -1,4 +1,4 @@
-// src/app/components/TransitionOverlay.tsx
+// src/app/components/layout/TransitionOverlay.tsx
 // 切页转场 + 页面扫描：
 //  1) 先盖一层站点底色（把页面挡住），四角取景框、十字准线、计数与进度条依次出现；
 //  2) 竖向色块从左往右扫、横向色块从下往上扫（交叉点从屏幕左下走到右上），

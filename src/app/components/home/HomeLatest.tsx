@@ -1,4 +1,4 @@
-// src/app/components/HomeLatest.tsx
+// src/app/components/home/HomeLatest.tsx
 // 首页第二段：最近更新。用等宽序号 + 标题 + 日期的列表，滚动进入时上浮淡入。
 // 数据由服务端传入（构建期算好）。
 

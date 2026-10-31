@@ -1,4 +1,4 @@
-// src/app/components/Callout.tsx
+// src/app/components/mdx/Callout.tsx
 // MDX 正文里的提示块（<Callout type="info|warn|danger">），配色按类型走 styles 表。
 
 import type { ReactNode } from "react";

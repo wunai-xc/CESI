@@ -1,4 +1,4 @@
-// src/app/components/BrandIcon.tsx
+// src/app/components/mdx/BrandIcon.tsx
 // 品牌图标组件：从 brand-icons.ts 里取出 svg path 与 viewBox，用内联 SVG 渲染。
 // 全部离线，不请求任何图标 CDN（国内可正常显示）。
 

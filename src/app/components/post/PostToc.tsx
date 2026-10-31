@@ -1,4 +1,4 @@
-// src/app/components/PostToc.tsx
+// src/app/components/post/PostToc.tsx
 // 文章目录浮层：固定在屏幕左上方的「Contents」按钮，点开列出正文的 h2 / h3，
 // 点条目跳转到对应锚点。目录数据由服务端（posts.ts 的 getPostHeadings）算好后传进来。
 //

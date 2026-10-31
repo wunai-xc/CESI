@@ -4,8 +4,8 @@
 
 import { isValidElement } from "react";
 import type { MDXComponents } from "mdx/types";
-import Callout from "@/app/components/Callout";
-import CodeBlock from "@/app/components/CodeBlock";
+import Callout from "@/app/components/mdx/Callout";
+import CodeBlock from "@/app/components/mdx/CodeBlock";
 
 const components: MDXComponents = {
   Callout,

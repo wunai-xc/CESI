@@ -1,4 +1,4 @@
-// src/app/components/PostSearch.tsx
+// src/app/components/post/PostSearch.tsx
 // 文章搜索框：纯客户端过滤（标题 / 摘要 / 标签），不发请求、不索引正文，换字即出结果。
 // 用 useDeferredValue 把"输入"和"过滤"解耦：输入永远跟手，列表在后台重算，
 // 关键词在结果里用 <mark> 高亮。
@@ -6,8 +6,8 @@
 "use client";
 
 import { useDeferredValue, useMemo, useState } from "react";
-import PostList from "@/app/components/PostList";
-import { parseTerms } from "@/app/components/Highlight";
+import PostList from "@/app/components/post/PostList";
+import { parseTerms } from "@/app/components/post/Highlight";
 import type { Post } from "@/app/content/posts";
 
 export default function PostSearch({ posts }: { posts: Post[] }) {

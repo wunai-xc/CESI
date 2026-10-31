@@ -1,4 +1,4 @@
-// src/app/components/ThemeToggle.tsx
+// src/app/components/layout/ThemeToggle.tsx
 // 亮色 / 暗色 / 跟随系统 三切按钮。
 // 主题存在 localStorage 的 "theme"，实际效果是在 <html> 上加/去 .dark 类；
 // 首屏防闪白的脚本在 src/app/layout.tsx 的 <head> 里。

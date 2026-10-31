@@ -1,4 +1,4 @@
-// src/app/components/Highlight.tsx
+// src/app/components/post/Highlight.tsx
 // 关键词高亮：把文本里命中搜索词的片段包进 <mark>。
 // 支持多个关键词（空格分隔），大小写不敏感；没有关键词时原样输出。
 

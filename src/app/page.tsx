@@ -7,9 +7,9 @@
 
 import type { Metadata } from "next";
 import { getAllPosts } from "@/app/content/posts";
-import HomeHero from "@/app/components/HomeHero";
-import HomeLatest from "@/app/components/HomeLatest";
-import HomeAbout from "@/app/components/HomeAbout";
+import HomeHero from "@/app/components/home/HomeHero";
+import HomeLatest from "@/app/components/home/HomeLatest";
+import HomeAbout from "@/app/components/home/HomeAbout";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },

@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllTags, getPostsByTag } from "@/app/content/posts";
-import PostList from "@/app/components/PostList";
+import PostList from "@/app/components/post/PostList";
 
 type TagPageProps = {
   params: Promise<{ tag: string }>;

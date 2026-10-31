@@ -23,6 +23,17 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - 不要用 `cp -al` / 硬链接方式复制项目：这个 Android proot 环境用 link2symlink 模拟硬链接，会把项目文件改成 `.l2s.*` 链接对，误删就会丢文件。
 - 删除文件前先确认路径，不要对项目目录做模糊匹配的批量删除。
 
+## 组件结构（`src/app/components/`）
+
+- `layout/`：导航栏、页脚、主题切换、转场层（`Navbar` / `Footer` / `ThemeToggle` / `TransitionOverlay`）
+- `home/`：首页三段（`HomeHero` / `HomeLatest` / `HomeAbout`）
+- `post/`：文章相关（`PostList` / `PostSearch` / `PostToc` / `PostPager` / `BackToTop` / `TagLink` / `Highlight`）
+- `mdx/`：MDX 渲染用（`Callout` / `CodeBlock` / `BrandIcon` / `brand-icons.ts`）
+- `ui/`：通用小组件（`Reveal`）
+- `posts/`：**路由目录**（`page.tsx` / `[slug]` / `tag/[tag]`），对应网址 `/components/posts/...`，不要挪动
+
+新增组件按上面的分类放，`ui/` 只放与业务无关的通用件；组件之间统一用 `@/app/components/<dir>/<Name>` 绝对路径引用。
+
 ## 样式文件结构（`src/app/styles/`）
 
 `layout.tsx` 只 import `globals.css` 一个入口，其余文件通过 `@import` 引入：

@@ -18,10 +18,10 @@ import {
   loadPostContent,
 } from "@/app/content/posts";
 import { formatDate } from "@/app/lib/formatDate";
-import TagLink from "@/app/components/TagLink";
-import PostToc from "@/app/components/PostToc";
-import PostPager from "@/app/components/PostPager";
-import BackToTop from "@/app/components/BackToTop";
+import TagLink from "@/app/components/post/TagLink";
+import PostToc from "@/app/components/post/PostToc";
+import PostPager from "@/app/components/post/PostPager";
+import BackToTop from "@/app/components/post/BackToTop";
 
 type PostPageProps = {
   params: Promise<{ slug: string }>;

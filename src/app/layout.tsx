@@ -4,9 +4,9 @@
 
 import type { Metadata } from "next";
 import "./styles/globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import TransitionOverlay from "./components/TransitionOverlay";
+import Navbar from "@/app/components/layout/Navbar";
+import Footer from "@/app/components/layout/Footer";
+import TransitionOverlay from "@/app/components/layout/TransitionOverlay";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "./lib/site";
 
 export const metadata: Metadata = {

@@ -1,4 +1,4 @@
-// src/app/components/CodeBlock.tsx
+// src/app/components/mdx/CodeBlock.tsx
 // MDX 代码块外壳：顶部信息栏（文件名 / 运行环境与版本 / 语言与版本）+ 复制按钮，下面是高亮后的代码。
 // 高亮本身由 rehype-highlight 在编译期完成，这里只负责外壳与复制交互，不引入客户端高亮库。
 

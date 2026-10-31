@@ -1,4 +1,4 @@
-// src/app/components/PostList.tsx
+// src/app/components/post/PostList.tsx
 // 文章列表：列表页、搜索结果、标签页共用的同一份渲染逻辑。
 // 入场动画用 CSS（Reveal 的 animate-rise）+ 逐项延迟，不依赖 JS；
 // 只依赖 type-only 的 Post 类型，所以服务端组件里能直接用。
@@ -6,9 +6,9 @@
 
 import Link from "next/link";
 import { formatDate } from "@/app/lib/formatDate";
-import Highlight from "@/app/components/Highlight";
-import Reveal from "@/app/components/Reveal";
-import TagLink from "@/app/components/TagLink";
+import Highlight from "@/app/components/post/Highlight";
+import Reveal from "@/app/components/ui/Reveal";
+import TagLink from "@/app/components/post/TagLink";
 import type { Post } from "@/app/content/posts";
 
 export default function PostList({

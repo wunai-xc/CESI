@@ -1,4 +1,4 @@
-// src/app/components/BackToTop.tsx
+// src/app/components/post/BackToTop.tsx
 // 文章页右下角的「返回顶部」悬浮按钮：
 // 方形边框就是阅读进度条（SVG rect + stroke-dashoffset），中间显示进度百分比，点击平滑回到顶部。
 // 按钮整体半透明，不遮挡正文阅读。

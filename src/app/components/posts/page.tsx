@@ -6,7 +6,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllPosts, getAllTags } from "@/app/content/posts";
-import PostSearch from "@/app/components/PostSearch";
+import PostSearch from "@/app/components/post/PostSearch";
 
 export const metadata: Metadata = {
   title: "全部文章",

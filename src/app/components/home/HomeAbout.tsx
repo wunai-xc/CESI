@@ -1,4 +1,4 @@
-// src/app/components/HomeAbout.tsx
+// src/app/components/home/HomeAbout.tsx
 // 首页第三段：关于 + 联系方式。同样的滚动入场，左标题右内容的两栏结构，
 // 窄屏自动堆叠。链接沿用站点风格（英文为主，必要时中英并列）。
 

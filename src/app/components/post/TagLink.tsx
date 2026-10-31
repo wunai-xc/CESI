@@ -1,4 +1,4 @@
-// src/app/components/TagLink.tsx
+// src/app/components/post/TagLink.tsx
 // 标签小胶囊：列表页、标签页、文章页共用。点击进入该标签的文章列表。
 // 没有 "use client"，服务端组件和客户端组件里都能直接渲染。
 
