@@ -1,7 +1,3 @@
-// src/app/page.tsx
-// 首页（路由 /）：站点 logo（亮色 / 暗色两张）+ 欢迎语 + 去文章列表的入口。
-// 三块内容用 Reveal 做错峰入场（CSS 动画，不依赖 JS）。
-
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,7 +32,7 @@ export default function Home() {
       </Reveal>
 
       <Reveal delay={0.08}>
-        <h1 className="text-center text-5xl">Hello! This is my App.</h1>
+        <h1 className="text-center text-5xl"><span className="text-red-600">Hello!</span> This is my App.</h1>
       </Reveal>
 
       <Reveal delay={0.16}>
