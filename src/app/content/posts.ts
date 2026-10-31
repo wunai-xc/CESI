@@ -123,6 +123,10 @@ function loadPosts(): Post[] {
 let cachedPosts: Post[] | null = null;
 let cachedSignature = "";
 
+// 文件系统只在构建期（和 dev 的每次请求）可用；部署到 Workers / Serverless 运行时时沒有 fs，
+// 所以生产环境下不做目录签名检查，第一次扫完就固定下来，后续全部走缓存。
+const isDev = process.env.NODE_ENV === "development";
+
 function directorySignature(): string {
   if (!fs.existsSync(POSTS_DIR)) return "";
 
@@ -135,7 +139,10 @@ function directorySignature(): string {
 
 // 取得文章列表（带缓存，目录变化后自动失效）。生产构建时只算一次。
 export function getAllPosts(): Post[] {
-  const signature = directorySignature();
+  // 生产 / 构建期：只扫一次，之后不再碰 fs
+  if (!isDev && cachedPosts) return cachedPosts;
+
+  const signature = isDev ? directorySignature() : "";
 
   if (!cachedPosts || signature !== cachedSignature) {
     cachedPosts = loadPosts();
