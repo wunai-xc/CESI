@@ -1,0 +1,27 @@
+/* src/app/styles/animations.css */
+/* 入场动画：纯 CSS keyframes，不依赖 JS。
+   关键点：动画只在 CSS 生效时播放，静态导出的 HTML 里元素默认是可见的，
+   不会出现「JS 没加载 → 内容一直 opacity:0 看不见」的问题。 */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise {
+  animation: rise-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* 尊重系统"减少动态效果"：直接不播动画，元素保持可见 */
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise {
+    animation: none;
+  }
+}

@@ -7,6 +7,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { PostHeading } from "@/app/content/posts";
 
 // 滚动停下多久后重新显示按钮（毫秒）
@@ -31,6 +32,7 @@ function ListIcon() {
 export default function PostToc({ headings }: { headings: PostHeading[] }) {
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const reducedMotion = useReducedMotion();
 
   // 按 Esc 收起，键盘用户不用挪回按钮
   useEffect(() => {
@@ -94,10 +96,16 @@ export default function PostToc({ headings }: { headings: PostHeading[] }) {
         <span>Contents</span>
       </button>
 
-      {open ? (
-        <nav
+      {/* 展开/收起用 AnimatePresence 做淡入 + 上滑，避免面板瞬间出现 */}
+      <AnimatePresence initial={false}>
+        {open ? (
+        <motion.nav
           id="post-toc"
           aria-label="Table of contents"
+          initial={reducedMotion ? false : { opacity: 0, y: -6 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: reducedMotion ? 0 : 0.18, ease: [0.22, 1, 0.36, 1] }}
           className="mt-2 max-h-[60svh] w-64 overflow-y-auto border border-zinc-200 bg-white/85 py-1 text-sm shadow-lg backdrop-blur-sm dark:border-zinc-800 dark:bg-zinc-950/85"
         >
           <ul>
@@ -117,8 +125,9 @@ export default function PostToc({ headings }: { headings: PostHeading[] }) {
               </li>
             ))}
           </ul>
-        </nav>
+        </motion.nav>
       ) : null}
+      </AnimatePresence>
     </div>
   );
 }

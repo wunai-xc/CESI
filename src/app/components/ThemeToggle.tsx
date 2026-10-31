@@ -6,6 +6,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { motion, useReducedMotion } from "motion/react";
 
 type Theme = "light" | "dark" | "system";
 
@@ -136,6 +137,8 @@ const options: { value: Theme; label: string; icon: () => React.JSX.Element }[] 
   ];
 
 export default function ThemeToggle() {
+  const reducedMotion = useReducedMotion();
+
   // 服务端渲染时固定给 "system"，水合后立刻换成真实值，避免 SSR/客户端不一致
   const theme = useSyncExternalStore(
     subscribe,
@@ -152,13 +155,15 @@ export default function ThemeToggle() {
       {options.map(({ value, label, icon: Icon }) => {
         const active = theme === value;
         return (
-          <button
+          <motion.button
             key={value}
             type="button"
             title={label}
             aria-label={label}
             aria-pressed={active}
             onClick={() => setTheme(value)}
+            whileTap={reducedMotion ? undefined : { scale: 0.9 }}
+            transition={{ duration: 0.12 }}
             className={[
               "p-1.5 transition-colors",
               active
@@ -167,7 +172,7 @@ export default function ThemeToggle() {
             ].join(" ")}
           >
             <Icon />
-          </button>
+          </motion.button>
         );
       })}
     </div>

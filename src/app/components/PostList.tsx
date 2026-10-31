@@ -1,11 +1,13 @@
 // src/app/components/PostList.tsx
 // 文章列表：列表页、搜索结果、标签页共用的同一份渲染逻辑。
-// 只依赖 type-only 的 Post 类型，因此服务端组件与客户端组件都能用。
+// 入场动画用 CSS（Reveal 的 animate-rise）+ 逐项延迟，不依赖 JS；
+// 只依赖 type-only 的 Post 类型，所以服务端组件里能直接用。
 // 传入 terms 时会把标题、摘要里的命中词高亮。
 
 import Link from "next/link";
 import { formatDate } from "@/app/lib/formatDate";
 import Highlight from "@/app/components/Highlight";
+import Reveal from "@/app/components/Reveal";
 import TagLink from "@/app/components/TagLink";
 import type { Post } from "@/app/content/posts";
 
@@ -24,8 +26,9 @@ export default function PostList({
 
   return (
     <ul className="mt-6 divide-y divide-zinc-200 dark:divide-zinc-800">
-      {posts.map((post) => (
-        <li key={post.slug} className="py-6">
+      {posts.map((post, index) => (
+        // 逐项延迟最多 0.4s，长列表末尾不会等太久
+        <Reveal as="li" key={post.slug} className="py-6" delay={Math.min(index * 0.04, 0.4)}>
           <Link href={`/components/posts/${post.slug}`} className="group block">
             <h2 className="text-xl font-semibold text-zinc-900 transition-colors group-hover:text-blue-600 dark:text-zinc-100 dark:group-hover:text-blue-400">
               <Highlight text={post.title} terms={terms} />
@@ -49,7 +52,7 @@ export default function PostList({
               ))}
             </div>
           ) : null}
-        </li>
+        </Reveal>
       ))}
     </ul>
   );

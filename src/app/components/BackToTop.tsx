@@ -6,10 +6,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 
 export default function BackToTop() {
   const [progress, setProgress] = useState(0);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     let frame = 0;
@@ -54,13 +56,23 @@ export default function BackToTop() {
   }, []);
 
   const percent = Math.round(progress * 100);
+  // 还没开始读（进度接近 0）时不显示，出现/消失都带过渡
+  const visible = progress > 0.02;
 
   return (
-    <button
+    <AnimatePresence>
+      {visible ? (
+    <motion.button
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Back to top"
       title="Back to top 返回顶部"
+      initial={reducedMotion ? false : { opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: reducedMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={reducedMotion ? undefined : { scale: 1.04 }}
+      whileTap={reducedMotion ? undefined : { scale: 0.96 }}
       className="fixed bottom-5 right-4 z-40 flex h-12 w-12 items-center justify-center bg-white/55 text-zinc-700 backdrop-blur-sm transition-colors hover:bg-white/80 hover:text-blue-600 dark:bg-zinc-900/55 dark:text-zinc-200 dark:hover:bg-zinc-900/80 dark:hover:text-blue-400"
     >
       <svg viewBox="0 0 56 56" aria-hidden="true" className="absolute inset-0 h-full w-full">
@@ -93,6 +105,8 @@ export default function BackToTop() {
       <span className="relative text-[11px] font-medium tabular-nums">
         {percent}%
       </span>
-    </button>
+    </motion.button>
+      ) : null}
+    </AnimatePresence>
   );
 }
