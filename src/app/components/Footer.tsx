@@ -19,10 +19,12 @@ type LegalLink = { label: string; href: string };
 // 第一栏常用网站
 const siteGroups: SiteGroup[] = [
   {
-    title: "code / social contact",
+    title: "Common links",
     items: [
       { name: "GitHub", icon: "github", href: "https://github.com" },
       { name: "X", icon: "x", href: "https://x.com" },
+      { name: "Cloudflare", icon: "cloudflare", href: "https://www.cloudflare.com/" },
+      { name: "Vercel", icon: "vercel", href: "https://vercel.com/" },
     ],
   },
   {
@@ -45,6 +47,11 @@ const siteGroups: SiteGroup[] = [
     items: [
       { name: "DeepSeek", icon: "deepseek", href: "https://www.deepseek.com" },
       { name: "Trae", icon: "trae", href: "https://www.trae.ai" },
+      { name: "Kimi", icon: "kimi", href: "https://www.kimi.com/" },
+      { name: "ChatGPT", icon: "chatgpt", href: "https://chatgpt.com/" },
+      { name: "Claude", icon: "claude", href: "https://claude.ai/" },
+      { name: "Gemini", icon: "gemini", href: "https://gemini.google.com/" },
+      { name: "Grok", icon: "grok", href: "https://grok.com/" },
     ],
   },
 ];
