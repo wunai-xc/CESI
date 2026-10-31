@@ -4,6 +4,10 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/app/lib/site";
 
+// 静态导出必须显式声明为静态，否则构建时会报
+// "export const dynamic = force-static not configured on route /robots.txt"
+export const dynamic = "force-static";
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [

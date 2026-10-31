@@ -7,6 +7,9 @@ import type { MetadataRoute } from "next";
 import { getAllPosts, getAllTags } from "@/app/content/posts";
 import { SITE_URL } from "@/app/lib/site";
 
+// 静态导出同样需要显式声明静态
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
