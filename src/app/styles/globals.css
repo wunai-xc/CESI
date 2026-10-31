@@ -140,17 +140,17 @@ body {
   }
 }
 
-.sweep-line-x {
+.sweep-bar-v {
   animation: sweep-x 1s ease-in-out infinite alternate;
 }
 
-.sweep-line-y {
+.sweep-bar-h {
   animation: sweep-y 1s ease-in-out infinite alternate;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sweep-line-x,
-  .sweep-line-y {
+  .sweep-bar-v,
+  .sweep-bar-h {
     animation-duration: 2s;
     animation-timing-function: linear;
   }
