@@ -78,7 +78,107 @@
 /* 尊重系统"减少动态效果"：直接不播动画，元素保持可见 */
 @media (prefers-reduced-motion: reduce) {
   .animate-rise,
+  .hero-grid,
+  .hero-glow,
+  .animate-caret,
   .page-enter {
     animation: none;
   }
+}
+
+/* ---------- 首页 hero 的装饰效果 ---------- */
+
+/* 背景网格：缓慢斜向漂移，用 mask 让它从中心向外淡出 */
+@keyframes grid-drift {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 32px 32px;
+  }
+}
+
+.hero-grid {
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.07) 0 1px,
+      transparent 1px 32px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.07) 0 1px,
+      transparent 1px 32px
+    );
+  -webkit-mask-image: radial-gradient(
+    ellipse 75% 65% at 50% 40%,
+    #000 25%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    ellipse 75% 65% at 50% 40%,
+    #000 25%,
+    transparent 78%
+  );
+  animation: grid-drift 22s linear infinite;
+}
+
+.dark .hero-grid {
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.08) 0 1px,
+      transparent 1px 32px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.08) 0 1px,
+      transparent 1px 32px
+    );
+}
+
+/* 中心光晕：缓慢呼吸，给纯文字区一点空气感 */
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.hero-glow {
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 32%,
+    rgba(59, 130, 246, 0.2),
+    transparent 70%
+  );
+  animation: glow-pulse 7s ease-in-out infinite;
+}
+
+/* 闪烁光标：跟在标语末尾 */
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-caret {
+  animation: caret-blink 1.05s step-end infinite;
+}
+
+/* 描边字：用来压一档视觉重量（填充透明 + 只留描边） */
+.text-outline {
+  -webkit-text-stroke-width: 1.5px;
+  -webkit-text-stroke-color: currentColor;
+  -webkit-text-fill-color: transparent;
 }
