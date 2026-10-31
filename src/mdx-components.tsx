@@ -55,6 +55,8 @@ const components: MDXComponents = {
         {...props}
         className={[
           "not-prose border border-zinc-200 px-1.5 py-0.5 font-mono text-[0.9em]",
+          // whitespace-nowrap：行内代码不跨行断开（表格、正文、列表里都一样）
+          "whitespace-nowrap align-baseline",
           "bg-zinc-100 text-zinc-800 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100",
           className ?? "",
         ].join(" ")}

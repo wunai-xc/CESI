@@ -62,6 +62,8 @@ export default function CodeBlock({
 }: CodeBlockProps) {
   const bodyRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
+  // 默认单行不换行（横向滚动），点按钮可切换成自动换行
+  const [wrap, setWrap] = useState(false);
 
   // 信息栏要显示的三段文字，缺哪段就不渲染哪段
   const languageLabel = languageOf(children, language);
@@ -98,21 +100,45 @@ export default function CodeBlock({
             <span>{languageLabelWithVersion}</span>
           ) : null}
         </div>
-        <button
-          type="button"
-          onClick={copyCode}
-          aria-label="Copy code"
-          className="shrink-0 border border-zinc-300 px-2 py-0.5 text-xs transition-colors hover:border-zinc-400 hover:text-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-500 dark:hover:text-zinc-100"
-        >
-          {copied ? "Copied" : "Copy"}
-        </button>
+        <div className="flex shrink-0 items-center gap-1.5">
+          {/* 换行开关：单行（横向滚动）↔ 自动换行 */}
+          <button
+            type="button"
+            onClick={() => setWrap((value) => !value)}
+            aria-pressed={wrap}
+            aria-label={wrap ? "Nowrap code" : "Wrap code"}
+            title={wrap ? "单行显示" : "换行显示"}
+            className="border border-zinc-300 px-2 py-0.5 text-xs transition-colors hover:border-zinc-400 hover:text-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-500 dark:hover:text-zinc-100"
+          >
+            {wrap ? "Nowrap" : "Wrap"}
+          </button>
+          <button
+            type="button"
+            onClick={copyCode}
+            aria-label="Copy code"
+            className="border border-zinc-300 px-2 py-0.5 text-xs transition-colors hover:border-zinc-400 hover:text-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-500 dark:hover:text-zinc-100"
+          >
+            {copied ? "Copied" : "Copy"}
+          </button>
+        </div>
       </div>
       {/* 代码正文：children 是 rehype-highlight 处理过的 <code> */}
       <div
         ref={bodyRef}
-        className="overflow-x-auto bg-zinc-50 px-4 py-3 text-[13px] leading-6 dark:bg-zinc-950"
+        className={[
+          "bg-zinc-50 px-4 py-3 text-[13px] leading-6 dark:bg-zinc-950",
+          // 单行模式：横向滚动、不折行；换行模式：软换行，长行不产生横向滚动
+          wrap ? "overflow-x-hidden" : "overflow-x-auto",
+        ].join(" ")}
       >
-        <pre className="font-mono">{children}</pre>
+        <pre
+          className={[
+            "font-mono",
+            wrap ? "whitespace-pre-wrap break-words" : "whitespace-pre",
+          ].join(" ")}
+        >
+          {children}
+        </pre>
       </div>
     </div>
   );
