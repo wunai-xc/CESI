@@ -1,7 +1,7 @@
 /* src/app/styles/animations.css */
-/* 入场动画：纯 CSS keyframes，不依赖 JS。
-   关键点：动画只在 CSS 生效时播放，静态导出的 HTML 里元素默认是可见的，
-   不会出现「JS 没加载 → 内容一直 opacity:0 看不见」的问题。 */
+/* 入场 / 转场相关的关键帧与工具类。
+   关键点：动画都在 CSS 里，静态导出的 HTML 元素默认可见，
+   不会出现「JS 没加载 → 内容一直 opacity:0 看不见」。 */
 
 @keyframes rise-in {
   from {
@@ -19,9 +19,8 @@
   animation: rise-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* 切页时页面内容的入场：由 TransitionOverlay 给 <main> 挂 .page-enter。
-   延迟 0.55s 起步，正好接在扫描色块扫过、幕布淡出那一段，
-   视觉上内容像是被扫描线"刷"出来的。没有 JS 时不会加这个类，内容始终可见。 */
+/* 切页时页面内容的入场：TransitionOverlay 给 <main> 挂 .page-enter，
+   延迟 0.55s 起步，接在扫描扫过、幕布淡出那一段，内容像被扫描线"刷"出来。 */
 @keyframes page-enter {
   from {
     opacity: 0.3;
@@ -36,6 +35,44 @@
 
 .page-enter {
   animation: page-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both;
+}
+
+/* 转场用的网格底纹：1px 细线 + 20px 格距，亮暗各一套颜色 */
+.scan-grid {
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.09) 0 1px,
+      transparent 1px 20px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.09) 0 1px,
+      transparent 1px 20px
+    );
+}
+
+.dark .scan-grid {
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.12) 0 1px,
+      transparent 1px 20px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.12) 0 1px,
+      transparent 1px 20px
+    );
+}
+
+/* 把扫描色块裁成 10px 的棋盘格小块，扫过去就像扫描仪一行行点亮网格。
+   mask 只在负责渲染的浏览器上生效，不支持时退化成整块实心色块，不影响功能。 */
+.scan-cells {
+  -webkit-mask-image: repeating-conic-gradient(#000 0 25%, transparent 0 50%);
+  mask-image: repeating-conic-gradient(#000 0 25%, transparent 0 50%);
+  -webkit-mask-size: 20px 20px;
+  mask-size: 20px 20px;
 }
 
 /* 尊重系统"减少动态效果"：直接不播动画，元素保持可见 */

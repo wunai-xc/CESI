@@ -107,28 +107,52 @@ export default function TransitionOverlay() {
           transition={{ duration: 0.45, delay: 0.25, ease: "easeInOut" }}
         />
 
-        {/* 2) 扫描色块：竖块短边（宽度）10 → 50 → 10px，整块从左外侧扫到右外侧 */}
+        {/* 2) 网格底纹：扫描期间铺在幕布之上，被扫过的区域看起来是一格格点亮的 */}
+        <motion.div
+          className="scan-grid absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 1, 1, 0] }}
+          transition={{ duration: DURATION, times: [0, 0.12, 0.8, 1], ease: "easeInOut" }}
+        />
+
+        {/* 3) 扫描色块：.scan-cells 把色块裁成棋盘小格，扫过去就是一行行点亮网格。
+            竖块短边（宽度）10 → 50 → 10px，整块从左外侧扫到右外侧 */}
         <motion.span
-          className="absolute left-0 top-0 h-full bg-black dark:bg-white"
+          className="scan-cells absolute left-0 top-0 h-full bg-yellow-500"
           initial={{ width: 10, x: "-100%" }}
           animate={{ width: [10, 50, 10], x: ["-100%", 0, "100vw"] }}
           transition={{ duration: 0.85, delay: 0.12, ease: "easeInOut" }}
         />
         {/* 横块短边（高度）同理，从下外侧扫到上外侧 */}
         <motion.span
-          className="absolute bottom-0 left-0 w-full bg-black dark:bg-white"
+          className="scan-cells absolute bottom-0 left-0 w-full bg-yellow-500"
           initial={{ height: 10, y: "100%" }}
           animate={{ height: [10, 50, 10], y: ["100%", 0, "-100vh"] }}
           transition={{ duration: 0.85, delay: 0.12, ease: "easeInOut" }}
         />
 
-        {/* 3) 取景框四角 */}
+        {/* 扫描头：贴着竖块右缘的 1px 竖线，强化"正在扫"的感觉 */}
+        <motion.span
+          className="absolute top-0 h-full w-px bg-yellow-600/70 dark:bg-yellow-400/70"
+          initial={{ x: "0vw" }}
+          animate={{ x: "100vw" }}
+          transition={{ duration: 0.85, delay: 0.12, ease: "easeInOut" }}
+        />
+        {/* 扫描头：贴着横块上缘的 1px 横线 */}
+        <motion.span
+          className="absolute left-0 w-full h-px bg-yellow-600/70 dark:bg-yellow-400/70"
+          initial={{ y: "100vh" }}
+          animate={{ y: "0vh" }}
+          transition={{ duration: 0.85, delay: 0.12, ease: "easeInOut" }}
+        />
+
+        {/* 4) 取景框四角 */}
         <Bracket className="left-4 top-4 border-l-2 border-t-2" delay={0} />
         <Bracket className="right-4 top-4 border-r-2 border-t-2" delay={0.05} />
         <Bracket className="bottom-4 left-4 border-b-2 border-l-2" delay={0.1} />
         <Bracket className="bottom-4 right-4 border-b-2 border-r-2" delay={0.15} />
 
-        {/* 4) 十字准线 */}
+        {/* 5) 十字准线 */}
         <motion.span
           className="absolute left-1/2 top-1/2 h-px w-[min(72vw,420px)] -translate-x-1/2 -translate-y-1/2 bg-zinc-900/40 dark:bg-zinc-100/40"
           initial={{ scaleX: 0 }}
@@ -142,7 +166,7 @@ export default function TransitionOverlay() {
           transition={{ duration: 0.35, delay: 0.08, ease: EASE }}
         />
 
-        {/* 5) 中心 HUD：计数 + 细进度条，最后和整层一起淡出 */}
+        {/* 6) 中心 HUD：计数 + 细进度条，最后和整层一起淡出 */}
         <motion.div
           className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-2 px-3 py-2"
           initial={{ opacity: 1, y: 6 }}
