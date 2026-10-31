@@ -43,11 +43,11 @@ export default function HomeBackdrop() {
         style={{ y: reducedMotion ? 0 : nearY }}
       >
         <Image
-          src="/images/stars-near.jpg"
+          src="/images/stars-far.jpg"
           alt=""
           fill
           sizes="100vw"
-          className="object-cover opacity-25 grayscale dark:opacity-60 dark:grayscale-0"
+          className="object-cover dark:grayscale-0"
         />
       </motion.div>
     </div>

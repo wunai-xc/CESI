@@ -1,8 +1,11 @@
 // src/app/components/home/HomeAbout.tsx
 // 首页第三段：关于 + 联系方式。同样的滚动入场，左标题右内容的两栏结构，
-// 窄屏自动堆叠。链接沿用站点风格（英文为主，必要时中英并列）。
+// 窄屏自动堆叠。背景右侧放 wunai-bot 图，与星空同样的视差位移（向左渐隐融进底色）。
+// 链接沿用站点风格（英文为主，必要时中英并列）。
 
+import Image from "next/image";
 import Link from "next/link";
+import Parallax from "@/app/components/ui/Parallax";
 
 // 联系方式：与页脚保持一致，方便集中修改
 const LINKS = [
@@ -13,8 +16,22 @@ const LINKS = [
 
 export default function HomeAbout() {
   return (
-    <section className="relative border-t border-zinc-200 bg-zinc-50 px-6 py-20 dark:border-zinc-800 dark:bg-black">
-      <div className="scroll-reveal mx-auto grid w-full max-w-3xl gap-10 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
+    <section className="relative overflow-hidden border-t border-zinc-200 bg-zinc-50 px-6 py-20 dark:border-zinc-800 dark:bg-black">
+      {/* 背景：wunai-bot 视差层，靠右贴边，向左渐隐 */}
+      <Parallax
+        distance={70}
+        className="pointer-events-none absolute inset-y-0 right-0 w-full sm:w-3/5"
+      >
+        <Image
+          src="/images/wunai-bot.jpg"
+          alt=""
+          fill
+          sizes="(min-width: 640px) 60vw, 100vw"
+          className="edge-fade-left object-cover object-right opacity-15 grayscale dark:opacity-35 dark:grayscale-0"
+        />
+      </Parallax>
+
+      <div className="scroll-reveal relative mx-auto grid w-full max-w-3xl gap-10 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
         <div>
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-zinc-400 dark:text-zinc-500">
             02 / about
