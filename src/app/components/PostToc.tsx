@@ -1,12 +1,16 @@
 // src/app/components/PostToc.tsx
 // 文章目录浮层：固定在屏幕左上方的「Contents」按钮，点开列出正文的 h2 / h3，
-// 点条目跳转到对应锚点。目录数据由服务端（posts.ts 的 getPostHeadings）算好后传进来，
-// 这里只负责展开/收起和滚动定位。
+// 点条目跳转到对应锚点。目录数据由服务端（posts.ts 的 getPostHeadings）算好后传进来。
+//
+// 按钮半透明，不遮正文；滚动时淡出、停下 400ms 后再出现，避免阅读时被挡。
 
 "use client";
 
 import { useEffect, useState } from "react";
 import type { PostHeading } from "@/app/content/posts";
+
+// 滚动停下多久后重新显示按钮（毫秒）
+const SHOW_DELAY = 400;
 
 function ListIcon() {
   return (
@@ -26,6 +30,7 @@ function ListIcon() {
 
 export default function PostToc({ headings }: { headings: PostHeading[] }) {
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   // 按 Esc 收起，键盘用户不用挪回按钮
   useEffect(() => {
@@ -37,11 +42,42 @@ export default function PostToc({ headings }: { headings: PostHeading[] }) {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
+  // 滚动中隐藏、停下再显示；只登记一帧，避免滚动时反复 setState
+  useEffect(() => {
+    if (open) return;
+
+    let frame = 0;
+    let timer = 0;
+
+    const onScroll = () => {
+      if (!frame) {
+        frame = window.requestAnimationFrame(() => {
+          frame = 0;
+          setHidden(true);
+        });
+      }
+
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setHidden(false), SHOW_DELAY);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+      window.clearTimeout(timer);
+    };
+  }, [open]);
+
   // 没有小标题的文章不显示这个按钮
   if (headings.length === 0) return null;
 
+  // 面板展开时强制可见，避免滚一下目录就消失
+  const invisible = hidden && !open;
+
   return (
-    // top-20 避开顶部导航条；pointer-events 只作用在自身，不影响页面其它区域
+    // top-20 避开顶部导航条
     <div className="fixed left-3 top-20 z-40">
       <button
         type="button"
@@ -49,7 +85,10 @@ export default function PostToc({ headings }: { headings: PostHeading[] }) {
         aria-expanded={open}
         aria-controls="post-toc"
         title="Contents 目录"
-        className="inline-flex items-center gap-1.5 border border-zinc-300 bg-white px-2.5 py-1.5 text-xs text-zinc-600 shadow-sm transition-colors hover:border-zinc-400 hover:text-zinc-900 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:text-zinc-50"
+        className={[
+          "inline-flex items-center gap-1.5 bg-white/55 px-2.5 py-1.5 text-xs text-zinc-700 backdrop-blur-sm transition-all duration-200 hover:bg-white/80 hover:text-blue-600 dark:bg-zinc-900/55 dark:text-zinc-200 dark:hover:bg-zinc-900/80 dark:hover:text-blue-400",
+          invisible ? "pointer-events-none opacity-0" : "opacity-100",
+        ].join(" ")}
       >
         <ListIcon />
         <span>Contents</span>
@@ -59,7 +98,7 @@ export default function PostToc({ headings }: { headings: PostHeading[] }) {
         <nav
           id="post-toc"
           aria-label="Table of contents"
-          className="mt-2 max-h-[60svh] w-64 overflow-y-auto border border-zinc-200 bg-white py-1 text-sm shadow-lg dark:border-zinc-800 dark:bg-zinc-950"
+          className="mt-2 max-h-[60svh] w-64 overflow-y-auto border border-zinc-200 bg-white/85 py-1 text-sm shadow-lg backdrop-blur-sm dark:border-zinc-800 dark:bg-zinc-950/85"
         >
           <ul>
             {headings.map((heading) => (
