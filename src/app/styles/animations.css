@@ -1,29 +1,41 @@
-@keyframes sweep-x {
-  from {
+@keyframes sweep-bar-v {
+  0% {
+    width: 10px;
     transform: translateX(-100%);
   }
 
-  to {
+  50% {
+    width: 50px;
+  }
+
+  100% {
+    width: 10px;
     transform: translateX(100vw);
   }
 }
 
-@keyframes sweep-y {
-  from {
+@keyframes sweep-bar-h {
+  0% {
+    height: 10px;
     transform: translateY(100%);
   }
 
-  to {
+  50% {
+    height: 50px;
+  }
+
+  100% {
+    height: 10px;
     transform: translateY(-100svh);
   }
 }
 
 .sweep-bar-v {
-  animation: sweep-x 1s ease-in-out infinite alternate;
+  animation: sweep-bar-v 1s ease-in-out infinite alternate;
 }
 
 .sweep-bar-h {
-  animation: sweep-y 1s ease-in-out infinite alternate;
+  animation: sweep-bar-h 1s ease-in-out infinite alternate;
 }
 
 @media (prefers-reduced-motion: reduce) {
