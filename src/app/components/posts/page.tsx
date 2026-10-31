@@ -20,7 +20,7 @@ export default function PostsPage() {
     <div className="mx-auto w-full max-w-3xl flex-1 px-6 py-12">
       <header className="border-b border-zinc-200 pb-6 dark:border-zinc-800">
         <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
-          全部文章
+          All Posts
         </h1>
         <p className="mt-2 text-sm text-zinc-500">
           共 {posts.length} 篇 · 总计 {totalWords.toLocaleString()} 字

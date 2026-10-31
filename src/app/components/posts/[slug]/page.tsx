@@ -20,6 +20,7 @@ import {
 import { formatDate } from "@/app/lib/formatDate";
 import PostToc from "@/app/components/PostToc";
 import PostPager from "@/app/components/PostPager";
+import BackToTop from "@/app/components/BackToTop";
 
 type PostPageProps = {
   params: Promise<{ slug: string }>;
@@ -77,7 +78,8 @@ async function PostBody({ params }: PostPageProps) {
   return (
     <>
       <PostToc headings={headings} />
-      <article>
+      {/* data-reading-target 给右下角进度按钮测量阅读范围用 */}
+      <article data-reading-target>
       <header className="mt-6 border-b border-zinc-200 pb-6 dark:border-zinc-800">
         <h1 className="text-3xl font-bold leading-tight tracking-tight text-zinc-900 dark:text-zinc-50">
           {post.title}
@@ -103,6 +105,8 @@ async function PostBody({ params }: PostPageProps) {
 
       <PostPager previous={previous} next={next} />
       </article>
+
+      <BackToTop />
     </>
   );
 }
