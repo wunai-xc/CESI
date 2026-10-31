@@ -10,8 +10,9 @@ import "katex/dist/contrib/mhchem.min.js";
 import "katex/dist/katex.min.css";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPost, loadPostContent, posts } from "@/app/content/posts";
+import { getPost, getPostHeadings, loadPostContent, posts } from "@/app/content/posts";
 import { formatDate } from "@/app/lib/formatDate";
+import PostToc from "@/app/components/PostToc";
 
 type PostPageProps = {
   params: Promise<{ slug: string }>;
@@ -60,8 +61,13 @@ async function PostBody({ params }: PostPageProps) {
   const Content = await loadPostContent(slug);
   if (!Content) notFound();
 
+  // 目录条目在服务端从同一份 .mdx 源文件里扫出来，锚点 id 与 rehype-slug 生成的一致
+  const headings = getPostHeadings(slug);
+
   return (
-    <article>
+    <>
+      <PostToc headings={headings} />
+      <article>
       <header className="mt-6 border-b border-zinc-200 pb-6 dark:border-zinc-800">
         <h1 className="text-3xl font-bold leading-tight tracking-tight text-zinc-900 dark:text-zinc-50">
           {post.title}
@@ -83,7 +89,8 @@ async function PostBody({ params }: PostPageProps) {
       <div className="prose prose-zinc mt-8 max-w-none dark:prose-invert prose-a:text-blue-600 dark:prose-a:text-blue-400">
         <Content />
       </div>
-    </article>
+      </article>
+    </>
   );
 }
 

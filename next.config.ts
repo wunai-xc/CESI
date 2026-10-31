@@ -38,8 +38,8 @@ const withMDX = createMDX({
   options: {
     // frontmatter 只负责剥掉 YAML 头；公式走 remark-math；codeMeta 把围栏元数据转成 data-* 属性
     remarkPlugins: ['remark-frontmatter', 'remark-math', codeMetaPlugin],
-    // 公式渲染 + 代码高亮，全部在编译期完成，客户端不跑高亮库
-    rehypePlugins: ['rehype-katex', 'rehype-highlight'],
+    // 公式渲染 + 标题锚点 + 代码高亮，全部在编译期完成，客户端不跑高亮库
+    rehypePlugins: ['rehype-katex', 'rehype-slug', 'rehype-highlight'],
   },
 })
 

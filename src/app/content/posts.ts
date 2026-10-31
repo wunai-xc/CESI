@@ -6,6 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import type { ComponentType } from "react";
 import matter from "gray-matter";
+import GithubSlugger from "github-slugger";
 
 // 文章目录（以 _ 开头的文件会被忽略，可用来放草稿）
 const POSTS_DIR = path.join(process.cwd(), "src/app/content/posts");
@@ -16,6 +17,13 @@ export type Post = {
   date: string;
   summary: string;
   tags: string[];
+};
+
+// 文章目录条目：id 与正文标题上的锚点一致（rehype-slug 用同一套算法生成）
+export type PostHeading = {
+  id: string;
+  text: string;
+  depth: number;
 };
 
 // frontmatter 里的 date 允许写成日期对象或 "YYYY-MM-DD" 字符串，统一成字符串
@@ -101,4 +109,58 @@ export async function loadPostContent(
   } catch {
     return null;
   }
+}
+
+// 去掉标题里的 markdown 标记，只留可读文本
+function stripMarkdown(text: string): string {
+  return text
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/\*([^*]+)\*/g, "$1")
+    .replace(/<[^>]+>/g, "")
+    .trim();
+}
+
+// 扫描正文里的一级~四级标题生成目录。
+// 注意：slugger 必须对所有标题（含 h1/h4）依次调用，才能和 rehype-slug 给正文生成的 id 完全对应，
+// 但只把 h2/h3 放进返回结果（h1 通常是文章标题的重复）。
+export function getPostHeadings(slug: string): PostHeading[] {
+  if (!getPost(slug)) return [];
+
+  const filePath = path.join(POSTS_DIR, `${slug}.mdx`);
+  let source = "";
+  try {
+    source = matter(fs.readFileSync(filePath, "utf8")).content;
+  } catch {
+    return [];
+  }
+
+  const slugger = new GithubSlugger();
+  const headings: PostHeading[] = [];
+  let inFence = false;
+
+  for (const line of source.split("\n")) {
+    // 围栏代码块内的 # 不是标题
+    if (/^\s*(```|~~~)/.test(line)) {
+      inFence = !inFence;
+      continue;
+    }
+    if (inFence) continue;
+
+    const match = /^(#{1,4})\s+(.+?)\s*#*\s*$/.exec(line);
+    if (!match) continue;
+
+    const text = stripMarkdown(match[2]);
+    if (!text) continue;
+
+    const depth = match[1].length;
+    const id = slugger.slug(text);
+    if (depth === 2 || depth === 3) {
+      headings.push({ id, text, depth });
+    }
+  }
+
+  return headings;
 }
