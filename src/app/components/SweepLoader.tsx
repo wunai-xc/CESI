@@ -34,11 +34,15 @@ export default function SweepLoader() {
     if (now - lastRunRef.current < duration) return;
     lastRunRef.current = now;
 
+    // 终点位移用实测的覆盖层尺寸，而不是 100vw / 100svh：
+    // 手机上地址栏收起后固定层的实际高度会大于 100svh，用 svh 算终点会留出一条可见的色块
+    const { width, height } = overlay.getBoundingClientRect();
+
+    // fill 不设 forwards：播完立刻回到基础样式（opacity-0），免得残留的色块被视口变化露出来
     const sweep = {
       duration,
       easing,
       iterations: 1,
-      fill: "forwards",
     } satisfies KeyframeAnimationOptions;
 
     // 虚化：16px → 0，播完不加 fill，滤镜自动撤销，不长期占着合成层
@@ -55,7 +59,7 @@ export default function SweepLoader() {
       [
         { opacity: 1, width: "10px", transform: "translateX(-100%)" },
         { opacity: 1, width: "50px", offset: 0.5 },
-        { opacity: 1, width: "10px", transform: "translateX(100vw)" },
+        { opacity: 1, width: "10px", transform: `translateX(${width}px)` },
       ],
       sweep,
     );
@@ -65,7 +69,7 @@ export default function SweepLoader() {
       [
         { opacity: 1, height: "10px", transform: "translateY(100%)" },
         { opacity: 1, height: "50px", offset: 0.5 },
-        { opacity: 1, height: "10px", transform: "translateY(-100svh)" },
+        { opacity: 1, height: "10px", transform: `translateY(-${height}px)` },
       ],
       sweep,
     );
