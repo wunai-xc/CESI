@@ -41,6 +41,7 @@ export default function PostsPage() {
                 <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-zinc-400">
                   {/* dateTime 给搜索引擎和读屏用，显示用本地化格式 */}
                   <time dateTime={post.date}>{formatDate(post.date)}</time>
+                  <span>{post.wordCount.toLocaleString()} 字</span>
                   {post.tags.map((tag) => (
                     <span
                       key={tag}

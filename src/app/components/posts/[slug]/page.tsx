@@ -84,6 +84,7 @@ async function PostBody({ params }: PostPageProps) {
         </h1>
         <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-zinc-500">
           <time dateTime={post.date}>{formatDate(post.date)}</time>
+          <span>{post.wordCount.toLocaleString()} 字</span>
           {post.tags.map((tag) => (
             <span
               key={tag}

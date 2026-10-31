@@ -17,6 +17,8 @@ export type Post = {
   date: string;
   summary: string;
   tags: string[];
+  // 正文字数（不含 frontmatter、代码块和 markdown 标记）
+  wordCount: number;
 };
 
 // 文章目录条目：id 与正文标题上的锚点一致（rehype-slug 用同一套算法生成）
@@ -50,11 +52,32 @@ function normalizeTags(value: unknown): string[] {
   return [];
 }
 
+// 统计正文字数：中文按字算，英文/数字按词算。
+// 先剥掉代码块、行内代码、图片、链接地址、HTML/JSX 标签、MDX 表达式和 markdown 标记，
+// 只对真正的正文文字计数。
+function countWords(content: string): number {
+  const stripped = content
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/~~~[\s\S]*?~~~/g, " ")
+    .replace(/`[^`]*`/g, " ")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\{[^}]*\}/g, " ")
+    .replace(/[#>*_~|\\-]/g, " ");
+
+  const cjk = stripped.match(/[\u3400-\u4dbf\u4e00-\u9fff]/g)?.length ?? 0;
+  const latin =
+    stripped.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g)?.length ?? 0;
+
+  return cjk + latin;
+}
+
 // 读单个文件：解析 frontmatter，缺关键字段直接抛错，方便写作时立刻发现
 function readPost(fileName: string): Post {
   const slug = fileName.replace(/\.mdx$/, "");
   const filePath = path.join(POSTS_DIR, fileName);
-  const { data } = matter(fs.readFileSync(filePath, "utf8"));
+  const { data, content } = matter(fs.readFileSync(filePath, "utf8"));
 
   const title = typeof data.title === "string" ? data.title.trim() : "";
   const date = normalizeDate(data.date);
@@ -75,6 +98,7 @@ function readPost(fileName: string): Post {
     date: date as string,
     summary,
     tags: normalizeTags(data.tags),
+    wordCount: countWords(content),
   };
 }
 
