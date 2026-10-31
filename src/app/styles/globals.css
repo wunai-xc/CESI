@@ -24,3 +24,8 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans-local);
 }
+
+/* 文章正文用阅读字体（不含站点字体 cesi-sans），其余界面照常使用站点字体 */
+.prose-reading {
+  font-family: var(--font-reading);
+}

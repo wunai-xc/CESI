@@ -8,6 +8,10 @@
   --font-sans-local: "cesi-sans", "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", system-ui,
     -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* 文章正文专用：不带站点字体 cesi-sans，保证长文阅读清晰 */
+  --font-reading: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    "Noto Sans SC", "Source Han Sans SC", system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   /* 代码块与行内代码保持等宽，避免对不齐 */
   --font-mono-local: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
     "Liberation Mono", "Courier New", monospace;

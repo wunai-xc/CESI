@@ -98,8 +98,9 @@ async function PostBody({ params }: PostPageProps) {
         </div>
       </header>
 
-      {/* prose 来自 @tailwindcss/typography，一行类名把 markdown 排版好 */}
-      <div className="prose prose-zinc mt-8 max-w-none dark:prose-invert prose-a:text-blue-600 dark:prose-a:text-blue-400">
+      {/* prose 来自 @tailwindcss/typography，一行类名把 markdown 排版好；
+          prose-reading 让正文改用阅读字体，不用站点字体 */}
+      <div className="prose prose-zinc prose-reading mt-8 max-w-none dark:prose-invert prose-a:text-blue-600 dark:prose-a:text-blue-400">
         <Content />
       </div>
 
