@@ -1,34 +1,24 @@
 // src/app/components/HomeHero.tsx
-// 首页 hero：logo + 眉标 + 逐词入场的大标题 + 标语（带闪烁光标）+ 站点数据 + 两个入口按钮。
-// 全部效果都用 CSS 动画（见 src/app/styles/animations.css），不依赖 JS，
-// 静态导出后即使脚本没加载完，文字也是可见的。
+// 首页第一屏：眉标 + 渐变标题 + 打字机标语 + 按钮 + 下滑提示。
+// 所有效果都是 CSS 动画（见 src/app/styles/animations.css），不依赖 JS：
+// 静态导出后即使脚本没加载完，文字依然可见。
 
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-type HomeHeroProps = {
-  postCount: number;
-  wordCount: number;
-  // 最近一篇文章的日期（YYYY-MM-DD），没有文章时传空串
-  latestDate: string;
-};
+// 打字机内容：中文字宽约 1em，正好可以用「字数 × 1em」当结束宽度
+const TYPED_LINE = "用代码写点东西，也写点没想清楚的想法。";
 
-// 大标题按词拆开，逐词错峰入场；最后一个是描边字
-const HEADLINE = ["Hello,", "I'm", "WUNAI."];
-
-export default function HomeHero({
-  postCount,
-  wordCount,
-  latestDate,
-}: HomeHeroProps) {
+export default function HomeHero() {
   return (
-    <section className="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-zinc-50 px-6 py-20 dark:bg-black">
+    <section className="relative flex min-h-[calc(100svh-4rem)] flex-col items-center justify-center overflow-hidden bg-zinc-50 px-6 py-20 dark:bg-black">
       {/* 背景层：漂移网格 + 呼吸光晕 */}
       <div className="hero-grid absolute inset-0" aria-hidden="true" />
       <div className="hero-glow absolute inset-0" aria-hidden="true" />
 
       <div className="relative flex w-full max-w-3xl flex-col items-center gap-7 text-center">
-        {/* logo：亮/暗两张图切换 */}
+        {/* logo */}
         <div
           className="animate-rise flex justify-center"
           style={{ animationDelay: "0s" }}
@@ -51,7 +41,7 @@ export default function HomeHero({
           />
         </div>
 
-        {/* 眉标：等宽小字 + 两侧细线 */}
+        {/* 眉标 */}
         <div
           className="animate-rise flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.32em] text-zinc-500 dark:text-zinc-400"
           style={{ animationDelay: "0.06s" }}
@@ -61,65 +51,35 @@ export default function HomeHero({
           <span className="h-px w-8 bg-zinc-300 dark:bg-zinc-700" />
         </div>
 
-        {/* 大标题：逐词入场，最后一个词用描边 */}
-        <h1 className="text-balance text-5xl font-bold leading-[1.15] tracking-tight text-zinc-900 sm:text-6xl dark:text-zinc-50">
-          {HEADLINE.map((word, index) => (
-            <span
-              key={word}
-              className="animate-rise inline-block"
-              style={{ animationDelay: `${0.12 + index * 0.09}s` }}
-            >
-              {index === HEADLINE.length - 1 ? (
-                <span className="text-outline">{word}</span>
-              ) : (
-                word
-              )}
-              {index < HEADLINE.length - 1 ? "\u00A0" : ""}
-            </span>
-          ))}
+        {/* 多色渐变标题：bg-clip-text 把背景裁进文字，再叠一层柔光阴影 */}
+        <h1
+          className="animate-rise text-balance bg-gradient-to-r from-blue-600 via-fuchsia-500 to-amber-500 bg-clip-text text-5xl font-bold leading-[1.15] tracking-tight text-transparent drop-shadow-[0_6px_24px_rgba(99,102,241,0.25)] sm:text-6xl dark:from-blue-300 dark:via-fuchsia-300 dark:to-amber-200 dark:drop-shadow-[0_6px_28px_rgba(129,140,248,0.28)]"
+          style={{ animationDelay: "0.12s" }}
+        >
+          Hello, I&apos;m WUNAI.
         </h1>
 
-        {/* 标语 + 闪烁光标 */}
+        {/* 打字机标语 + 光标 */}
         <p
-          className="animate-rise max-w-lg text-sm leading-7 text-zinc-600 dark:text-zinc-400"
-          style={{ animationDelay: "0.42s" }}
+          className="animate-rise flex max-w-full items-baseline justify-center gap-1 text-sm leading-7 text-zinc-600 dark:text-zinc-400"
+          style={{ animationDelay: "0.4s" }}
         >
-          记录代码、笔记，和一些还没想清楚的想法。
           <span
-            className="animate-caret ml-1 inline-block h-4 w-[2px] translate-y-[3px] bg-zinc-800 align-middle dark:bg-zinc-200"
+            className="animate-typing"
+            style={{ "--type-chars": TYPED_LINE.length } as CSSProperties}
+          >
+            {TYPED_LINE}
+          </span>
+          <span
+            className="animate-caret inline-block h-4 w-[2px] bg-zinc-800 align-middle dark:bg-zinc-200"
             aria-hidden="true"
           />
         </p>
 
-        {/* 站点数据：等宽小字 + 竖线分隔 */}
-        <dl
-          className="animate-rise flex divide-x divide-zinc-300 border border-zinc-300 font-mono text-[10px] uppercase tracking-[0.18em] dark:divide-zinc-700 dark:border-zinc-700"
-          style={{ animationDelay: "0.5s" }}
-        >
-          <div className="px-4 py-2">
-            <dt className="text-zinc-400 dark:text-zinc-500">Posts</dt>
-            <dd className="mt-1 text-sm text-zinc-800 dark:text-zinc-200">
-              {String(postCount).padStart(2, "0")}
-            </dd>
-          </div>
-          <div className="px-4 py-2">
-            <dt className="text-zinc-400 dark:text-zinc-500">Words</dt>
-            <dd className="mt-1 text-sm text-zinc-800 dark:text-zinc-200">
-              {wordCount.toLocaleString()}
-            </dd>
-          </div>
-          <div className="px-4 py-2">
-            <dt className="text-zinc-400 dark:text-zinc-500">Updated</dt>
-            <dd className="mt-1 text-sm text-zinc-800 dark:text-zinc-200">
-              {latestDate || "—"}
-            </dd>
-          </div>
-        </dl>
-
-        {/* 入口按钮：主按钮反色 + 箭头位移，次按钮描边 */}
+        {/* 按钮 */}
         <div
           className="animate-rise flex flex-wrap items-center justify-center gap-3"
-          style={{ animationDelay: "0.58s" }}
+          style={{ animationDelay: "0.52s" }}
         >
           <Link
             href="/components/posts"
@@ -140,6 +100,17 @@ export default function HomeHero({
             About 关于
           </Link>
         </div>
+      </div>
+
+      {/* 下滑提示 */}
+      <div
+        className="animate-rise absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 font-mono text-[10px] uppercase tracking-[0.3em] text-zinc-400 dark:text-zinc-500"
+        style={{ animationDelay: "0.7s" }}
+      >
+        scroll
+        <span className="animate-bounce text-base leading-none" aria-hidden="true">
+          ↓
+        </span>
       </div>
     </section>
   );

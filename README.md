@@ -26,8 +26,10 @@ tags: [Next.js, MDX]
 ---
 ```
 
+- 首页：`/`（分三段：hero / 最近更新 / 关于，第 2、3 段随滚动淡入）
 - 列表页：`/components/posts`
 - 详情页：`/components/posts/<slug>`
+- 标签页：`/components/posts/tag/<tag>`
 
 ## 构建与部署
 

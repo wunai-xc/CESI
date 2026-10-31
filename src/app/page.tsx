@@ -1,9 +1,15 @@
 // src/app/page.tsx
-// 首页（路由 /）：hero 区，数据（文章数 / 字数 / 最近更新）在构建期算好传给 HomeHero。
+// 首页（路由 /）：分三段——
+//   1) hero：渐变标题 + 打字机标语 + 入口按钮 + 下滑提示
+//   2) 最近更新：三篇文章 + 全站统计
+//   3) 关于 + 联系
+// 数据（篇数 / 字数 / 最近日期）在构建期算好传给各段。
 
 import type { Metadata } from "next";
 import { getAllPosts } from "@/app/content/posts";
 import HomeHero from "@/app/components/HomeHero";
+import HomeLatest from "@/app/components/HomeLatest";
+import HomeAbout from "@/app/components/HomeAbout";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -11,13 +17,13 @@ export const metadata: Metadata = {
 
 export default function Home() {
   const posts = getAllPosts();
-  const wordCount = posts.reduce((sum, post) => sum + post.wordCount, 0);
+  const totalWords = posts.reduce((sum, post) => sum + post.wordCount, 0);
 
   return (
-    <HomeHero
-      postCount={posts.length}
-      wordCount={wordCount}
-      latestDate={posts[0]?.date ?? ""}
-    />
+    <div className="flex flex-1 flex-col">
+      <HomeHero />
+      <HomeLatest posts={posts} totalWords={totalWords} />
+      <HomeAbout />
+    </div>
   );
 }

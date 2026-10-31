@@ -78,6 +78,8 @@
 /* 尊重系统"减少动态效果"：直接不播动画，元素保持可见 */
 @media (prefers-reduced-motion: reduce) {
   .animate-rise,
+  .animate-typing,
+  .scroll-reveal,
   .hero-grid,
   .hero-glow,
   .animate-caret,
@@ -181,4 +183,39 @@
   -webkit-text-stroke-width: 1.5px;
   -webkit-text-stroke-color: currentColor;
   -webkit-text-fill-color: transparent;
+}
+
+/* ---------- 打字机 ---------- */
+
+/* 宽度从 0 长到内容宽度，steps 让它一格一格"打字"。
+   数字用 CSS 变量传（--type-chars=字符数），中文按 1em 一字算。
+   注意：如果某浏览器不认 steps(var())，animation 会整体失效 → 退回正常全宽显示，文字不会被藏起来。 */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: calc(var(--type-chars, 24) * 1em);
+  }
+}
+
+.animate-typing {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+  animation: typing 1.3s steps(var(--type-chars, 24), end) 0.6s both;
+}
+
+/* ---------- 滚动驱动入场 ---------- */
+
+/* 支持 animation-timeline: view() 的浏览器：元素随滚动进入视口时上浮淡入；
+   不支持的浏览器不加这个类也完全可见（渐进增强）。 */
+@supports (animation-timeline: view()) {
+  .scroll-reveal {
+    animation: rise-in linear both;
+    animation-timeline: view();
+    animation-range: entry 8% cover 34%;
+  }
 }
