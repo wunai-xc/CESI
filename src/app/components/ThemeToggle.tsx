@@ -38,7 +38,7 @@ function subscribe(listener: () => void) {
 
   const media = window.matchMedia("(prefers-color-scheme: dark)");
   const onChange = () => {
-    applyTheme(readTheme());
+    applyWithTransition(readTheme());
     listeners.forEach((fn) => fn());
   };
 
@@ -52,10 +52,26 @@ function subscribe(listener: () => void) {
   };
 }
 
-// 用户点击后：写 localStorage、立即应用到 DOM、通知所有订阅者
+// 切换主题时给 <html> 临时挂 .theme-transition（globals.css 里定义的过渡），
+// 让颜色渐变而不是瞬间跳变；过渡结束就把类摘掉，不影响后续 hover。
+const TRANSITION_MS = 300;
+let transitionTimer = 0;
+
+function applyWithTransition(theme: Theme) {
+  const root = document.documentElement;
+  root.classList.add("theme-transition");
+  applyTheme(theme);
+
+  window.clearTimeout(transitionTimer);
+  transitionTimer = window.setTimeout(() => {
+    root.classList.remove("theme-transition");
+  }, TRANSITION_MS);
+}
+
+// 用户点击后：写 localStorage、立即应用到 DOM（带过渡）、通知所有订阅者
 function setTheme(theme: Theme) {
   window.localStorage.setItem(STORAGE_KEY, theme);
-  applyTheme(theme);
+  applyWithTransition(theme);
   listeners.forEach((fn) => fn());
 }
 

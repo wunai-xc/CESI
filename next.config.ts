@@ -10,8 +10,13 @@ import createMDX from '@next/mdx'
 const isProduction = process.env.NODE_ENV === 'production'
 
 // @next/mdx 的 loader 用 require.resolve 解析插件字符串，相对路径会从 loader 目录找，
-// 所以这里传绝对路径
-const codeMetaPlugin = path.join(process.cwd(), 'src/app/lib/remark-code-meta.mjs')
+// 所以本地插件一律传绝对路径
+const libPlugin = (name: string) => path.join(process.cwd(), 'src/app/lib', name)
+const codeMetaPlugin = libPlugin('remark-code-meta.mjs')
+const markPlugin = libPlugin('remark-mark.mjs')
+const scriptPlugin = libPlugin('remark-script.mjs')
+const defListPlugin = libPlugin('remark-def-list.mjs')
+const headingIdPlugin = libPlugin('remark-heading-id.mjs')
 
 const nextConfig: NextConfig = {
   experimental: {
@@ -36,9 +41,22 @@ const nextConfig: NextConfig = {
 
 const withMDX = createMDX({
   options: {
-    // frontmatter 剥 YAML 头；remark-gfm 提供表格/删除线/自动链接等 GFM 语法；
-    // 公式走 remark-math；codeMeta 把围栏元数据转成 data-* 属性
-    remarkPlugins: ['remark-frontmatter', 'remark-gfm', 'remark-math', codeMetaPlugin],
+    remarkPlugins: [
+      // 剥 YAML 头
+      'remark-frontmatter',
+      // GFM：表格、删除线、任务列表、脚注、自动链接；
+      // singleTilde 关掉，否则 ~2~ 会被当成删除线，下标就没法用了
+      ['remark-gfm', { singleTilde: false }],
+      // 公式
+      'remark-math',
+      // 以下四个是本地插件：==高亮==、~下标~ / ^上标^、定义列表、标题自定义 id
+      markPlugin,
+      scriptPlugin,
+      defListPlugin,
+      headingIdPlugin,
+      // 围栏代码块的元数据（文件名/版本）转成 data-* 属性
+      codeMetaPlugin,
+    ],
     // 公式渲染 + 标题锚点 + 代码高亮，全部在编译期完成，客户端不跑高亮库
     rehypePlugins: ['rehype-katex', 'rehype-slug', 'rehype-highlight'],
   },

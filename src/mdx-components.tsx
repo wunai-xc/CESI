@@ -64,6 +64,30 @@ const components: MDXComponents = {
     );
   },
 
+  // 高亮 ==文字==：黄色底，暗色降亮度
+  mark: (props) => (
+    <mark
+      {...props}
+      className="bg-yellow-200/80 px-0.5 text-inherit dark:bg-yellow-400/30"
+    />
+  ),
+
+  // 定义列表：术语加粗、定义缩进并用左侧细线区分
+  dl: (props) => <dl {...props} className="my-5" />,
+  dt: (props) => (
+    <dt {...props} className="mt-3 font-semibold text-zinc-900 dark:text-zinc-100" />
+  ),
+  dd: (props) => (
+    <dd
+      {...props}
+      className="mt-1 border-l-2 border-zinc-200 pl-3 text-zinc-600 dark:border-zinc-800 dark:text-zinc-400"
+    />
+  ),
+
+  // 上下标：不改变默认行为，只把字号相对化，便于在正文行高里对齐
+  sub: (props) => <sub {...props} className="text-[0.75em]" />,
+  sup: (props) => <sup {...props} className="text-[0.75em]" />,
+
   // 表格：外层横向滚动容器（窄屏不撑破布局）+ not-prose 接管样式，避免和 typography 的极简表格样式打架。
   // 单元格留白、表头底色、斑马纹、行分隔线都用 arbitrary variant 写在 table 上，一处维护。
   table: (props) => (

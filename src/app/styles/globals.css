@@ -24,3 +24,20 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans-local);
 }
+
+/* 亮暗切换过渡：只在切换那一刻挂上 .theme-transition（见 ThemeToggle），
+   给颜色类属性加过渡，页面就会逐渐变亮 / 逐渐变暗；平时不加，避免影响正常的 hover 速度。 */
+@media (prefers-reduced-motion: no-preference) {
+  html.theme-transition,
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition:
+      background-color 260ms ease,
+      border-color 260ms ease,
+      color 260ms ease,
+      fill 260ms ease,
+      stroke 260ms ease,
+      outline-color 260ms ease !important;
+  }
+}
