@@ -8,23 +8,22 @@ export default function Home() {
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-6 bg-zinc-50 px-6 py-16 font-sans dark:bg-black">
       {/* logo 在 h1 上方：亮色显示 light 图，暗色显示 dark 图（dark:hidden / dark:block 切换）。
-          注意两张 png 是 500×500 的画布，真正的图案只有 400×100（上下各留白约 200px），
-          所以这里显示高度要给到 h-64/h-72，视觉上的 logo 才和下面 text-5xl 的 h1 差不多大 */}
+          两张 png 已裁掉多余透明边，实际尺寸 400×100，所以 h-12/h-14 就是图案本身的高度 */}
       <Image
         src="/icon/WUNAI-LOGO-light.png"
         alt="WUNAI Logo"
-        width={500}
-        height={500}
+        width={400}
+        height={100}
         priority
-        className="h-64 w-auto block sm:h-72 dark:hidden"
+        className="h-12 w-auto block sm:h-14 dark:hidden"
       />
       <Image
         src="/icon/WUNAI-LOGO-dark.png"
         alt="WUNAI Logo"
-        width={500}
-        height={500}
+        width={400}
+        height={100}
         priority
-        className="h-64 w-auto hidden sm:h-72 dark:block"
+        className="h-12 w-auto hidden sm:h-14 dark:block"
       />
 
       <h1 className="text-center text-5xl">Hello! This is my App.</h1>
