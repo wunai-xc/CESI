@@ -5,7 +5,7 @@
 
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getAllTags, posts } from "@/app/content/posts";
+import { getAllPosts, getAllTags } from "@/app/content/posts";
 import PostSearch from "@/app/components/PostSearch";
 
 export const metadata: Metadata = {
@@ -14,6 +14,8 @@ export const metadata: Metadata = {
 };
 
 export default function PostsPage() {
+  const posts = getAllPosts();
+
   // 全站文章总字数：构建期汇总，每篇的 wordCount 在 posts.ts 里已经算好
   const totalWords = posts.reduce((sum, post) => sum + post.wordCount, 0);
   const tags = getAllTags();

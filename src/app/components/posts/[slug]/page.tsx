@@ -12,10 +12,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   getAdjacentPosts,
+  getAllPosts,
   getPost,
   getPostHeadings,
   loadPostContent,
-  posts,
 } from "@/app/content/posts";
 import { formatDate } from "@/app/lib/formatDate";
 import TagLink from "@/app/components/TagLink";
@@ -29,7 +29,7 @@ type PostPageProps = {
 
 // 构建时把每篇文章预渲染成静态页面
 export function generateStaticParams() {
-  return posts.map((post) => ({ slug: post.slug }));
+  return getAllPosts().map((post) => ({ slug: post.slug }));
 }
 
 // 每篇文章自己的 title / description（这里 await params 是被允许的）

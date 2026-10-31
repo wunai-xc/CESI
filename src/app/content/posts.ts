@@ -117,11 +117,36 @@ function loadPosts(): Post[] {
     .sort((a, b) => b.date.localeCompare(a.date));
 }
 
-// 模块加载时算一次，构建期就把列表定下来
-export const posts: Post[] = loadPosts();
+// 目录签名：文件名 + 各自的 mtime。
+// dev 下把目录里新增/删除/改动的文章算进签名，签名变了才重新扫描——
+// 否则模块只会在服务启动时执行一次，新加的文章要重启 dev 才出现。
+let cachedPosts: Post[] | null = null;
+let cachedSignature = "";
+
+function directorySignature(): string {
+  if (!fs.existsSync(POSTS_DIR)) return "";
+
+  return fs
+    .readdirSync(POSTS_DIR)
+    .filter((fileName) => fileName.endsWith(".mdx"))
+    .map((fileName) => `${fileName}:${fs.statSync(path.join(POSTS_DIR, fileName)).mtimeMs}`)
+    .join("|");
+}
+
+// 取得文章列表（带缓存，目录变化后自动失效）。生产构建时只算一次。
+export function getAllPosts(): Post[] {
+  const signature = directorySignature();
+
+  if (!cachedPosts || signature !== cachedSignature) {
+    cachedPosts = loadPosts();
+    cachedSignature = signature;
+  }
+
+  return cachedPosts;
+}
 
 export function getPost(slug: string): Post | undefined {
-  return posts.find((post) => post.slug === slug);
+  return getAllPosts().find((post) => post.slug === slug);
 }
 
 // 标签系统：统计所有标签及其文章数（按数量倒序，同数量按名称排），供列表页标签栏和标签路由用
@@ -133,7 +158,7 @@ export type PostTag = {
 export function getAllTags(): PostTag[] {
   const counts = new Map<string, number>();
 
-  for (const post of posts) {
+  for (const post of getAllPosts()) {
     for (const tag of post.tags) {
       counts.set(tag, (counts.get(tag) ?? 0) + 1);
     }
@@ -146,7 +171,7 @@ export function getAllTags(): PostTag[] {
 
 // 取某个标签下的文章（保持日期倒序）
 export function getPostsByTag(tag: string): Post[] {
-  return posts.filter((post) => post.tags.includes(tag));
+  return getAllPosts().filter((post) => post.tags.includes(tag));
 }
 
 // 相邻文章（用于底部「上篇 / 下篇」）：
@@ -157,12 +182,13 @@ export type AdjacentPosts = {
 };
 
 export function getAdjacentPosts(slug: string): AdjacentPosts {
-  const index = posts.findIndex((post) => post.slug === slug);
+  const list = getAllPosts();
+  const index = list.findIndex((post) => post.slug === slug);
   if (index === -1) return {};
 
   return {
-    previous: posts[index + 1],
-    next: posts[index - 1],
+    previous: list[index + 1],
+    next: list[index - 1],
   };
 }
 
