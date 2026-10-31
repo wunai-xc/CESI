@@ -1,8 +1,3 @@
-// src/app/components/home/HomeAbout.tsx
-// 首页第三段：关于 + 联系方式。同样的滚动入场，左标题右内容的两栏结构，
-// 窄屏自动堆叠。背景右侧放 wunai-bot 图，与星空同样的视差位移（向左渐隐融进底色）。
-// 链接沿用站点风格（英文为主，必要时中英并列）。
-
 import Image from "next/image";
 import Link from "next/link";
 import Parallax from "@/app/components/ui/Parallax";
@@ -27,7 +22,7 @@ export default function HomeAbout() {
           alt=""
           fill
           sizes="(min-width: 640px) 60vw, 100vw"
-          className="edge-fade-left object-cover object-right opacity-15 grayscale dark:opacity-35 dark:grayscale-0"
+          className="edge-fade-left object-cover object-right dark:grayscale-0"
         />
       </Parallax>
 
