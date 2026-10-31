@@ -43,7 +43,7 @@ export default function HomeBackdrop() {
         style={{ y: reducedMotion ? 0 : nearY }}
       >
         <Image
-          src="/images/stars-far.jpg"
+          src="/images/stars-1.png"
           alt=""
           fill
           sizes="100vw"

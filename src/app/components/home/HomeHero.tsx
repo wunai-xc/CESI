@@ -32,7 +32,7 @@ export default function HomeHero({
           style={{ animationDelay: "0s" }}
         >
           <Image
-            src="/icon/WUNAI-LOGO-light.png"
+            src="/icon/WUNAI.png"
             alt="WUNAI Logo"
             width={400}
             height={100}
@@ -40,7 +40,7 @@ export default function HomeHero({
             className="h-11 w-auto block dark:hidden"
           />
           <Image
-            src="/icon/WUNAI-LOGO-dark.png"
+            src="/icon/WUNAI-dark.png"
             alt="WUNAI Logo"
             width={400}
             height={100}
@@ -49,22 +49,22 @@ export default function HomeHero({
           />
         </div>
 
-        {/* 眉标：等宽小字 + 两侧细线 */}
+        {/* 眉标：等宽小字 + 两侧细线；text-invert 让颜色与下方星空反向 */}
         <div
-          className="animate-rise flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.32em] text-zinc-900 dark:text-zinc-900"
+          className="animate-rise text-invert flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.32em]"
           style={{ animationDelay: "0.06s" }}
         >
-          <span className="h-px w-8 bg-zinc-900 dark:bg-zinc-900" />
+          <span className="h-px w-8 bg-current opacity-40" />
           Personal blog
-          <span className="h-px w-8 bg-zinc-900 dark:bg-zinc-900" />
+          <span className="h-px w-8 bg-current opacity-40" />
         </div>
 
-        {/* 标题：纯灰阶，最后一个词用前景色加深 */}
+        {/* 标题：同样走 text-invert（白字 + difference），压在星空上自动取反色 */}
         <h1
-          className="animate-rise text-balance text-5xl font-bold leading-[1.15] tracking-tight text-zinc-50 sm:text-6xl dark:text-zinc-900"
+          className="animate-rise text-invert text-balance text-5xl font-bold leading-[1.15] tracking-tight sm:text-6xl"
           style={{ animationDelay: "0.12s" }}
         >
-          Hello, I&apos;m <span className="text-accent">WUNAI.</span>
+          Hello, I&apos;m WUNAI.
         </h1>
 
         {/* 打字机标语 + 光标 */}

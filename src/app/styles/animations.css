@@ -121,3 +121,13 @@
     #000 100%
   );
 }
+
+/* 与下方背景反向的文字：白色 + mix-blend-mode: difference，
+   叠在星空图上时颜色自动取背景的反色，亮处变暗、暗处变亮。
+   用 @supports 包住：不支持混合模式的浏览器保持正常继承色，不会变成隐形白字。 */
+@supports (mix-blend-mode: difference) {
+  .text-invert {
+    color: #fff;
+    mix-blend-mode: difference;
+  }
+}
