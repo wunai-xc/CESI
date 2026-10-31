@@ -124,6 +124,31 @@ export function getPost(slug: string): Post | undefined {
   return posts.find((post) => post.slug === slug);
 }
 
+// 标签系统：统计所有标签及其文章数（按数量倒序，同数量按名称排），供列表页标签栏和标签路由用
+export type PostTag = {
+  tag: string;
+  count: number;
+};
+
+export function getAllTags(): PostTag[] {
+  const counts = new Map<string, number>();
+
+  for (const post of posts) {
+    for (const tag of post.tags) {
+      counts.set(tag, (counts.get(tag) ?? 0) + 1);
+    }
+  }
+
+  return [...counts.entries()]
+    .map(([tag, count]) => ({ tag, count }))
+    .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag));
+}
+
+// 取某个标签下的文章（保持日期倒序）
+export function getPostsByTag(tag: string): Post[] {
+  return posts.filter((post) => post.tags.includes(tag));
+}
+
 // 相邻文章（用于底部「上篇 / 下篇」）：
 // posts 已按日期倒序，所以 index + 1 是更早发布的一篇（上一篇），index - 1 是更晚的一篇（下一篇）
 export type AdjacentPosts = {

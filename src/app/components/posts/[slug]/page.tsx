@@ -18,6 +18,7 @@ import {
   posts,
 } from "@/app/content/posts";
 import { formatDate } from "@/app/lib/formatDate";
+import TagLink from "@/app/components/TagLink";
 import PostToc from "@/app/components/PostToc";
 import PostPager from "@/app/components/PostPager";
 import BackToTop from "@/app/components/BackToTop";
@@ -88,12 +89,7 @@ async function PostBody({ params }: PostPageProps) {
           <time dateTime={post.date}>{formatDate(post.date)}</time>
           <span>{post.wordCount.toLocaleString()} 字</span>
           {post.tags.map((tag) => (
-            <span
-              key={tag}
-              className="bg-zinc-100 px-2.5 py-0.5 text-xs text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"
-            >
-              #{tag}
-            </span>
+            <TagLink key={tag} tag={tag} className="text-xs" />
           ))}
         </div>
       </header>
