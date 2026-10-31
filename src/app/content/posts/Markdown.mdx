@@ -10,11 +10,16 @@ tags: [MDX]
 | 元素 | MD语法 | HTML语法 | 效果 |
 | --- | --- | --- | --- |
 | 标题 | `#` <br /> `##` <br /> `###` <br /> `####` | `<h1>H1</h1>` <br /> `<h2>H2</h2>` <br /> `<h3>H3</h3>` <br /> `<h4>H4</h4>` | <h1>H1</h1> <br /> <h2>H2</h2> <br /> <h3>H3</h3> <br /> <h4>H4</h4> |
+| 标题 id | `\{#英文id\}` 写在标题末尾 | `<h2 id="custom">标题</h2>` | [点我跳到本页锚点](#custom-anchor) |
 | 粗体 | `**粗体**` <br /> `__粗体__` | `<strong>粗体</strong>` | **粗体** <br /> __粗体__ |
 | 斜体 | `*斜体*` <br /> `_斜体_` | `<em>斜体</em>` | *斜体* <br /> _斜体_ |
 | 粗斜体 | `***粗斜体***` <br /> `___粗斜体___` | `<strong><em>粗斜体</em></strong>` | ***粗斜体*** <br /> ___粗斜体___ |
 | 删除线 | `~~删除线~~` | `<del>删除线</del>` | ~~删除线~~ |
+| 高亮 | `==高亮==` | `<mark>高亮</mark>` | ==高亮== |
 | 行内代码 | `` `code` `` | `<code>code</code>` | `code` |
+| 代码块 | <code>```ts</code> 换行写代码 换行 <code>```</code> | `<pre><code>code</code></pre>` | 见下方代码块 |
+| 下标 | `~2~` | `<sub>2</sub>` | H~2~O |
+| 上标 | `^2^` | `<sup>2</sup>` | E=mc^2^ |
 | 链接 | `[Next.js](https://nextjs.org)` | `<a href="https://nextjs.org">Next.js</a>` | [Next.js](https://nextjs.org) |
 | 引用块 | `> 引用` | `<blockquote><p>这是一段引用内容。</p></blockquote>` | <blockquote><p>这是一段引用内容。</p></blockquote> |
 | 水平线 | `***` <br /> `---` | `<hr />` | <hr /> |
@@ -22,8 +27,41 @@ tags: [MDX]
 | 图片 | `![alt text](/icon/WUNAI-LOGO-light.png)` | `<img src="/icon/WUNAI-LOGO-light.png" alt="logo" width="120" />` | <img src="/icon/WUNAI-LOGO-light.png" alt="logo" width="120" /> |
 | 有序列表 | `1.` 每行一项 | `<ol><li>第一项</li><li>第二项</li></ol>` | <ol><li>第一项</li><li>第二项</li></ol> |
 | 无序列表 | `- ` 每行一项 | `<ul><li>第一项</li><li>第二项</li></ul>` | <ul><li>第一项</li><li>第二项</li></ul> |
+| 任务列表 | `- [ ] 未完成` <br /> `- [x] 已完成` | `<input type="checkbox" checked disabled />` | <ul class="task-list-item"><li><input type="checkbox" disabled /> 未完成</li><li><input type="checkbox" checked disabled /> 已完成</li></ul> |
+| 定义列表 | `术语` 换行 `: 定义` | `<dl><dt>术语</dt><dd>定义</dd></dl>` | <dl><dt>术语</dt><dd>定义内容</dd></dl> |
+| 脚注 | `正文[^1]` + `[^1]: 注释` | `<sup><a href="#fn1">1</a></sup>` | 正文里带脚注[^1] |
 | 表格 | `\| 日期 \| 顺序 \|` <br /> `\| --- \| --- \|` <br /> `\| 31 \| 1 \|` | `<table><tbody><tr><th>日期</th><th>顺序</th></tr><tr><td>31</td><td>1</td></tr></tbody></table>` | <table><tbody><tr><th>日期</th><th>顺序</th></tr><tr><td>31</td><td>1</td></tr></tbody></table> |
 
-> 表格单元格只解析**行内内容**：块级 markdown（`#`、列表、代码块）在里面不生效，
-> 想展示真实效果就写 HTML/JSX 标签，并且整段必须和这一行在同一行、不能换行。
+## 1.2 代码块
+
+围栏代码块支持语言标识、文件名/版本元数据、语法高亮，以及右上角的换行与复制按钮：
+
+```ts filename="src/app/content/posts.ts" runtime=Node runtimeVersion=22 languageVersion=5.9
+export const posts = loadPosts();
+```
+
+## 1.3 定义列表
+
+术语
+: 定义列表由「术语行 + 以冒号开头的定义行」组成
+: 一个术语可以有多条定义
+
+## 1.4 任务列表
+
+- [x] 已经支持的语法：表格、删除线、高亮、上下标、任务列表、脚注
+- [x] 代码块：高亮 + 文件名/版本 + 换行/复制
+- [ ] 还没写的：把这份速查表补到常用语法全覆盖
+
+## 1.5 自定义标题 id
+
+下面是带自定义 id 的标题，可以从表格里的链接跳过来。
+
+### 自定义锚点 \{#custom-anchor\}
+
+跳转成功的话，你刚才点的链接就把你带到这个小标题了。
+
+> 表格单元格只解析**行内内容**：块级 markdown（`#`、列表、代码块、定义列表）在里面不生效，
+> 想展示真实效果就写 HTML 标签，并且整段必须和这一行在同一行、不能换行。
 > 单元格里出现的 `|` 必须转义成 `\|`，否则会被当成列分隔符。
+
+[^1]: 这是一条脚注，会出现在文章末尾的脚注区。

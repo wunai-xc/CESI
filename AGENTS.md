@@ -53,6 +53,20 @@ export const posts = loadPosts();
 
 元数据由 `src/app/lib/remark-code-meta.mjs` 写进 `data-*` 属性，`src/mdx-components.tsx` 的 `pre` 读出来传给 `src/app/components/CodeBlock.tsx`；高亮由 `rehype-highlight` 在编译期完成，不跑客户端 JS。
 
+## MDX 支持的语法
+
+| 语法 | 写法 | 由谁实现 |
+| --- | --- | --- |
+| 表格 / 删除线 / 任务列表 / 脚注 / 自动链接 | GFM 标准写法 | `remark-gfm`（`singleTilde: false`，把单波浪线留给下标） |
+| 高亮 | `==文字==` | `src/app/lib/remark-mark.mjs` |
+| 下标 / 上标 | `~2~` / `^2^` | `src/app/lib/remark-script.mjs` |
+| 定义列表 | `术语` 换行 `: 定义` | `src/app/lib/remark-def-list.mjs` |
+| 标题自定义 id | `## 标题 \{#custom\}`（MDX 里花括号要转义） | `src/app/lib/remark-heading-id.mjs` |
+| 标题自动 id | 标题文字自动 slug | `rehype-slug` |
+| 代码高亮 | 围栏代码块 | `rehype-highlight` |
+| 公式 | `$…$` / `$$…$$` | `remark-math` + `rehype-katex` |
+| 代码块元数据 | 围栏后跟 `filename=… runtime=…` | `src/app/lib/remark-code-meta.mjs` |
+
 ## 表格
 
 - 表格是 GFM 语法，必须有表头 + 分隔行：`| a | b |` / `| --- | --- |` / 数据行。

@@ -98,7 +98,7 @@ async function PostBody({ params }: PostPageProps) {
           正文字体用内联样式指向 --font-reading（阅读字体，不含站点字体 cesi-sans），
           这样不依赖额外 CSS 类，也不会被工具类或插件样式覆盖 */}
       <div
-        className="prose prose-zinc mt-8 max-w-none dark:prose-invert prose-a:text-blue-600 dark:prose-a:text-blue-400"
+        className="prose prose-zinc mt-8 max-w-none dark:prose-invert prose-a:text-blue-600 dark:prose-a:text-blue-400 [&_.task-list-item]:list-none [&_.task-list-item]:pl-0 [&_.task-list-item>input]:mr-2 [&_.task-list-item>input]:align-middle [&_.task-list-item>input]:accent-blue-600 [&_[data-footnotes]]:mt-10 [&_[data-footnotes]]:border-t [&_[data-footnotes]]:border-zinc-200 [&_[data-footnotes]]:pt-4 [&_[data-footnotes]]:text-sm dark:[&_[data-footnotes]]:border-zinc-800"
         style={{ fontFamily: "var(--font-reading)" }}
       >
         <Content />
