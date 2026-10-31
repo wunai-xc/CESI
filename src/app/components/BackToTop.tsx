@@ -1,14 +1,12 @@
 // src/app/components/BackToTop.tsx
 // 文章页右下角的「返回顶部」悬浮按钮：
-// 圆环边框就是阅读进度条（SVG stroke-dashoffset），中间显示进度百分比，点击平滑回到顶部。
+// 方形边框就是阅读进度条（SVG rect + stroke-dashoffset），中间显示进度百分比，点击平滑回到顶部。
+// 按钮整体半透明，不遮挡正文阅读。
 
 "use client";
 
 import { useEffect, useState } from "react";
 
-// 圆环半径与周长（viewBox 56x56，线宽 2，半径留 26 不裁到边缘）
-const RADIUS = 26;
-const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
 export default function BackToTop() {
   const [progress, setProgress] = useState(0);
@@ -63,36 +61,33 @@ export default function BackToTop() {
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Back to top"
       title="Back to top 返回顶部"
-      // 圆环是几何形状，这里用行内 borderRadius 而不是 rounded-full（全站不用圆角工具类）
-      style={{ borderRadius: "50%" }}
-      className="fixed bottom-5 right-4 z-40 flex h-14 w-14 items-center justify-center bg-white/90 text-zinc-600 shadow-sm backdrop-blur transition-colors hover:text-blue-600 dark:bg-zinc-900/90 dark:text-zinc-300 dark:hover:text-blue-400"
+      className="fixed bottom-5 right-4 z-40 flex h-12 w-12 items-center justify-center bg-white/55 text-zinc-700 backdrop-blur-sm transition-colors hover:bg-white/80 hover:text-blue-600 dark:bg-zinc-900/55 dark:text-zinc-200 dark:hover:bg-zinc-900/80 dark:hover:text-blue-400"
     >
-      <svg
-        viewBox="0 0 56 56"
-        aria-hidden="true"
-        // -rotate-90 让圆环从正上方开始顺时针增长
-        className="absolute inset-0 h-full w-full -rotate-90"
-      >
-        {/* 底环：淡色描边，表示 100% */}
-        <circle
-          cx="28"
-          cy="28"
-          r={RADIUS}
+      <svg viewBox="0 0 56 56" aria-hidden="true" className="absolute inset-0 h-full w-full">
+        {/* 底线：淡色描边，表示 100% */}
+        <rect
+          x="1"
+          y="1"
+          width="54"
+          height="54"
           fill="none"
           stroke="currentColor"
-          strokeOpacity="0.18"
+          strokeOpacity="0.15"
           strokeWidth="2"
+          pathLength={100}
         />
-        {/* 进度环：dashoffset 越接近 0 显示得越多 */}
-        <circle
-          cx="28"
-          cy="28"
-          r={RADIUS}
+        {/* 进度线：pathLength=100 后 dasharray 就能直接按百分比算，从左上角顺时针增长 */}
+        <rect
+          x="1"
+          y="1"
+          width="54"
+          height="54"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
-          strokeDasharray={CIRCUMFERENCE}
-          strokeDashoffset={CIRCUMFERENCE * (1 - progress)}
+          pathLength={100}
+          strokeDasharray={100}
+          strokeDashoffset={100 - percent}
         />
       </svg>
       <span className="relative text-[11px] font-medium tabular-nums">
