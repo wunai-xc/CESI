@@ -32,7 +32,7 @@ export default function Home() {
       </Reveal>
 
       <Reveal delay={0.08}>
-        <h1 className="text-center text-5xl"><span className="text-red-600">Hello!</span> This is my App.</h1>
+        <h1 className="text-center text-5xl"><span className="text-red-600 font-bold">Hello!</span> This is my App.</h1>
       </Reveal>
 
       <Reveal delay={0.16}>
