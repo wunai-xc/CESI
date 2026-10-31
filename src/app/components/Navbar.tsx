@@ -9,7 +9,7 @@ export default function Navbar() {
     <header className="bg-white dark:text-zinc-100 shadow-md border-b dark:border-zinc-800 dark:bg-zinc-950">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
         {/* logo：点回首页；两张图靠 dark:hidden / dark:block 做配色切换 */}
-        <Link href="/" className="text-3xl font-bold dark:text-white transition-colors hover:text-blue-300 flex items-center">
+        <Link href="/" className="text-3xl font-bold dark:text-white transition-colors hover:text-accent flex items-center">
           <Image
             src="/icon/WUNAI.png"
             alt="WUNAI Logo"
@@ -28,10 +28,10 @@ export default function Navbar() {
 
         {/* 页面入口：文章列表压在 /components/posts 路由下 */}
         <div className="flex items-center space-x-6">
-          <Link href="/components/posts" className="transition-colors hover:text-blue-400">
+          <Link href="/components/posts" className="transition-colors hover:text-accent">
             All posts
           </Link>
-          <Link href="/content/about" className="transition-colors hover:text-blue-400">
+          <Link href="/content/about" className="transition-colors hover:text-accent">
             About
           </Link>
         </div>

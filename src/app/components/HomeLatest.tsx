@@ -46,7 +46,7 @@ export default function HomeLatest({
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-lg font-medium text-zinc-900 transition-colors group-hover:text-blue-600 dark:text-zinc-100 dark:group-hover:text-blue-400">
+                  <span className="block truncate text-lg font-medium text-zinc-900 transition-colors group-hover:text-accent dark:text-zinc-100">
                     {post.title}
                   </span>
                   {post.summary ? (
@@ -66,7 +66,7 @@ export default function HomeLatest({
         <div className="mt-8 flex items-center justify-between gap-4">
           <Link
             href="/components/posts"
-            className="group inline-flex items-center gap-2 text-sm font-medium text-zinc-900 transition-colors hover:text-blue-600 dark:text-zinc-100 dark:hover:text-blue-400"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-zinc-900 transition-colors hover:text-accent dark:text-zinc-100 dark:hover:text-accent"
           >
             Browse all posts
             <span

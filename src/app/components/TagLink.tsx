@@ -16,7 +16,7 @@ export default function TagLink({
       href={`/components/posts/tag/${encodeURIComponent(tag)}`}
       // 标签是数据、不是按钮，保持方角，悬停变蓝提示可点
       className={[
-        "inline-block bg-zinc-100 px-2.5 py-0.5 text-zinc-600 transition-colors hover:text-blue-600 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:text-blue-400",
+        "inline-block bg-zinc-100 px-2.5 py-0.5 text-zinc-600 transition-colors hover:text-accent dark:bg-zinc-800 dark:text-zinc-300 dark:hover:text-accent",
         className,
       ].join(" ")}
     >

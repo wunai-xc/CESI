@@ -110,7 +110,7 @@ const components: MDXComponents = {
           // 否则 h1 在 14px 的表格里会显得过大
           "[&_h1]:m-0 [&_h2]:m-0 [&_h3]:m-0 [&_h4]:m-0 [&_p]:m-0",
           "[&_h1]:text-2xl [&_h2]:text-xl [&_h3]:text-lg [&_h4]:text-base",
-          "[&_a]:text-blue-600 [&_a]:underline dark:[&_a]:text-blue-400",
+          "[&_a]:text-accent [&_a]:underline",
           // 单元格里演示列表 / 图片时，把默认外边距和列表符号归一化，否则缩进会很难看
           "[&_ol]:m-0 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:m-0 [&_ul]:list-disc [&_ul]:pl-5",
           "[&_li]:my-0.5 [&_img]:my-0 [&_img]:inline [&_img]:h-auto [&_img]:max-w-full [&_hr]:my-2",

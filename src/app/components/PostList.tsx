@@ -30,7 +30,7 @@ export default function PostList({
         // 逐项延迟最多 0.4s，长列表末尾不会等太久
         <Reveal as="li" key={post.slug} className="py-6" delay={Math.min(index * 0.04, 0.4)}>
           <Link href={`/components/posts/${post.slug}`} className="group block">
-            <h2 className="text-xl font-semibold text-zinc-900 transition-colors group-hover:text-blue-600 dark:text-zinc-100 dark:group-hover:text-blue-400">
+            <h2 className="text-xl font-semibold text-zinc-900 transition-colors group-hover:text-accent dark:text-zinc-100">
               <Highlight text={post.title} terms={terms} />
             </h2>
             {post.summary ? (

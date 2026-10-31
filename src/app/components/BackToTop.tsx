@@ -73,7 +73,7 @@ export default function BackToTop() {
       transition={{ duration: reducedMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
       whileHover={reducedMotion ? undefined : { scale: 1.04 }}
       whileTap={reducedMotion ? undefined : { scale: 0.96 }}
-      className="fixed bottom-5 right-4 z-40 flex h-12 w-12 items-center justify-center bg-white/55 text-zinc-700 backdrop-blur-sm transition-colors hover:bg-white/80 hover:text-blue-600 dark:bg-zinc-900/55 dark:text-zinc-200 dark:hover:bg-zinc-900/80 dark:hover:text-blue-400"
+      className="fixed bottom-5 right-4 z-40 flex h-12 w-12 items-center justify-center bg-white/55 text-zinc-700 backdrop-blur-sm transition-colors hover:bg-white/80 hover:text-accent dark:bg-zinc-900/55 dark:text-zinc-200 dark:hover:bg-zinc-900/80 dark:hover:text-accent"
     >
       <svg viewBox="0 0 56 56" aria-hidden="true" className="absolute inset-0 h-full w-full">
         {/* 底线：淡色描边，表示 100% */}

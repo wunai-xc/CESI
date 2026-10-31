@@ -13,7 +13,7 @@ type CalloutProps = {
 
 // 三种类型的边框 / 背景 / 文字色，亮色与暗色各一套
 const styles: Record<CalloutType, string> = {
-  info: "border-blue-200 bg-blue-50 text-blue-900 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-100",
+  info: "border-line bg-panel text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100",
   warn: "border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-100",
   danger:
     "border-red-200 bg-red-50 text-red-900 dark:border-red-900 dark:bg-red-950 dark:text-red-100",

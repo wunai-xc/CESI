@@ -147,7 +147,7 @@ export default function Footer() {
                           target="_blank"
                           rel="noopener noreferrer"
                           title={item.name}
-                          className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs text-zinc-600 transition-colors hover:border-blue-400 hover:text-blue-600 dark:text-zinc-300 dark:hover:text-blue-400"
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs text-zinc-600 transition-colors hover:border-accent hover:text-accent dark:text-zinc-300 dark:hover:text-accent"
                         >
                           <BrandIcon name={item.icon} className="h-3.5 w-3.5" />
                           <span>{item.name}</span>
@@ -172,7 +172,7 @@ export default function Footer() {
                     {...(item.href.startsWith("http")
                       ? { target: "_blank", rel: "noopener noreferrer" }
                       : {})}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 text-zinc-600 transition-colors hover:text-blue-600 dark:text-zinc-300 dark:hover:text-blue-400"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 text-zinc-600 transition-colors hover:text-accent dark:text-zinc-300 dark:hover:text-accent"
                   >
                     <BrandIcon name={item.icon} className="h-4 w-4 shrink-0" />
                     <span>{item.label}</span>
@@ -191,7 +191,7 @@ export default function Footer() {
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="text-zinc-600 transition-colors hover:text-blue-600 dark:text-zinc-300 dark:hover:text-blue-400"
+                    className="text-zinc-600 transition-colors hover:text-accent dark:text-zinc-300 dark:hover:text-accent"
                   >
                     {item.label}
                   </Link>

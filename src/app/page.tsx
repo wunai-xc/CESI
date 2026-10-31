@@ -21,7 +21,11 @@ export default function Home() {
 
   return (
     <div className="flex flex-1 flex-col">
-      <HomeHero />
+      <HomeHero
+        postCount={posts.length}
+        wordCount={totalWords}
+        latestDate={posts[0]?.date ?? ""}
+      />
       <HomeLatest posts={posts} totalWords={totalWords} />
       <HomeAbout />
     </div>

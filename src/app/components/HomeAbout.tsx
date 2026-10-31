@@ -42,9 +42,9 @@ export default function HomeAbout() {
                   {...(item.external
                     ? { target: "_blank", rel: "noopener noreferrer" }
                     : {})}
-                  className="group inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.16em] text-zinc-600 transition-colors hover:text-blue-600 dark:text-zinc-300 dark:hover:text-blue-400"
+                  className="group inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.16em] text-zinc-600 transition-colors hover:text-accent dark:text-zinc-300 dark:hover:text-accent"
                 >
-                  <span className="h-px w-4 bg-zinc-400 transition-all duration-200 group-hover:w-6 group-hover:bg-blue-500" />
+                  <span className="h-px w-4 bg-zinc-400 transition-all duration-200 group-hover:w-6 group-hover:bg-accent" />
                   {item.label}
                 </a>
               </li>

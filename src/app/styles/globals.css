@@ -16,6 +16,11 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  /* 工程机械风格：强调色、分隔线、面板色都走 CSS 变量，亮暗各自一套 */
+  --color-accent: var(--accent);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-line: var(--line);
+  --color-panel: var(--panel);
   --font-sans: var(--font-sans-local);
   --font-mono: var(--font-mono-local);
 }

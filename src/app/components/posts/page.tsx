@@ -38,7 +38,7 @@ export default function PostsPage() {
               <Link
                 key={tag}
                 href={`/components/posts/tag/${encodeURIComponent(tag)}`}
-                className="bg-zinc-100 px-2.5 py-0.5 text-zinc-600 transition-colors hover:text-blue-600 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:text-blue-400"
+                className="bg-zinc-100 px-2.5 py-0.5 text-zinc-600 transition-colors hover:text-accent dark:bg-zinc-800 dark:text-zinc-300 dark:hover:text-accent"
               >
                 #{tag}
                 <span className="ml-1 text-zinc-400 dark:text-zinc-500">

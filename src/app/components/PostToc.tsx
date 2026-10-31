@@ -88,7 +88,7 @@ export default function PostToc({ headings }: { headings: PostHeading[] }) {
         aria-controls="post-toc"
         title="Contents 目录"
         className={[
-          "inline-flex items-center gap-1.5 border border-zinc-300/80 bg-white/55 px-2.5 py-1.5 text-xs text-zinc-700 backdrop-blur-sm transition-all duration-200 hover:border-zinc-400 hover:bg-white/80 hover:text-blue-600 dark:border-zinc-700/80 dark:bg-zinc-900/55 dark:text-zinc-200 dark:hover:border-zinc-500 dark:hover:bg-zinc-900/80 dark:hover:text-blue-400",
+          "inline-flex items-center gap-1.5 border border-zinc-300/80 bg-white/55 px-2.5 py-1.5 text-xs text-zinc-700 backdrop-blur-sm transition-all duration-200 hover:border-zinc-400 hover:bg-white/80 hover:text-accent dark:border-zinc-700/80 dark:bg-zinc-900/55 dark:text-zinc-200 dark:hover:border-zinc-500 dark:hover:bg-zinc-900/80 dark:hover:text-accent",
           invisible ? "pointer-events-none opacity-0" : "opacity-100",
         ].join(" ")}
       >
@@ -115,7 +115,7 @@ export default function PostToc({ headings }: { headings: PostHeading[] }) {
                   href={`#${heading.id}`}
                   onClick={() => setOpen(false)}
                   className={[
-                    "block px-3 py-1.5 leading-5 text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-blue-600 dark:text-zinc-300 dark:hover:bg-zinc-900 dark:hover:text-blue-400",
+                    "block px-3 py-1.5 leading-5 text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-accent dark:text-zinc-300 dark:hover:bg-zinc-900 dark:hover:text-accent",
                     // 三级标题缩进，形成层级
                     heading.depth === 3 ? "pl-6" : "",
                   ].join(" ")}

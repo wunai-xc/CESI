@@ -7,7 +7,7 @@ import type { Post } from "@/app/content/posts";
 
 // 统一的外框样式：方角、细边框、悬停变蓝
 const boxClass =
-  "flex flex-1 flex-col justify-center border border-zinc-200 px-4 py-3 transition-colors hover:border-blue-400 dark:border-zinc-800 dark:hover:border-blue-500";
+  "flex flex-1 flex-col justify-center border border-zinc-200 px-4 py-3 transition-colors hover:border-accent dark:border-zinc-800 dark:hover:border-accent";
 
 function PostLink({
   post,
