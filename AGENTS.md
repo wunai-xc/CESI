@@ -20,6 +20,18 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - 不要用 `cp -al` / 硬链接方式复制项目：这个 Android proot 环境用 link2symlink 模拟硬链接，会把项目文件改成 `.l2s.*` 链接对，误删就会丢文件。
 - 删除文件前先确认路径，不要对项目目录做模糊匹配的批量删除。
 
+## 样式文件结构（`src/app/styles/`）
+
+`layout.tsx` 只 import `globals.css` 一个入口，其余文件通过 `@import` 引入：
+
+- `globals.css`：入口，只放 `@import "tailwindcss"`、`@import` 其他分片、`@plugin`、`@custom-variant dark`、`@theme inline` 和 `body` 基础样式
+- `fonts.css`：`@font-face`
+- `tokens.css`：颜色 / 字体变量与 `.dark` 覆盖
+- `syntax.css`：代码高亮（hljs）配色
+- `animations.css`：加载动画 keyframes 与类
+
+新增样式按这个划分放对应文件，不要再往 `globals.css` 里堆。
+
 ## 文章里的代码块写法
 
 围栏代码块后面可以带元数据，会显示在代码块头部的信息栏里：

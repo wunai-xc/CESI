@@ -1,33 +1,12 @@
 @import "tailwindcss";
+@import "./fonts.css";
+@import "./tokens.css";
+@import "./syntax.css";
+@import "./animations.css";
+
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where(.dark, .dark *));
-
-@font-face {
-  font-family: "cesi-sans";
-  src: url("/fonts/vendettaregular-xgrga.ttf") format("truetype");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --hl-comment: #8a8f98;
-  --hl-keyword: #a626a4;
-  --hl-string: #0a7d33;
-  --hl-number: #986801;
-  --hl-function: #1c62b9;
-  --hl-type: #0f766e;
-  --hl-attr: #b45309;
-  --hl-builtin: #7c3aed;
-  --font-sans-local: "cesi-sans", "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", system-ui,
-    -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono-local: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-}
 
 @theme inline {
   --color-background: var(--background);
@@ -36,122 +15,8 @@
   --font-mono: var(--font-mono-local);
 }
 
-.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --hl-comment: #7f848e;
-  --hl-keyword: #c678dd;
-  --hl-string: #98c379;
-  --hl-number: #d19a66;
-  --hl-function: #61afef;
-  --hl-type: #56b6c2;
-  --hl-attr: #e5c07b;
-  --hl-builtin: #c678dd;
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans-local);
-}
-
-.hljs {
-  color: inherit;
-  background: transparent;
-}
-
-.hljs-comment,
-.hljs-quote {
-  color: var(--hl-comment);
-  font-style: italic;
-}
-
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-literal,
-.hljs-doctag {
-  color: var(--hl-keyword);
-}
-
-.hljs-string,
-.hljs-regexp,
-.hljs-meta .hljs-string {
-  color: var(--hl-string);
-}
-
-.hljs-number,
-.hljs-symbol,
-.hljs-bullet {
-  color: var(--hl-number);
-}
-
-.hljs-title,
-.hljs-section,
-.hljs-name {
-  color: var(--hl-function);
-}
-
-.hljs-type,
-.hljs-class .hljs-title {
-  color: var(--hl-type);
-}
-
-.hljs-attr,
-.hljs-attribute,
-.hljs-variable,
-.hljs-template-variable,
-.hljs-selector-id,
-.hljs-selector-class,
-.hljs-meta {
-  color: var(--hl-attr);
-}
-
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-params {
-  color: var(--hl-builtin);
-}
-
-.hljs-emphasis {
-  font-style: italic;
-}
-
-.hljs-strong {
-  font-weight: 600;
-}
-
-@keyframes sweep-x {
-  from {
-    transform: translateX(-100%);
-  }
-
-  to {
-    transform: translateX(100vw);
-  }
-}
-
-@keyframes sweep-y {
-  from {
-    transform: translateY(100%);
-  }
-
-  to {
-    transform: translateY(-100svh);
-  }
-}
-
-.sweep-bar-v {
-  animation: sweep-x 1s ease-in-out infinite alternate;
-}
-
-.sweep-bar-h {
-  animation: sweep-y 1s ease-in-out infinite alternate;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sweep-bar-v,
-  .sweep-bar-h {
-    animation-duration: 2s;
-    animation-timing-function: linear;
-  }
 }
