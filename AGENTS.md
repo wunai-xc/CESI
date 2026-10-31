@@ -31,8 +31,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `fonts.css`：`@font-face`
 - `tokens.css`：颜色 / 字体变量与 `.dark` 覆盖
 - `syntax.css`：代码高亮（hljs）配色
+- `animations.css`：入场动画（`animate-rise`），纯 CSS，不依赖 JS
 
-加载动画（`src/app/components/SweepLoader.tsx`）用 Web Animations API 在客户端跑，不写在 CSS 里。
+切页转场（`src/app/components/TransitionOverlay.tsx`）用 motion 在客户端跑，不进 CSS。
 
 新增样式按这个划分放对应文件，不要再往 `globals.css` 里堆。
 

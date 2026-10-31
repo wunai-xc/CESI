@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import "./styles/globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import SweepLoader from "./components/SweepLoader";
+import TransitionOverlay from "./components/TransitionOverlay";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "./lib/site";
 
 export const metadata: Metadata = {
@@ -45,8 +45,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="flex min-h-full flex-col">
-        {/* 全屏扫屏动画：跟随路由变化播一遍 */}
-        <SweepLoader />
+        {/* 全屏转场：跟随路由变化播一遍（1s） */}
+        <TransitionOverlay />
         <Navbar />
         {/* min-h-svh 保证内容至少占满一屏，页脚被推到首屏之下，要下滑才看到 */}
         <main className="flex min-h-svh flex-col">{children}</main>
