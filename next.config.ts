@@ -45,6 +45,8 @@ const nextConfig: NextConfig = {
 }
 
 const withMDX = createMDX({
+  // 默认只处理 .mdx；这里放开到 .md，让纯 markdown 文章也能被编译
+  extension: /\.(md|mdx)$/,
   options: {
     remarkPlugins: [
       // 剥 YAML 头

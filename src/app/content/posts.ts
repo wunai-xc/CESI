@@ -1,5 +1,5 @@
 // src/app/content/posts.ts
-// 文章数据层：启动时扫描 src/app/content/posts/*.mdx，用 gray-matter 读 frontmatter，
+// 文章数据层：启动时扫描 src/app/content/posts/*.{md,mdx}，用 gray-matter 读 frontmatter，
 // 供列表页 / 详情页取元数据，并按需动态 import 对应的 MDX 正文组件。
 
 import fs from "node:fs";
@@ -10,6 +10,26 @@ import GithubSlugger from "github-slugger";
 
 // 文章目录（以 _ 开头的文件会被忽略，可用来放草稿）
 const POSTS_DIR = path.join(process.cwd(), "src/app/content/posts");
+
+// 支持的文章扩展名：.md（纯 markdown）和 .mdx（可写 JSX/组件）
+const POST_EXTENSIONS = [".mdx", ".md"] as const;
+
+function isPostFile(fileName: string): boolean {
+  return POST_EXTENSIONS.some((extension) => fileName.endsWith(extension));
+}
+
+function slugOf(fileName: string): string {
+  return fileName.replace(/\.mdx?$/, "");
+}
+
+// 同一 slug 同时存在 .mdx 和 .md 时，优先 .mdx（文件列表里它排在前）
+function fileForSlug(slug: string): string | null {
+  for (const extension of POST_EXTENSIONS) {
+    const candidate = `${slug}${extension}`;
+    if (fs.existsSync(path.join(POSTS_DIR, candidate))) return candidate;
+  }
+  return null;
+}
 
 export type Post = {
   slug: string;
@@ -35,7 +55,16 @@ function normalizeDate(value: unknown): string | null {
   if (value instanceof Date) return value.toISOString().slice(0, 10);
   if (typeof value === "string") {
     const trimmed = value.trim();
-    return /^\d{4}-\d{2}-\d{2}$/.test(trimmed) ? trimmed : null;
+    // 允许 2026-11-1 这种不补零的写法，统一补成 2026-11-01
+    const match = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(trimmed);
+    if (!match) return null;
+    const [, year, month, day] = match;
+    const mm = month.padStart(2, "0");
+    const dd = day.padStart(2, "0");
+    // 简单范围校验，避免 2026-13-40 这种脏数据混进排序
+    if (Number(mm) < 1 || Number(mm) > 12) return null;
+    if (Number(dd) < 1 || Number(dd) > 31) return null;
+    return `${year}-${mm}-${dd}`;
   }
   return null;
 }
@@ -79,7 +108,7 @@ function countWords(content: string): number {
 // YAML 写错、缺关键字段都只打印警告并跳过这一篇，不抛异常——
 // 一篇文章写坏不该把整站（首页、列表页、其它文章）一起搞崩。
 function readPost(fileName: string): Post | null {
-  const slug = fileName.replace(/\.mdx$/, "");
+  const slug = slugOf(fileName);
   const filePath = path.join(POSTS_DIR, fileName);
 
   let data: Record<string, unknown> = {};
@@ -130,7 +159,7 @@ function loadPosts(): Post[] {
 
   return fs
     .readdirSync(POSTS_DIR)
-    .filter((fileName) => fileName.endsWith(".mdx"))
+    .filter(isPostFile)
     .filter((fileName) => !fileName.startsWith("_"))
     .map(readPost)
     .filter((post): post is Post => post !== null)
@@ -153,7 +182,7 @@ function directorySignature(): string {
 
   return fs
     .readdirSync(POSTS_DIR)
-    .filter((fileName) => fileName.endsWith(".mdx"))
+    .filter(isPostFile)
     .map((fileName) => `${fileName}:${fs.statSync(path.join(POSTS_DIR, fileName)).mtimeMs}`)
     .join("|");
 }
@@ -220,15 +249,26 @@ export function getAdjacentPosts(slug: string): AdjacentPosts {
   };
 }
 
-// 动态 import 对应 slug 的 MDX；文件不存在或编译失败时返回 null（由页面转 404）
+// 动态 import 对应 slug 的正文；.mdx 优先，其次 .md，都失败则返回 null（由页面转 404）。
+// 两种扩展名都交给 @next/mdx 编译（next.config.ts 里 extension 设为 /\.(md|mdx)$/）。
 export async function loadPostContent(
   slug: string,
 ): Promise<ComponentType | null> {
   if (!getPost(slug)) return null;
 
+  // 注意：这里必须写两个"字面量扩展名"的 import，不能用变量拼扩展名，
+  // 否则 Turbopack 生成的动态导入上下文不包含 .md，运行时会找不到模块。
   try {
-    const mod = await import(`@/app/content/posts/${slug}.mdx`);
-    return (mod as { default?: ComponentType }).default ?? null;
+    const mdx = await import(`@/app/content/posts/${slug}.mdx`);
+    const content = (mdx as { default?: ComponentType }).default;
+    if (content) return content;
+  } catch {
+    // 没有 .mdx 就试 .md
+  }
+
+  try {
+    const md = await import(`@/app/content/posts/${slug}.md`);
+    return (md as { default?: ComponentType }).default ?? null;
   } catch {
     return null;
   }
@@ -252,7 +292,10 @@ function stripMarkdown(text: string): string {
 export function getPostHeadings(slug: string): PostHeading[] {
   if (!getPost(slug)) return [];
 
-  const filePath = path.join(POSTS_DIR, `${slug}.mdx`);
+  // 目录是从源文件里扫的，.md / .mdx 都要支持
+  const fileName = fileForSlug(slug);
+  if (!fileName) return [];
+  const filePath = path.join(POSTS_DIR, fileName);
   let source = "";
   try {
     source = matter(fs.readFileSync(filePath, "utf8")).content;

@@ -67,7 +67,7 @@ export const posts = loadPosts();
 
 ## 文章与草稿
 
-- 文章目录：`src/app/content/posts/*.mdx`，frontmatter 必填 `title`、`date`（`YYYY-MM-DD`），可选 `summary`、`tags`、`draft`。
+- 文章目录：`src/app/content/posts/*.{md,mdx}`（`.md` 纯 markdown、`.mdx` 可写 JSX；同 slug 时 `.mdx` 优先），frontmatter 必填 `title`、`date`（`YYYY-MM-DD`，不补零会自动补），可选 `summary`、`tags`、`draft`。
 - `draft: true`：dev 下正常显示（列表和详情页标题旁有 `draft` 标记），**生产构建时整篇排除**。
 - 文件名以 `_` 开头：完全不读取，适合放还没成形的稿子。
 - frontmatter 写坏（YAML 解析失败或缺 title/date）只会打印 `[posts] 跳过 xxx.mdx` 警告并跳过该篇，不会影响整站。

@@ -9,7 +9,8 @@ Albert Einstein
 
 ## 完整的 MDX 文件头
 
-新建文章时，把下面这段直接抄到 `src/app/content/posts/<slug>.mdx` 最顶部（`---` 必须是文件第一行）：
+文章支持 `.mdx`（可写 JSX/组件）和 `.md`（纯 markdown）两种扩展名，两套 frontmatter 完全一样。
+新建文章时，把下面这段直接抄到 `src/app/content/posts/<slug>.mdx`（或 `<slug>.md`）最顶部（`---` 必须是文件第一行）：
 
 ````mdx
 ---
@@ -30,7 +31,7 @@ draft: false
 | 字段 | 是否必填 | 说明 |
 | --- | --- | --- |
 | `title` | 必填 | 文章标题，列表页和详情页的 `<h1>` 都用它 |
-| `date` | 必填 | 必须是 `YYYY-MM-DD` 字符串（带引号），决定排序和「上一篇 / 下一篇」 |
+| `date` | 必填 | `YYYY-MM-DD` 字符串（带引号），决定排序和「上一篇 / 下一篇」；位数不补零（`2026-11-1`）也会自动补成 `2026-11-01` |
 | `summary` | 可选 | 列表页摘要 + `generateMetadata` 的 description |
 | `tags` | 可选 | 写成 `[A, B]` 数组，也可以写 `A, B、C` 这种分隔字符串；会生成标签页 |
 | `draft` | 可选 | 写 `true` 就是草稿：**dev 下正常显示**（标题旁有 `draft` 标记），**构建时整篇排除**，不会出现在线上 |
