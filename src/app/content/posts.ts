@@ -19,6 +19,8 @@ export type Post = {
   tags: string[];
   // 正文字数（不含 frontmatter、代码块和 markdown 标记）
   wordCount: number;
+  // 草稿：dev 下照常显示（便于预览），生产构建时整篇排除，不会被静态导出
+  draft: boolean;
 };
 
 // 文章目录条目：id 与正文标题上的锚点一致（rehype-slug 用同一套算法生成）
@@ -73,12 +75,26 @@ function countWords(content: string): number {
   return cjk + latin;
 }
 
-// 读单个文件：解析 frontmatter。缺关键字段时打印警告并跳过这篇，
-// 不抛异常——一篇文章写坏不该把整站（首页、列表页、其它文章）一起搞崩。
+// 读单个文件：解析 frontmatter。
+// YAML 写错、缺关键字段都只打印警告并跳过这一篇，不抛异常——
+// 一篇文章写坏不该把整站（首页、列表页、其它文章）一起搞崩。
 function readPost(fileName: string): Post | null {
   const slug = fileName.replace(/\.mdx$/, "");
   const filePath = path.join(POSTS_DIR, fileName);
-  const { data, content } = matter(fs.readFileSync(filePath, "utf8"));
+
+  let data: Record<string, unknown> = {};
+  let content = "";
+
+  try {
+    const parsed = matter(fs.readFileSync(filePath, "utf8"));
+    data = parsed.data as Record<string, unknown>;
+    content = parsed.content;
+  } catch (error) {
+    console.warn(
+      `[posts] 跳过 ${fileName}：frontmatter 的 YAML 解析失败 → ${(error as Error).message.split("\n")[0]}`,
+    );
+    return null;
+  }
 
   const title = typeof data.title === "string" ? data.title.trim() : "";
   const date = normalizeDate(data.date);
@@ -101,6 +117,7 @@ function readPost(fileName: string): Post | null {
     summary,
     tags: normalizeTags(data.tags),
     wordCount: countWords(content),
+    draft: data.draft === true || String(data.draft).toLowerCase() === "true",
   };
 }
 
@@ -108,12 +125,16 @@ function readPost(fileName: string): Post | null {
 function loadPosts(): Post[] {
   if (!fs.existsSync(POSTS_DIR)) return [];
 
+  // 文件名以 _ 开头 = 完全不读；frontmatter 里 draft: true = 只在 dev 里出现
+  const isProduction = process.env.NODE_ENV === "production";
+
   return fs
     .readdirSync(POSTS_DIR)
     .filter((fileName) => fileName.endsWith(".mdx"))
     .filter((fileName) => !fileName.startsWith("_"))
     .map(readPost)
     .filter((post): post is Post => post !== null)
+    .filter((post) => !(isProduction && post.draft))
     .sort((a, b) => b.date.localeCompare(a.date));
 }
 

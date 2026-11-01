@@ -20,6 +20,7 @@ import {
 import { formatDate } from "@/app/lib/formatDate";
 import TagLink from "@/app/components/post/TagLink";
 import PostToc from "@/app/components/post/PostToc";
+import DraftBadge from "@/app/components/post/DraftBadge";
 import PostPager from "@/app/components/post/PostPager";
 import BackToTop from "@/app/components/post/BackToTop";
 
@@ -88,6 +89,7 @@ export default async function PostPage({ params }: PostPageProps) {
           <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-zinc-500">
             <time dateTime={post.date}>{formatDate(post.date)}</time>
             <span>{post.wordCount.toLocaleString()} 字</span>
+            {post.draft ? <DraftBadge /> : null}
             {post.tags.map((tag) => (
               <TagLink key={tag} tag={tag} className="text-xs" />
             ))}

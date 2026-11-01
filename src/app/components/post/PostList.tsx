@@ -7,6 +7,7 @@
 import Link from "next/link";
 import { formatDate } from "@/app/lib/formatDate";
 import Highlight from "@/app/components/post/Highlight";
+import DraftBadge from "@/app/components/post/DraftBadge";
 import Reveal from "@/app/components/ui/Reveal";
 import TagLink from "@/app/components/post/TagLink";
 import type { Post } from "@/app/content/posts";
@@ -30,8 +31,9 @@ export default function PostList({
         // 逐项延迟最多 0.4s，长列表末尾不会等太久
         <Reveal as="li" key={post.slug} className="py-6" delay={Math.min(index * 0.04, 0.4)}>
           <Link href={`/components/posts/${post.slug}`} className="group block">
-            <h2 className="text-xl font-semibold text-zinc-900 transition-colors group-hover:text-accent dark:text-zinc-100">
+            <h2 className="flex flex-wrap items-center gap-2 text-xl font-semibold text-zinc-900 transition-colors group-hover:text-accent dark:text-zinc-100">
               <Highlight text={post.title} terms={terms} />
+              {post.draft ? <DraftBadge /> : null}
             </h2>
             {post.summary ? (
               <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">

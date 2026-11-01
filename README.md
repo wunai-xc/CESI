@@ -15,7 +15,9 @@ npm run dev
 
 ## 文章
 
-文章写在 `src/app/content/posts/<slug>.mdx`，frontmatter 需要 `title`、`date`（`YYYY-MM-DD`），可选 `summary`、`tags`。
+文章写在 `src/app/content/posts/<slug>.mdx`，frontmatter 需要 `title`、`date`（`YYYY-MM-DD`），可选 `summary`、`tags`、`draft`。
+
+草稿两种写法：`draft: true`（dev 可见、构建时排除）或文件名以 `_` 开头（完全不读取）。
 
 ```mdx
 ---

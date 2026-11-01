@@ -65,6 +65,13 @@ export const posts = loadPosts();
 
 元数据由 `src/app/lib/remark-code-meta.mjs` 写进 `data-*` 属性，`src/mdx-components.tsx` 的 `pre` 读出来传给 `src/app/components/CodeBlock.tsx`；高亮由 `rehype-highlight` 在编译期完成，不跑客户端 JS。
 
+## 文章与草稿
+
+- 文章目录：`src/app/content/posts/*.mdx`，frontmatter 必填 `title`、`date`（`YYYY-MM-DD`），可选 `summary`、`tags`、`draft`。
+- `draft: true`：dev 下正常显示（列表和详情页标题旁有 `draft` 标记），**生产构建时整篇排除**。
+- 文件名以 `_` 开头：完全不读取，适合放还没成形的稿子。
+- frontmatter 写坏（YAML 解析失败或缺 title/date）只会打印 `[posts] 跳过 xxx.mdx` 警告并跳过该篇，不会影响整站。
+
 ## MDX 支持的语法
 
 | 语法 | 写法 | 由谁实现 |
