@@ -45,6 +45,7 @@
   .animate-caret,
   .contour-drift,
   .contour-flow,
+  .contour-fade,
   .page-enter {
     animation: none;
   }
@@ -173,4 +174,20 @@
 .contour-flow {
   animation: contour-flow 48s ease-in-out infinite;
   will-change: transform;
+}
+
+/* 等高线生成后淡入：只动 opacity，不碰 transform，
+   避免和同元素上的 .contour-flow 缓动动画抢 transform。 */
+@keyframes contour-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.contour-fade {
+  animation: contour-fade 700ms ease-out both;
 }
