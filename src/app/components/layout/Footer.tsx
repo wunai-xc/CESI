@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import BrandIcon from "@/app/components/mdx/BrandIcon";
 import ThemeToggle from "@/app/components/layout/ThemeToggle";
+import FooterWordmark from "@/app/components/layout/FooterWordmark";
 import type { BrandName } from "@/app/components/mdx/brand-icons";
 
 type SiteLink = { name: string; icon: BrandName; href: string };
@@ -200,6 +201,11 @@ export default function Footer() {
               ))}
             </ul>
           </div>
+        </div>
+
+        {/* 页脚大字：正文粒子效果（2D canvas，无依赖） */}
+        <div className="border-t border-line py-6">
+          <FooterWordmark text="WUNAI" />
         </div>
 
         {/* 底行：版权 + 设置按钮（占位，暂无功能） */}
