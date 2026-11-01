@@ -1,7 +1,8 @@
 ---
-title: Diary{{date}}{{time}}
+title: Diary-{{date}}-{{time}}
 date: "{{date}}"
-tags: [Diary]
+tags:
+  - Diary
 draft: true
 summary: ""
 ---
