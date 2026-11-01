@@ -2,6 +2,8 @@
 // 关于页，路由 /content/about。目前只是占位框架，正文待补。
 
 import type { Metadata } from "next";
+import BackHome from "@/app/components/button/BackHome"
+
 
 // 页面标题与描述（模板 "%s | cesi" 会自动套上站点后缀）
 export const metadata: Metadata = {
@@ -12,6 +14,10 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="mx-auto w-full max-w-3xl flex-1 px-6 py-12">
+      <BackHome />
+      <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-zinc-400 dark:text-zinc-500">
+          02 / about
+        </p>
       <h2 className="font-bold text-5xl">
         About Me.
       </h2>

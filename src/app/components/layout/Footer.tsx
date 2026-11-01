@@ -23,6 +23,7 @@ const siteGroups: SiteGroup[] = [
       { name: "X", icon: "x", href: "https://x.com" },
       { name: "Cloudflare", icon: "cloudflare", href: "https://www.cloudflare.com/" },
       { name: "Vercel", icon: "vercel", href: "https://vercel.com/" },
+      { name: "Google", icon: "google", href: "https://google.com"},
     ],
   },
   {

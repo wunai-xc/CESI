@@ -11,7 +11,7 @@ import BackHome from "@/app/components/button/BackHome";
 
 export const metadata: Metadata = {
   title: "FriendLinks 友链",
-  description: "WUNAI 的友链：一群写博客的人。",
+  description: "WUNAI 的友链：一些朋友或组织的网站。",
 };
 
 type FriendLink = {
@@ -105,7 +105,7 @@ export default function FriendLinks() {
           FriendLinks 友链
         </h1>
         <p className="mt-2 text-sm text-zinc-500">
-          共 {FRIENDS.length} 位 · 都是认真写字的人
+          共 {FRIENDS.length} 个 · 网站
         </p>
       </header>
 

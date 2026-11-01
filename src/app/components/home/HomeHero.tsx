@@ -25,7 +25,7 @@ export default function HomeHero({
       {/* 背景：两层星空视差 + 中央遮罩 */}
       <HomeBackdrop />
 
-      <div className="relative flex w-full max-w-3xl flex-col items-center gap-6 text-center">
+      <div className="relative flex w-full max-w-6xl flex-col items-center gap-6 text-center">
         {/* logo */}
         <div
           className="animate-rise flex justify-center bg-white dark:bg-black"
