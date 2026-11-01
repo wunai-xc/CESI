@@ -43,6 +43,8 @@
   .animate-typing,
   .scroll-reveal,
   .animate-caret,
+  .contour-drift,
+  .contour-flow,
   .page-enter {
     animation: none;
   }
@@ -130,4 +132,45 @@
     color: #fff;
     mix-blend-mode: difference;
   }
+}
+
+/* 等高线背景的滚动视差：支持 scroll timeline 的浏览器随滚动轻微下移，
+   不支持的浏览器保持静止（渐进增强，不影响可读性）。 */
+@keyframes contour-drift {
+  from {
+    transform: translate3d(0, -12px, 0);
+  }
+
+  to {
+    transform: translate3d(0, 60px, 0);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .contour-drift {
+    animation: contour-drift linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 900px;
+  }
+}
+
+/* 等高线背景的缓动漂移：非常慢地平移 + 轻微缩放，让背景"活"起来但不抢注意力。
+   跑在内层元素上，和外层 .contour-drift（滚动视差）互不干扰。 */
+@keyframes contour-flow {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+
+  50% {
+    transform: translate3d(-1.6%, -1.1%, 0) scale(1.14);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+}
+
+.contour-flow {
+  animation: contour-flow 48s ease-in-out infinite;
+  will-change: transform;
 }
