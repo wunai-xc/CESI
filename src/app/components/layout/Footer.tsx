@@ -203,9 +203,12 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* 页脚大字：正文粒子效果（2D canvas，无依赖） */}
-        <div className="border-t border-line py-6">
-          <FooterWordmark text="WUNAI" />
+        {/* 页脚大字：粒子效果。容器用 @container，高度 28cqi（最小 190px / 最大 340px），
+            和 techmc.wiki 的 footer-wordmark 用同一套尺寸与兜底大字比例 */}
+        <div className="@container relative w-full overflow-hidden border-t border-line">
+          <div className="relative h-[28cqi] max-h-[340px] min-h-[190px] w-full">
+            <FooterWordmark text="WUNAI" shortText="WUNAI" />
+          </div>
         </div>
 
         {/* 底行：版权 + 设置按钮（占位，暂无功能） */}
