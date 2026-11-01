@@ -6,7 +6,8 @@
 /* eslint-disable @next/next/no-img-element */
 
 import type { Metadata } from "next";
-import Link from "next/link";
+import BackHome from "@/app/components/button/BackHome";
+
 
 export const metadata: Metadata = {
   title: "FriendLinks 友链",
@@ -93,12 +94,8 @@ function hostOf(url: string): string {
 export default function FriendLinks() {
   return (
     <div className="mx-auto w-full max-w-3xl flex-1 px-6 py-12">
-      <Link
-        href="/"
-        className="text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:hover:text-zinc-100"
-      >
-        ← Back Home
-      </Link>
+
+      <BackHome />
 
       <header className="mt-6 border-b border-zinc-200 pb-6 dark:border-zinc-800">
         <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-zinc-400 dark:text-zinc-500">
