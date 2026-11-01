@@ -37,7 +37,7 @@ export default function HomeHero({
             width={400}
             height={100}
             priority
-            className="h-11 w-auto block dark:hidden"
+            className="h-30 w-auto block dark:hidden"
           />
           <Image
             src="/icon/WUNAI-dark.png"
@@ -45,7 +45,7 @@ export default function HomeHero({
             width={400}
             height={100}
             priority
-            className="h-11 w-auto hidden dark:block"
+            className="h-30 w-auto hidden dark:block"
           />
         </div>
 
