@@ -67,9 +67,9 @@ export default function HomeHero({
           Hello, I&apos;m WUNAI.
         </h1>
 
-        {/* 打字机标语 + 光标 */}
+        {/* 打字机标语 + 光标：同样走 text-invert，压在星空上自动取反色 */}
         <p
-          className="animate-rise flex max-w-full items-baseline justify-center gap-1 font-mono text-xs leading-7 tracking-wide text-zinc-900 dark:text-zinc-900"
+          className="animate-rise text-invert flex max-w-full items-baseline justify-center gap-1 font-mono text-xs leading-7 tracking-wide"
           style={{ animationDelay: "0.4s" }}
         >
           <span
@@ -79,31 +79,31 @@ export default function HomeHero({
             {TYPED_LINE}
           </span>
           <span
-            className="animate-caret inline-block h-3.5 w-[2px] bg-accent align-middle"
+            className="animate-caret inline-block h-3.5 w-[2px] bg-current align-middle"
             aria-hidden="true"
           />
         </p>
 
         {/* 数据条：等宽小字 + 竖线分隔，像设备铭牌 */}
         <dl
-          className="animate-rise flex divide-x divide-line bg-panel/60 font-mono text-[10px] uppercase tracking-[0.18em]"
+          className="animate-rise flex divide-x divide-line bg-panel font-mono text-[10px] uppercase tracking-[0.18em]"
           style={{ animationDelay: "0.5s" }}
         >
           <div className="px-4 py-2">
-            <dt className="text-zinc-900 dark:text-zinc-900">Posts</dt>
-            <dd className="mt-1 text-sm text-zinc-800 dark:text-zinc-200">
+            <dt className="text-zinc-600 dark:text-zinc-400">Posts</dt>
+            <dd className="mt-1 text-sm text-zinc-900 dark:text-zinc-100">
               {String(postCount).padStart(2, "0")}
             </dd>
           </div>
           <div className="px-4 py-2">
-            <dt className="text-zinc-900 dark:text-zinc-900">Words</dt>
-            <dd className="mt-1 text-sm text-zinc-800 dark:text-zinc-200">
+            <dt className="text-zinc-600 dark:text-zinc-400">Words</dt>
+            <dd className="mt-1 text-sm text-zinc-900 dark:text-zinc-100">
               {wordCount.toLocaleString()}
             </dd>
           </div>
           <div className="px-4 py-2">
-            <dt className="text-zinc-900 dark:text-zinc-900">Updated</dt>
-            <dd className="mt-1 text-sm text-zinc-800 dark:text-zinc-200">
+            <dt className="text-zinc-600 dark:text-zinc-400">Updated</dt>
+            <dd className="mt-1 text-sm text-zinc-900 dark:text-zinc-100">
               {latestDate || "—"}
             </dd>
           </div>

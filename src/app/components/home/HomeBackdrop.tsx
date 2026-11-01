@@ -1,7 +1,8 @@
 // src/app/components/home/HomeBackdrop.tsx
 // 首页背景：两层星空视差（NASA 公开图像，已压成 1800px / 1400px 的 jpg）。
 // 用 motion 的 useScroll + useTransform 让远近两层以不同速度位移，形成视差。
-// 不额外盖遮罩、文字也不加投影：星空本身是暗色低透明，不影响正文阅读。
+// 图片保持原始画质与颜色：不加透明度、不加灰阶，也不盖遮罩；
+// 文字可读性交给 HomeHero 里的 .text-invert（mix-blend-mode: difference）解决。
 // 纯装饰（aria-hidden），系统开启「减少动态效果」时不位移。
 
 "use client";
@@ -33,7 +34,7 @@ export default function HomeBackdrop() {
           fill
           sizes="100vw"
           priority
-          className="object-cover opacity-20 grayscale dark:opacity-50 dark:grayscale-0"
+          className="object-cover"
         />
       </motion.div>
 
@@ -47,7 +48,7 @@ export default function HomeBackdrop() {
           alt=""
           fill
           sizes="100vw"
-          className="object-cover dark:grayscale-0"
+          className="object-cover"
         />
       </motion.div>
     </div>
