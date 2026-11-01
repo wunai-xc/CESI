@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/",
     "/components/posts",
     "/content/about",
+    "/content/links",
     "/content/terms",
     "/content/privacy",
   ];

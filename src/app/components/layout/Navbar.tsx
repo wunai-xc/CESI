@@ -34,6 +34,9 @@ export default function Navbar() {
           <Link href="/content/about" className="transition-colors hover:text-accent">
             About
           </Link>
+          <Link href="/content/links" className="transition-colors hover:text-accent">
+            Links
+          </Link>
         </div>
       </nav>
     </header>

@@ -66,9 +66,9 @@ export default function HomeAbout() {
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <Link
               href="/content/about"
-              className="inline-flex items-center gap-2 border border-zinc-300 px-4 py-2 text-sm text-zinc-700 transition-colors hover:border-zinc-400 hover:text-zinc-900 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:text-zinc-50"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm text-zinc-700 transition-colors hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-50"
             >
-              Read more
+              Read more →
             </Link>
             <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-400 dark:text-zinc-500">
               built with next.js · mdx · tailwind
